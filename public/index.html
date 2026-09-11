@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0c2538"><meta name="description" content="지메타와 함께 폭탄을 피하고 코인을 모으며 배우는 5단계 블록 코딩 대회"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/home.css"><title>블록 탈출 대회</title></head>
+<body>
+<!--
+THESIS: 아이가 출발 버튼을 누르기 전부터 다섯 단계의 모험을 한눈에 읽는 대회 출발 게이트; 설명 카드 모음을 거부한다.
+OWN-WORLD: 짙은 남색 라미네이트 작전판, 안전 노랑 레일, 코랄 위험 표지, 실제 지메타 캐릭터.
+STORY: 네 방향과 반복만으로 폭탄을 피하고 코인을 모아 다섯 깃발에 도전한다.
+FIRST VIEWPORT: 왼쪽의 큰 대회 제목과 시작 버튼, 오른쪽의 지메타, 아래를 가로지르는 다섯 스테이지 레일.
+FORM: 출발 게이트와 스테이지 레일, 후보 4, seed c103b32f.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+-->
+<header class="home-header">
+  <a class="home-brand" href="/" aria-label="블록 탈출 대회 메인"><span class="home-mark" aria-hidden="true">B</span><span>블록 탈출 대회</span></a>
+  <a class="header-link" href="/game.html">경기장 입장</a>
+</header>
+<main>
+  <section class="hero" aria-labelledby="heroTitle">
+    <div class="hero-copy">
+      <p class="hero-line"><span aria-hidden="true"></span> 생각하고, 놓고, 탈출하자!</p>
+      <h1 id="heroTitle">블록으로 만드는<br><em>가장 빠른 탈출</em></h1>
+      <p class="hero-description">위·아래·왼쪽·오른쪽과 반복 블록으로 지메타의 길을 설계하세요. 폭탄은 피하고, 코인은 챙기고, 다섯 개의 깃발까지!</p>
+      <div class="hero-actions"><a class="start-button" href="/game.html"><span class="play-icon" aria-hidden="true"></span>대회 시작하기</a><span class="start-note">이름 입력은 5단계 완료 후</span></div>
+    </div>
+    <div class="hero-visual" aria-label="출발선에 선 지메타">
+      <div class="route-line" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      <img src="/assets/gmeta-run.webp" alt="달릴 준비를 하는 지메타 캐릭터">
+      <div class="flag-sign" aria-hidden="true"><span></span></div>
+      <p>READY?</p>
+    </div>
+  </section>
+  <section class="stage-rail" aria-labelledby="stageRailTitle">
+    <div class="rail-heading"><h2 id="stageRailTitle">5개의 탈출 작전</h2><p>작은 맵부터 폭탄 지대까지, 알고리즘을 더 짧고 빠르게!</p></div>
+    <ol id="stagePreviews" class="stage-previews"></ol>
+  </section>
+  <section class="rules" aria-label="대회 핵심 규칙">
+    <div><span class="rule-symbol arrows" aria-hidden="true"></span><strong>네 방향 이동</strong><p>회전 없이 원하는 방향으로 한 칸</p></div>
+    <div><span class="rule-symbol repeat" aria-hidden="true"></span><strong>반복으로 줄이기</strong><p>같은 명령을 2~6번 묶어서 실행</p></div>
+    <div><span class="rule-symbol coin" aria-hidden="true"></span><strong>코인 보너스</strong><p>코인 하나마다 700점 추가</p></div>
+    <div><span class="rule-symbol flag" aria-hidden="true"></span><strong>깃발로 탈출</strong><p>빠르고 짧은 알고리즘이 높은 점수</p></div>
+  </section>
+</main>
+<footer><p>G-META와 함께하는 블록 코딩 챌린지</p><a href="/game.html">지금 출발하기</a></footer>
+<script type="module" src="/home.js"></script>
+</body></html>

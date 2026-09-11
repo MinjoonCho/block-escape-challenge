@@ -1,0 +1,191 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-11T10:40:42Z",
+  "title": "Design System: 블록 탈출 대회",
+  "extensions": {
+    "colorMeta": {
+      "operations-navy": {
+        "role": "primary",
+        "displayName": "Operations Navy",
+        "canonical": "#0c2538",
+        "tonalRamp": ["#07141f", "#0c2538", "#173b55", "#31566e", "#547387", "#8198a7", "#b7c5cd", "#eaf0f2"]
+      },
+      "command-blue": {
+        "role": "secondary",
+        "displayName": "Command Blue",
+        "canonical": "#2b78c5",
+        "tonalRamp": ["#09243e", "#123c68", "#1d5792", "#2b78c5", "#5797d3", "#88b6e1", "#bdd7ef", "#edf6fc"]
+      },
+      "route-green": {
+        "role": "secondary",
+        "displayName": "Route Green",
+        "canonical": "#16836b",
+        "tonalRamp": ["#06271f", "#0a4437", "#10634f", "#16836b", "#42a18b", "#76bdaa", "#aed9cc", "#e8f5f1"]
+      },
+      "safety-yellow": {
+        "role": "primary",
+        "displayName": "Safety Yellow",
+        "canonical": "#f7c948",
+        "tonalRamp": ["#3b2b03", "#654b07", "#946f0c", "#c99a1c", "#f7c948", "#f9d978", "#fce9ae", "#fff9e6"]
+      },
+      "hazard-coral": {
+        "role": "tertiary",
+        "displayName": "Hazard Coral",
+        "canonical": "#e7523e",
+        "tonalRamp": ["#3b100b", "#681c14", "#98291f", "#c83c2d", "#e7523e", "#ed7c6d", "#f3aaa1", "#fbe1dd"]
+      },
+      "operations-ink": {
+        "role": "neutral",
+        "displayName": "Operations Ink",
+        "canonical": "#102331",
+        "tonalRamp": ["#081118", "#102331", "#273c4a", "#455b69", "#687c88", "#93a3ac", "#c1cbd0", "#eef2f4"]
+      },
+      "instruction-muted": {
+        "role": "neutral",
+        "displayName": "Instruction Muted",
+        "canonical": "#597080",
+        "tonalRamp": ["#152027", "#293943", "#405460", "#597080", "#7b909c", "#a0b0b9", "#c8d2d7", "#f0f4f5"]
+      },
+      "divider-steel": {
+        "role": "neutral",
+        "displayName": "Divider Steel",
+        "canonical": "#b9c3c7",
+        "tonalRamp": ["#20282b", "#384346", "#566164", "#768184", "#98a2a5", "#b9c3c7", "#d7dddf", "#f3f5f6"]
+      },
+      "map-mist": {
+        "role": "neutral",
+        "displayName": "Map Mist",
+        "canonical": "#e8ebe5",
+        "tonalRamp": ["#252924", "#424741", "#626760", "#848a82", "#a7aca4", "#c8ccc5", "#e8ebe5", "#f8faf7"]
+      },
+      "board-paper": {
+        "role": "neutral",
+        "displayName": "Board Paper",
+        "canonical": "#f4f1e8",
+        "tonalRamp": ["#2b2922", "#49463c", "#6a665a", "#8d887b", "#b0ab9e", "#d2cec2", "#f4f1e8", "#fdfcf8"]
+      },
+      "grid-white": {
+        "role": "neutral",
+        "displayName": "Grid White",
+        "canonical": "#fffdf7",
+        "tonalRamp": ["#2d2c28", "#4b4a45", "#6d6b65", "#908e87", "#b4b1aa", "#d8d5cf", "#eeeae4", "#fffdf7"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Stamped Display", "purpose": "Verified completion headlines only." },
+      "headline": { "displayName": "Panel Headline", "purpose": "Names operational bays and drawers." },
+      "body": { "displayName": "Instruction Body", "purpose": "Mission guidance and supporting explanation." },
+      "label": { "displayName": "Operational Label", "purpose": "Scores, statuses, legends, captions, and control labels." }
+    },
+    "shadows": [
+      { "name": "board-lift", "value": "0 12px 24px rgba(2,24,39,.16)", "purpose": "Lifts the unified workspace above the page." },
+      { "name": "magnetic-block", "value": "0 5px 0 rgba(12,37,56,.28)", "purpose": "Creates the hard mounted edge under source command blocks." },
+      { "name": "program-move", "value": "0 3px 0 #17466e", "purpose": "Seats compact absolute-direction commands in the program." },
+      { "name": "program-repeat", "value": "0 3px 0 #0b5646", "purpose": "Seats compact repeat containers in the program." },
+      { "name": "safety-rail", "value": "0 9px 0 #80909a", "purpose": "Anchors the protected grid frame." },
+      { "name": "drawer", "value": "-18px 0 40px rgba(0,0,0,.25)", "purpose": "Separates the right-side leaderboard drawer." },
+      { "name": "result-modal", "value": "0 20px 60px rgba(0,0,0,.3)", "purpose": "Lifts the verified result above its scrim." }
+    ],
+    "motion": [
+      { "name": "command-response", "value": "160ms ease", "purpose": "Quick lift, brightness, and press feedback on command blocks." },
+      { "name": "mascot-step", "value": "220ms cubic-bezier(.16,1,.3,1)", "purpose": "A lively but controlled cell-to-cell mascot response." },
+      { "name": "route-pulse", "value": "800ms steps(2,end)", "purpose": "Signals that the assembled route is currently executing." },
+      { "name": "toast-arrival", "value": "200ms ease", "purpose": "Slides transient coaching feedback upward into view." }
+    ],
+    "breakpoints": [
+      { "name": "compact-desktop", "value": "1000px" },
+      { "name": "mobile", "value": "680px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Direction Command Block",
+      "kind": "button",
+      "refersTo": "command-move",
+      "description": "Adds one absolute up, down, left, or right movement instruction with the signature interlocking magnetic silhouette.",
+      "html": "<button class=\"ds-command ds-command-up\" type=\"button\"><span class=\"ds-command-icon\" aria-hidden=\"true\">↑</span><span><strong>위로</strong><small>한 칸 이동</small></span></button>",
+      "css": ".ds-command{display:flex;align-items:center;gap:13px;width:280px;min-height:68px;border:0;border-radius:12px;padding:10px 13px;text-align:left;color:var(--white);font-family:'Noto Sans KR',sans-serif;font-weight:700;box-shadow:0 5px 0 rgba(12,37,56,.28);clip-path:polygon(0 0,40% 0,43% 7%,57% 7%,60% 0,100% 0,100% 40%,94% 43%,94% 57%,100% 60%,100% 100%,60% 100%,57% 93%,43% 93%,40% 100%,0 100%);transition:transform .16s ease,filter .16s ease}.ds-command-up{background:var(--blue)}.ds-command:hover{transform:translateY(-2px);filter:brightness(1.06)}.ds-command:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(12,37,56,.28)}.ds-command:focus-visible{outline:4px solid #55b7ff;outline-offset:3px}.ds-command-icon{display:grid;place-items:center;width:42px;height:42px;border-radius:9px;background:rgba(255,255,255,.15);font-size:1.8rem}.ds-command span:last-child{display:grid}.ds-command strong{font-size:1rem}.ds-command small{font-size:.72rem;color:rgba(255,255,255,.82)}"
+    },
+    {
+      "name": "Repeat Command Block",
+      "kind": "button",
+      "refersTo": "command-repeat",
+      "description": "Opens or closes a green repeat container that nests direction instructions and exposes a compact repeat count.",
+      "html": "<button class=\"ds-command ds-command-repeat\" type=\"button\"><span class=\"ds-command-icon\" aria-hidden=\"true\">↻</span><span><strong>반복하기</strong><small>방향 묶기</small></span></button>",
+      "css": ".ds-command{display:flex;align-items:center;gap:13px;width:280px;min-height:68px;border:0;border-radius:12px;padding:10px 13px;text-align:left;color:var(--white);font-family:'Noto Sans KR',sans-serif;font-weight:700;box-shadow:0 5px 0 rgba(12,37,56,.28);clip-path:polygon(0 0,40% 0,43% 7%,57% 7%,60% 0,100% 0,100% 40%,94% 43%,94% 57%,100% 60%,100% 100%,60% 100%,57% 93%,43% 93%,40% 100%,0 100%);transition:transform .16s ease,filter .16s ease}.ds-command-repeat{background:var(--green)}.ds-command:hover{transform:translateY(-2px);filter:brightness(1.06)}.ds-command:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(12,37,56,.28)}.ds-command:focus-visible{outline:4px solid #55b7ff;outline-offset:3px}.ds-command-icon{display:grid;place-items:center;width:42px;height:42px;border-radius:9px;background:rgba(255,255,255,.15);font-size:1.8rem}.ds-command span:last-child{display:grid}.ds-command strong{font-size:1rem}.ds-command small{font-size:.72rem;color:rgba(255,255,255,.82)}"
+    },
+    {
+      "name": "Run Button",
+      "kind": "button",
+      "refersTo": "button-run",
+      "description": "Executes the assembled evacuation route as the primary safety-yellow action.",
+      "html": "<button class=\"ds-run\" type=\"button\"><span aria-hidden=\"true\">▶</span> 실행하기</button>",
+      "css": ".ds-run{min-width:190px;min-height:52px;border:0;border-radius:10px;padding:0 18px;background:var(--yellow);color:var(--navy);font-family:'Noto Sans KR',sans-serif;font-weight:900;box-shadow:0 5px 0 #b17b12;transition:transform .16s ease,filter .16s ease}.ds-run:hover{filter:brightness(1.05);transform:translateY(-1px)}.ds-run:active{transform:translateY(3px);box-shadow:0 2px 0 #b17b12}.ds-run:focus-visible{outline:4px solid #55b7ff;outline-offset:3px}.ds-run:disabled{cursor:not-allowed;opacity:.45}"
+    },
+    {
+      "name": "Program Command",
+      "kind": "custom",
+      "refersTo": "program-forward",
+      "description": "Shows an ordered command in the assembled algorithm and highlights it during execution.",
+      "html": "<div class=\"ds-program ds-program-active\"><span class=\"ds-program-index\">1</span><strong>위로</strong><button class=\"ds-program-delete\" type=\"button\" aria-label=\"1번 블록 삭제\">×</button></div>",
+      "css": ".ds-program{display:grid;grid-template-columns:28px 1fr 30px;align-items:center;gap:8px;width:280px;min-height:48px;padding:7px 8px;border-radius:9px;background:var(--blue);color:var(--white);font-family:'Noto Sans KR',sans-serif;box-shadow:0 3px 0 #17466e;clip-path:polygon(0 0,40% 0,43% 7%,57% 7%,60% 0,100% 0,100% 40%,94% 43%,94% 57%,100% 60%,100% 100%,60% 100%,57% 93%,43% 93%,40% 100%,0 100%)}.ds-program-active{outline:4px solid var(--yellow);outline-offset:2px}.ds-program-index{display:grid;place-items:center;width:25px;height:25px;border-radius:50%;background:rgba(255,255,255,.18);font-size:.72rem;font-weight:800}.ds-program-delete{border:0;background:rgba(0,0,0,.16);color:var(--white);border-radius:7px;width:28px;height:28px;font-size:1.1rem}.ds-program-delete:hover{background:rgba(0,0,0,.28)}.ds-program-delete:focus-visible{outline:4px solid #55b7ff;outline-offset:2px}"
+    },
+    {
+      "name": "Scoreboard Stat",
+      "kind": "nav",
+      "description": "Pairs a pale operational label with a bright live value in the navy race header.",
+      "html": "<div class=\"ds-stat\"><small>스테이지</small><strong>1 / 5</strong></div>",
+      "css": ".ds-stat{display:grid;gap:2px;min-width:68px;text-align:center;padding:8px 12px;background:var(--navy);color:var(--white);font-family:'Noto Sans KR',sans-serif}.ds-stat small{font-size:.75rem;color:#bad0dd}.ds-stat strong{font-size:1.05rem;font-weight:800;font-variant-numeric:tabular-nums}"
+    },
+    {
+      "name": "Name Submission Field",
+      "kind": "input",
+      "description": "Collects the short display name only after all five stages have been verified.",
+      "html": "<div class=\"ds-name-row\"><label class=\"ds-name-label\" for=\"ds-name\">이름</label><div><input id=\"ds-name\" maxlength=\"12\" placeholder=\"이름을 입력하세요\"><button type=\"button\">순위 등록</button></div></div>",
+      "css": ".ds-name-row{font-family:'Noto Sans KR',sans-serif}.ds-name-label{display:block;margin-bottom:8px;color:var(--ink);font-weight:800}.ds-name-row>div{display:flex}.ds-name-row input{min-width:0;width:220px;border:2px solid var(--navy);border-radius:0;padding:13px;background:var(--white);color:var(--ink)}.ds-name-row button{border:0;border-radius:0;padding:0 18px;background:var(--yellow);color:var(--navy);font-weight:900}.ds-name-row input:focus-visible,.ds-name-row button:focus-visible{outline:4px solid #55b7ff;outline-offset:3px}"
+    },
+    {
+      "name": "Route Status",
+      "kind": "chip",
+      "description": "Reports whether the child is designing, running, retrying, or has cleared the stage.",
+      "html": "<span class=\"ds-route-status ds-route-running\"><i aria-hidden=\"true\"></i><span>알고리즘 실행 중</span></span>",
+      "css": ".ds-route-status{display:inline-flex;align-items:center;gap:9px;color:var(--ink);font-family:'Noto Sans KR',sans-serif;font-size:.9rem;font-weight:800}.ds-route-status i{width:11px;height:11px;border-radius:50%;background:var(--yellow)}.ds-route-running i{animation:ds-pulse .8s steps(2,end) infinite}.ds-route-status:focus-visible{outline:4px solid #55b7ff;outline-offset:3px}@keyframes ds-pulse{50%{transform:scale(1.5)}}@media(prefers-reduced-motion:reduce){.ds-route-running i{animation-duration:.01ms}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Laminated Evacuation Board",
+    "overview": "The interface turns a child's command sequence into a visible evacuation route. It feels like a durable operations board prepared for a friendly school safety drill: navy framing establishes command, warm paper and mist surfaces keep the work legible, striped rails protect the play field, and magnetic-looking blocks make every instruction feel placed by hand.\n\nThe tone is alert without becoming alarming. Safety yellow identifies action and the planned path, coral marks hazards and errors, four distinct colors separate absolute movement directions, and green identifies repetition and safe completion. The upright G-META mascot remains the emotional center of the map while the interface stays compact, direct, and readable for elementary-school players.",
+    "keyCharacteristics": [
+      "A laminated navy-and-paper operations board rather than a generic rounded learning dashboard.",
+      "Interlocking magnetic command blocks with tactile press depth.",
+      "Safety-yellow rails and numbered markers that make the planned route visible before execution.",
+      "Coral hazards, deep navy structure, four color-coded directions, and a distinct green repeat category.",
+      "A 1920×1080 coding workbench with algorithm left, execution map right, and the command inventory spanning the bottom."
+    ],
+    "rules": [
+      { "name": "The Safety Signal Rule", "body": "Safety yellow means route or action, while hazard coral means danger, destructive action, or error; never swap their jobs.", "section": "colors" },
+      { "name": "The Color-Coded Command Rule", "body": "Up, down, left, right, and repeat keep distinct, consistent colors everywhere they appear, so children can recognize a sequence before reading every label.", "section": "colors" },
+      { "name": "The Stamped Heading Rule", "body": "Use Black Han Sans only where a sign, panel, or result needs a bold operational title; all instructional copy remains Noto Sans KR.", "section": "typography" },
+      { "name": "The Numbers-at-a-Glance Rule", "body": "Timers, scores, block counts, and ranks use bold weight and tabular numerals where values update in place.", "section": "typography" },
+      { "name": "The Map Owns the Mission Rule", "body": "The grid is always the largest working surface and moves ahead of editing controls on narrow screens.", "section": "layout" },
+      { "name": "The Single Board Rule", "body": "Adjacent work areas share edges and dividers; do not break the core workspace into floating dashboard cards.", "section": "layout" },
+      { "name": "The Mounted, Not Floating Rule", "body": "Use short vertical shadows for controls and map hardware; reserve soft diffuse shadows for the workspace, drawer, and result overlay.", "section": "elevation" },
+      { "name": "The Purposeful Geometry Rule", "body": "Rounded corners belong to touch controls and circular game symbols; operational containers stay square and engineered.", "section": "shapes" },
+      { "name": "The Interlock Rule", "body": "Command blocks retain their magnetic notch silhouette in every sequence-building context.", "section": "shapes" }
+    ],
+    "dos": [
+      "**Do** keep the 1920×1080 hierarchy as scoreboard, algorithm left, map right, and command inventory across the bottom.",
+      "**Do** highlight the active code block and show only actual movement results on the map.",
+      "**Do** keep G-META upright and express direction through the four absolute movement blocks.",
+      "**Do** preserve keyboard focus, touch-sized controls, Korean labels, and reduced-motion behavior.",
+      "**Do** use hard-edged depth and clipped geometry to make controls feel mounted and magnetic."
+    ],
+    "donts": [
+      "**Don't** turn the workspace into a collection of soft floating cards or pastel learning-app panels.",
+      "**Don't** use safety yellow as decoration or hazard coral for ordinary navigation.",
+      "**Don't** rotate, crop, or replace the recognizable G-META silhouette to indicate direction.",
+      "**Don't** hide the run action below long content on mobile; retain the quick-run control by the map and sticky full controls.",
+      "**Don't** communicate bombs, coins, flags, or execution state through color alone."
+    ]
+  }
+}
