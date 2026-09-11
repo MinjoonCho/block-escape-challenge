@@ -1,16 +1,17 @@
-import { stages } from "./stages.js";
-
 const labels={up:"위로",down:"아래로",left:"왼쪽으로",right:"오른쪽으로"};
 const vectors={up:[-1,0],down:[1,0],left:[0,-1],right:[0,1]};
+const directionPaths={up:"M24 6 9 22h9v20h12V22h9L24 6Z",down:"m24 42 15-16h-9V6H18v20H9l15 16Z",left:"M6 24 22 9v9h20v12H22v9L6 24Z",right:"m42 24-16-15v9H6v12h20v9l16-15Z"};
+const directionIcon=dir=>`<span class="program-direction" aria-hidden="true"><svg class="program-symbol" viewBox="0 0 48 48"><path d="${directionPaths[dir]}"></path></svg></span>`;
+const repeatIcon='<span class="repeat-symbol" aria-hidden="true"><svg class="program-symbol" viewBox="0 0 48 48"><path d="M38.7 13.5A19 19 0 1 0 42 30h-8a11 11 0 1 1-1.8-10.7L25 26h19V7l-5.3 6.5Z"></path></svg></span>';
 const el=id=>document.getElementById(id);
-const grid=el("gameGrid"),programList=el("programList");
+const grid=el("gameGrid"),programList=el("programList"),codingCanvas=document.querySelector(".coding-canvas");
 const key=(r,c)=>`${r},${c}`;
 const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 
-let stageIndex=0,program=[],openRepeat=null,player={r:0,c:0},collected=new Set();
+let stages=[],stageIndex=0,program=[],openRepeat=null,player={r:0,c:0},collected=new Set();
 let running=false,startedAt=Date.now(),totalScore=0,totalTime=0,totalCoins=0,timerId,soundOn=true,runId="",dragPayload=null;
 
-const runReady=fetch("/api/runs",{method:"POST"}).then(response=>response.json()).then(result=>{runId=result.runId;return runId});
+const runReady=fetch("/api/runs",{method:"POST"}).then(response=>response.json()).then(result=>{runId=result.runId;stages=result.stages;return runId});
 const stage=()=>stages[stageIndex];
 const sourceBlockCount=(nodes=program)=>nodes.reduce((sum,node)=>sum+1+(node.type==="repeat"?node.body.length:0),0);
 
@@ -39,17 +40,19 @@ function renderGrid(){
     if(current.coins.some(([a,b])=>a===r&&b===c)&&!collected.has(key(r,c)))cell.classList.add("coin");
     if(current.flag[0]===r&&current.flag[1]===c)cell.classList.add("flag");grid.append(cell);
   }
-  placePlayer();
+  placePlayer("",true);
 }
 
-function placePlayer(className=""){
-  document.querySelector(".player")?.remove();const cell=grid.querySelector(`[data-key="${key(player.r,player.c)}"]`);if(!cell)return;
-  const img=document.createElement("img");img.className=`player ${className}`;img.src="/assets/gmeta-run.webp";img.alt="지메타 캐릭터";cell.append(img);
+function placePlayer(className="",instant=false){
+  let img=grid.querySelector(".player");
+  if(!img){img=document.createElement("img");img.src="/assets/gmeta-run.webp";img.alt="지메타 캐릭터";grid.append(img)}
+  img.className=`player ${className}${instant?" instant":""}`;img.style.width=`${100/stage().cols}%`;img.style.height=`${100/stage().rows}%`;img.style.setProperty("--player-x",`${player.c*100}%`);img.style.setProperty("--player-y",`${player.r*100}%`);
+  if(instant)requestAnimationFrame(()=>img.classList.remove("instant"));
 }
 
 function moveMarkup(node,parentIndex,childIndex=null){
-  const target=childIndex===null?String(parentIndex):`${parentIndex}-${childIndex}`,number=childIndex===null?parentIndex+1:childIndex+1;
-  return `<span class="program-index">${number}</span><strong>${labels[node.dir]}</strong><span class="drag-grip" aria-hidden="true"><i></i><i></i><i></i></span><button class="program-delete" data-delete="${target}" type="button" aria-label="${labels[node.dir]} 블록 삭제">×</button>`;
+  const target=childIndex===null?String(parentIndex):`${parentIndex}-${childIndex}`;
+  return `${directionIcon(node.dir)}<strong>${labels[node.dir]}</strong><span class="drag-grip" aria-hidden="true"><i></i><i></i><i></i></span><button class="program-delete" data-delete="${target}" type="button" aria-label="${labels[node.dir]} 블록 삭제">×</button>`;
 }
 
 function readDrag(event){
@@ -64,7 +67,23 @@ function startDrag(event,payload){
   document.body.classList.add("is-dragging");
 }
 
-function endDrag(){dragPayload=null;document.body.classList.remove("is-dragging");document.querySelectorAll(".drag-over").forEach(node=>node.classList.remove("drag-over"))}
+function removeDraggedBlock(payload){
+  if(payload.origin==="program"){
+    const node=program[payload.index];if(!node)return false;if(openRepeat===node)openRepeat=null;program.splice(payload.index,1);
+  }else if(payload.origin==="nested"){
+    const parent=program[payload.parent];if(!parent?.body[payload.child])return false;parent.body.splice(payload.child,1);
+  }else return false;
+  renderProgram();toast("작업 영역 밖으로 뺀 블록을 삭제했어요.");return true;
+}
+
+function endDrag(event){
+  const payload=dragPayload;
+  if(event?.type==="dragend"&&payload&&(payload.origin==="program"||payload.origin==="nested")){
+    const target=(event.clientX||event.clientY)?document.elementFromPoint(event.clientX,event.clientY):null;
+    if(target&&!codingCanvas.contains(target))removeDraggedBlock(payload);
+  }
+  dragPayload=null;document.body.classList.remove("is-dragging");codingCanvas.classList.remove("canvas-drop-ready");document.querySelectorAll(".drag-over,.drop-before,.drop-after").forEach(node=>node.classList.remove("drag-over","drop-before","drop-after"));
+}
 
 function takeMove(payload){
   if(!payload)return null;
@@ -100,6 +119,23 @@ function dropSlot(index){
   slot.ondragleave=()=>slot.classList.remove("drag-over");slot.ondrop=event=>dropAtProgram(event,index);return slot;
 }
 
+function makeBlockDropTarget(item,index){
+  item.ondragover=event=>{
+    if(running||event.target.closest(".repeat-body")||event.target.closest("button"))return;
+    const payload=readDrag(event);if(!payload)return;
+    event.preventDefault();event.stopPropagation();const bounds=item.getBoundingClientRect(),after=event.clientY>=bounds.top+bounds.height/2;
+    item.classList.toggle("drop-before",!after);item.classList.toggle("drop-after",after);event.dataTransfer.dropEffect=payload.origin==="palette"?"copy":"move";
+  };
+  item.ondragleave=event=>{if(!item.contains(event.relatedTarget))item.classList.remove("drop-before","drop-after")};
+  item.ondrop=event=>{if(event.target.closest(".repeat-body"))return;dropAtProgram(event,item.classList.contains("drop-after")?index+1:index)};
+}
+
+function nearestProgramIndex(clientY){
+  const items=[...programList.querySelectorAll(":scope > .program-item[data-index]")];
+  for(const item of items){const bounds=item.getBoundingClientRect();if(clientY<bounds.top+bounds.height/2)return Number(item.dataset.index)}
+  return program.length;
+}
+
 function renderProgram(){
   programList.innerHTML='<li class="program-item start-block" aria-label="고정된 시작 블록"><span class="start-light"></span><strong>시작</strong><span class="fixed-label">고정</span></li>';
   programList.append(dropSlot(0));
@@ -110,10 +146,10 @@ function renderProgram(){
     }else{
       li.className=`program-item repeat-block ${openRepeat===node?"open":""}`;
       const body=node.body.map((item,childIndex)=>`<li class="nested-move ${item.dir}" draggable="${!running}" data-parent="${index}" data-child="${childIndex}" data-path="${index}-${childIndex}">${moveMarkup(item,index,childIndex)}</li>`).join("");
-      li.innerHTML=`<div class="repeat-head"><span class="repeat-symbol" aria-hidden="true"></span><strong>반복 <span>${node.count}</span>번</strong><span class="repeat-controls"><button data-repeat-minus="${index}" type="button" aria-label="반복 횟수 줄이기">−</button><button data-repeat-plus="${index}" type="button" aria-label="반복 횟수 늘리기">＋</button><button class="program-delete" data-delete="${index}" type="button" aria-label="반복 블록 삭제">×</button></span></div><ol class="repeat-body" data-repeat-drop="${index}">${body||'<li class="repeat-empty"><strong>명령을 여기에 끼우세요</strong><span>방향 블록만 넣을 수 있어요</span></li>'}</ol><div class="repeat-tail"><span>반복 끝</span></div>`;
+      li.innerHTML=`<div class="repeat-head">${repeatIcon}<strong>반복 <span>${node.count}</span>번</strong><span class="repeat-controls"><button data-repeat-minus="${index}" type="button" aria-label="반복 횟수 줄이기">−</button><button data-repeat-plus="${index}" type="button" aria-label="반복 횟수 늘리기">＋</button><button class="program-delete" data-delete="${index}" type="button" aria-label="반복 블록 삭제">×</button></span></div><ol class="repeat-body" data-repeat-drop="${index}">${body||'<li class="repeat-empty"><strong>명령을 여기에 끼우세요</strong><span>방향 블록만 넣을 수 있어요</span></li>'}</ol><div class="repeat-tail"><span>반복 끝</span></div>`;
     }
     li.ondragstart=event=>{if(event.target.closest("button")){event.preventDefault();return}if(event.target.closest(".nested-move"))return;startDrag(event,{origin:"program",index,type:node.type})};
-    li.ondragend=endDrag;programList.append(li);programList.append(dropSlot(index+1));
+    li.ondragend=endDrag;makeBlockDropTarget(li,index);programList.append(li);programList.append(dropSlot(index+1));
   });
 
   programList.querySelectorAll(".nested-move").forEach(item=>{
@@ -134,12 +170,12 @@ function renderProgram(){
   const used=sourceBlockCount(),valid=expandProgram().length>0&&!program.some(node=>node.type==="repeat"&&!node.body.length);
   el("blockCount").textContent=`${used} / ${stage().limit}`;el("emptyProgram").hidden=program.length>0;
   el("runButton").disabled=!valid||running;el("undoButton").disabled=!program.length||running;
-  el("repeatButton").classList.toggle("active",Boolean(openRepeat));el("repeatButton").querySelector("b").textContent=openRepeat?"반복 닫기":"반복하기";
+  el("repeatButton").classList.remove("active");el("repeatButton").querySelector("b").textContent="반복하기";
   el("limitText").textContent=`제한 ${stage().limit}개 · 시작 제외`;
 }
 
 function addMove(dir){if(running||!canAdd())return;const move={type:"move",dir};if(openRepeat)openRepeat.body.push(move);else program.push(move);renderProgram()}
-function toggleRepeat(){if(running)return;if(openRepeat)openRepeat=null;else{if(!canAdd())return;openRepeat={type:"repeat",count:2,body:[]};program.push(openRepeat)}renderProgram()}
+function addRepeat(){if(running||!canAdd())return;openRepeat={type:"repeat",count:2,body:[]};program.push(openRepeat);renderProgram()}
 function setStatus(text,state=""){el("statusText").textContent=text;el("statusText").parentElement.className=`route-status ${state}`}
 function blocked(r,c){const current=stage();return r<0||c<0||r>=current.rows||c>=current.cols||current.walls.some(([a,b])=>a===r&&b===c)}
 
@@ -150,27 +186,49 @@ function beep(note=520,duration=.08){
 
 function setExecuting(path=""){document.querySelectorAll("[data-path].executing").forEach(node=>node.classList.remove("executing"));if(path)programList.querySelector(`[data-path="${path}"]`)?.classList.add("executing")}
 
+function playCellEffect(r,c,type){
+  const cell=grid.querySelector(`[data-key="${key(r,c)}"]`);if(!cell)return;
+  const effect=document.createElement("span");effect.className=`cell-effect ${type}`;effect.setAttribute("aria-hidden","true");
+  effect.innerHTML='<span class="effect-object"></span><span class="effect-core"></span><span class="effect-ring"></span>';
+  const particleCount=type==="coin-burst"?10:type==="bomb-burst"?14:16;
+  for(let index=0;index<particleCount;index++){
+    const particle=document.createElement("i");particle.style.setProperty("--angle",`${index*360/particleCount+(Math.random()*12-6)}deg`);particle.style.setProperty("--distance",`${50+Math.random()*38}px`);particle.style.setProperty("--delay",`${Math.random()*.12}s`);effect.append(particle);
+  }
+  if(type==="bomb-burst")for(let index=0;index<7;index++){
+    const smoke=document.createElement("b");smoke.style.setProperty("--smoke-x",`${-42+(index%4)*28}px`);smoke.style.setProperty("--smoke-y",`${-24-Math.floor(index/4)*26}px`);smoke.style.setProperty("--delay",`${.13+index*.035}s`);effect.append(smoke);
+  }
+  cell.append(effect);if(type==="bomb-burst")cell.classList.add("detonating");setTimeout(()=>{effect.remove();cell.classList.remove("detonating")},1100);
+}
+
+async function showOutcome(state,title,message){
+  const banner=el("outcomeBanner");banner.className=`outcome-banner ${state}`;el("outcomeIcon").textContent=state==="success"?"✓":"×";el("outcomeTitle").textContent=title;el("outcomeMessage").textContent=message;banner.hidden=false;
+  await sleep(1150);banner.classList.add("leaving");await sleep(220);banner.hidden=true;banner.className="outcome-banner";
+}
+
 async function runProgram(){
   const commands=expandProgram();if(running||!commands.length||program.some(node=>node.type==="repeat"&&!node.body.length))return;
-  openRepeat=null;running=true;document.querySelectorAll("button.command").forEach(button=>button.disabled=true);renderProgram();resetPlayer();renderGrid();setStatus("알고리즘 실행 중","running");let crashed=false;
+  openRepeat=null;running=true;document.querySelectorAll("button.command").forEach(button=>button.disabled=true);renderProgram();resetPlayer();renderGrid();setStatus("알고리즘 실행 중","running");let crashed=false,failureMessage="깃발까지 도착하지 못했어요.";
   for(const command of commands){
     setExecuting(command.path);const[dr,dc]=vectors[command.dir],nr=player.r+dr,nc=player.c+dc;
-    if(blocked(nr,nc)){crashed=true;placePlayer("hit");beep(150,.2);toast("벽에 막혔어요. 블록 순서를 고쳐보세요!");break}
+    if(blocked(nr,nc)){crashed=true;failureMessage="벽에 막혔어요. 블록 순서를 고쳐보세요!";placePlayer("hit");beep(150,.2);break}
     player.r=nr;player.c=nc;
-    if(stage().bombs.some(([r,c])=>r===player.r&&c===player.c)){crashed=true;placePlayer("hit");beep(120,.25);toast("폭탄을 만났어요! 다른 블록 순서를 찾아보세요.");break}
-    if(stage().coins.some(([r,c])=>r===player.r&&c===player.c)&&!collected.has(key(player.r,player.c))){collected.add(key(player.r,player.c));beep(760);updateStats()}
-    renderGrid();placePlayer("step");await sleep(340);if(stage().flag[0]===player.r&&stage().flag[1]===player.c){setExecuting();await finishStage();return}
+    const hitBomb=stage().bombs.some(([r,c])=>r===player.r&&c===player.c);
+    if(stage().coins.some(([r,c])=>r===player.r&&c===player.c)&&!collected.has(key(player.r,player.c))){collected.add(key(player.r,player.c));grid.querySelector(`[data-key="${key(player.r,player.c)}"]`)?.classList.remove("coin");playCellEffect(player.r,player.c,"coin-burst");beep(760);updateStats()}
+    placePlayer(hitBomb?"hit":"step");
+    if(hitBomb){playCellEffect(player.r,player.c,"bomb-burst");beep(120,.25);setTimeout(()=>beep(72,.18),90);await sleep(920);crashed=true;failureMessage="폭탄을 만났어요! 다른 경로를 찾아보세요.";break}
+    await sleep(460);
+    if(stage().flag[0]===player.r&&stage().flag[1]===player.c){setExecuting();playCellEffect(player.r,player.c,"flag-burst");beep(980,.16);await sleep(480);await finishStage();return}
   }
-  setExecuting();running=false;document.querySelectorAll("button.command").forEach(button=>button.disabled=false);renderProgram();setStatus(crashed?"블록을 고쳐 다시 실행하세요":"깃발까지 명령이 더 필요해요");
+  setExecuting();setStatus(crashed?"블록을 고쳐 다시 실행하세요":"깃발까지 명령이 더 필요해요");await showOutcome("failure","실패",failureMessage);resetPlayer();renderGrid();updateStats();running=false;document.querySelectorAll("button.command").forEach(button=>button.disabled=false);renderProgram();
 }
 
 async function finishStage(){
   try{
     const id=await runReady,response=await fetch(`/api/runs/${id}/stage`,{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({stage:stageIndex,program})}),result=await response.json();if(!response.ok)throw new Error(result.error);
-    totalScore=result.score;totalTime=result.timeMs;totalCoins=result.coins;updateStats();beep(960,.3);setStatus(`스테이지 성공 · ${result.stageScore.toLocaleString()}점`);await sleep(700);
+    totalScore=result.score;totalTime=result.timeMs;totalCoins=result.coins;updateStats();beep(960,.3);setStatus(`스테이지 성공 · ${result.stageScore.toLocaleString()}점`);await showOutcome("success","성공!",`${result.stageScore.toLocaleString()}점을 획득했어요.`);
     if(result.complete){running=false;showResult();return}
     stageIndex++;program=[];openRepeat=null;resetPlayer();startedAt=Date.now();running=false;document.querySelectorAll("button.command").forEach(button=>button.disabled=false);renderStage();toast(`${stageIndex+1}단계 시작!`);
-  }catch(error){running=false;document.querySelectorAll("button.command").forEach(button=>button.disabled=false);renderProgram();setStatus("기록 서버를 확인해 주세요");toast(error.message||"경기 기록을 저장하지 못했어요.")}
+  }catch(error){setStatus("기록 서버를 확인해 주세요");await showOutcome("failure","확인 실패",error.message||"경기 기록을 저장하지 못했어요.");resetPlayer();renderGrid();updateStats();running=false;document.querySelectorAll("button.command").forEach(button=>button.disabled=false);renderProgram()}
 }
 
 function renderStage(){el("stageLabel").textContent=`${stageIndex+1} / ${stages.length}`;el("missionTitle").textContent=stage().title;el("missionText").textContent=stage().text;resetPlayer();renderGrid();renderProgram();setStatus("블록을 조립하세요");updateStats()}
@@ -184,13 +242,16 @@ async function loadScores(){const list=el("leaderList");list.innerHTML='<li clas
 document.querySelectorAll("[data-move]").forEach(button=>{
   button.onclick=()=>addMove(button.dataset.move);button.ondragstart=event=>startDrag(event,{origin:"palette",type:"move",dir:button.dataset.move});button.ondragend=endDrag;
 });
-el("repeatButton").onclick=toggleRepeat;el("repeatButton").ondragstart=event=>startDrag(event,{origin:"palette",type:"repeat"});el("repeatButton").ondragend=endDrag;
+el("repeatButton").onclick=addRepeat;el("repeatButton").ondragstart=event=>startDrag(event,{origin:"palette",type:"repeat"});el("repeatButton").ondragend=endDrag;
 el("undoButton").onclick=()=>{if(openRepeat?.body.length)openRepeat.body.pop();else if(program.length){if(openRepeat===program.at(-1))openRepeat=null;program.pop()}renderProgram()};
 el("clearButton").onclick=()=>{if(!running){program=[];openRepeat=null;renderProgram()}};el("runButton").onclick=runProgram;
 el("leaderButton").onclick=()=>{el("leaderboard").hidden=false;loadScores()};el("closeLeader").onclick=()=>el("leaderboard").hidden=true;
 el("soundToggle").onclick=()=>{soundOn=!soundOn;el("soundToggle").setAttribute("aria-pressed",String(soundOn));el("soundToggle").textContent=soundOn?"소리 켬":"소리 끔"};
 document.addEventListener("dragend",endDrag);
+codingCanvas.ondragover=event=>{if(running||!readDrag(event))return;event.preventDefault();event.dataTransfer.dropEffect=dragPayload?.origin==="palette"?"copy":"move";codingCanvas.classList.add("canvas-drop-ready")};
+codingCanvas.ondragleave=event=>{if(!codingCanvas.contains(event.relatedTarget))codingCanvas.classList.remove("canvas-drop-ready")};
+codingCanvas.ondrop=event=>{if(running)return endDrag();dropAtProgram(event,nearestProgramIndex(event.clientY))};
 
-el("scoreForm").onsubmit=async event=>{event.preventDefault();const button=event.submitter;button.disabled=true;el("formMessage").textContent="점수를 등록하고 있어요...";try{const response=await fetch("/api/scores",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({name:el("playerName").value,runId})}),result=await response.json();if(!response.ok)throw new Error(result.error);el("formMessage").textContent=`등록 완료! 현재 ${result.rank}위예요.`;button.textContent="등록 완료";setTimeout(()=>{el("resultScreen").hidden=true;el("leaderboard").hidden=false;loadScores()},900)}catch(error){el("formMessage").textContent=error.message||"등록하지 못했어요. 다시 시도해 주세요.";button.disabled=false}};
+el("scoreForm").onsubmit=async event=>{event.preventDefault();const button=event.submitter;button.disabled=true;el("formMessage").textContent="점수를 등록하고 있어요...";try{const response=await fetch("/api/scores",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({name:el("playerName").value,runId})}),result=await response.json();if(!response.ok)throw new Error(result.error);el("formMessage").textContent=`등록 완료! 현재 ${result.rank}위예요.`;button.textContent="등록 완료";setTimeout(()=>window.location.replace("/"),900)}catch(error){el("formMessage").textContent=error.message||"등록하지 못했어요. 다시 시도해 주세요.";button.disabled=false}};
 
-renderStage();timerId=setInterval(updateTimer,250);
+await runReady;renderStage();timerId=setInterval(updateTimer,250);

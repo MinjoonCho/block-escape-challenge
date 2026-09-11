@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#081c2d">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/admin.css">
+  <title>순위표 관리 · 블록 탈출 대회</title>
+</head>
+<body>
+  <header class="admin-header">
+    <a class="admin-brand" href="/"><span class="brand-mark" aria-hidden="true">B</span><strong>블록 탈출 대회</strong></a>
+    <a class="ranking-link" href="/ranking.html">순위 발표 화면</a>
+  </header>
+
+  <main>
+    <section class="login-panel" id="loginPanel" aria-labelledby="loginTitle">
+      <p class="eyebrow">ADMIN</p>
+      <h1 id="loginTitle">순위표 관리</h1>
+      <form id="loginForm">
+        <label for="adminPassword">비밀번호</label>
+        <div class="login-row">
+          <input id="adminPassword" name="password" type="password" inputmode="numeric" maxlength="4" autocomplete="current-password" required autofocus>
+          <button type="submit">로그인</button>
+        </div>
+        <p class="form-message" id="loginMessage" role="alert"></p>
+      </form>
+    </section>
+
+    <section class="admin-panel" id="adminPanel" aria-labelledby="adminTitle" hidden>
+      <div class="panel-heading">
+        <div><p class="eyebrow">LEADERBOARD</p><h1 id="adminTitle">참가자 기록</h1></div>
+        <div class="panel-actions"><span id="scoreCount">0명</span><button class="logout-button" id="logoutButton" type="button">로그아웃</button><button class="delete-all-button" id="deleteAllButton" type="button">전체 삭제</button></div>
+      </div>
+      <p class="status-message" id="statusMessage" aria-live="polite"></p>
+      <div class="score-table-wrap">
+        <table>
+          <thead><tr><th>순위</th><th>이름</th><th>점수</th><th>코인</th><th>기록</th><th>등록 시간</th><th><span class="sr-only">관리</span></th></tr></thead>
+          <tbody id="scoreRows"></tbody>
+        </table>
+        <p class="empty-message" id="emptyMessage" hidden>등록된 기록이 없습니다.</p>
+      </div>
+    </section>
+  </main>
+  <script type="module" src="/admin.js"></script>
+</body>
+</html>

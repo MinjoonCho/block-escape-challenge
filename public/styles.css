@@ -15,7 +15,7 @@
 @media(max-width:1000px){body{background:var(--navy)}.scorebar{height:auto;grid-template-columns:1fr auto;padding:14px 18px}.race-stats{grid-row:2;grid-column:1/-1;justify-content:space-between}.leader-button{grid-column:2}.workspace{grid-template-columns:220px 1fr;width:100%;margin:0;min-height:auto}.program-panel{grid-column:1/-1;border-left:0;border-top:1px solid var(--line)}.program-list{max-height:260px}.program-actions{margin-top:14px}.game-grid{width:min(100%,640px)}}
 @media(max-width:680px){.brand-mark{width:38px;height:38px}.leader-button{font-size:.75rem;padding:9px}.race-stats{gap:8px}.race-stats span{min-width:0}.race-stats small{font-size:.64rem}.race-stats strong{font-size:.86rem}.workspace{display:flex;flex-direction:column}.map-panel{order:1;padding:14px 10px 18px}.command-bay{order:2;border-right:0;border-top:1px solid var(--line)}.program-panel{order:3}.game-grid{border-width:7px}.command-list{grid-template-columns:repeat(3,1fr)}.command{min-height:94px;flex-direction:column;justify-content:center;text-align:center;padding:8px;gap:4px}.command small{display:none}.mission-note{margin-top:20px}.legend{grid-template-columns:repeat(3,1fr)}.result-card{grid-template-columns:1fr;padding:22px}.result-card img{max-height:180px}.result-card h2{font-size:2rem}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
-.player{width:106%;height:106%;transform:none!important;transition:transform .22s cubic-bezier(.16,1,.3,1)}
+.player{width:106%;height:106%;transform:none;transition:transform .22s cubic-bezier(.16,1,.3,1)}
 .map-panel{background-color:#e8ebe5;background-image:radial-gradient(circle at 20% 10%,rgba(255,255,255,.65),transparent 38%)}.game-grid{border-image:repeating-linear-gradient(45deg,var(--yellow) 0 12px,var(--navy) 12px 24px) 12}.command,.program-item{clip-path:polygon(0 0,40% 0,43% 7%,57% 7%,60% 0,100% 0,100% 40%,94% 43%,94% 57%,100% 60%,100% 100%,60% 100%,57% 93%,43% 93%,40% 100%,0 100%)}.command-icon{position:relative;font-size:0}.command-icon::before{content:"";display:block;width:8px;height:25px;background:#fff;border-radius:2px}.command-icon::after{content:"";position:absolute;left:10px;top:6px;border-left:11px solid transparent;border-right:11px solid transparent;border-bottom:13px solid #fff}.turn-left .command-icon::before,.turn-right .command-icon::before{width:23px;height:23px;background:none;border:5px solid #fff;border-right-color:transparent;border-bottom-color:transparent;border-radius:50%}.turn-left .command-icon::after,.turn-right .command-icon::after{left:4px;top:3px;border:0;width:9px;height:9px;border-left:5px solid #fff;border-bottom:5px solid #fff;transform:rotate(45deg)}.turn-right .command-icon{transform:scaleX(-1)}
 .mobile-run{display:none;border:0;background:var(--yellow);color:var(--navy);font-weight:900;padding:10px 14px;border-radius:8px;box-shadow:0 3px 0 #b17b12}
 @media(max-width:680px){.sound-toggle{display:none}.mobile-run{display:block}.map-topline{gap:8px}.route-status{font-size:.78rem}.map-panel{min-height:auto}.game-grid{width:100%}.command-bay{padding:24px 26px 90px}.program-actions{position:sticky;bottom:10px;z-index:8;background:var(--paper);padding:12px;box-shadow:0 -10px 20px rgba(12,37,56,.12)}}
@@ -26,7 +26,8 @@
 
 /* 1920×1080 집중형 블록 코딩 작업대 */
 body.game-page{height:100vh;overflow:hidden;background:var(--navy)}
-.game-page .scorebar{height:88px;grid-template-columns:minmax(260px,1fr) auto minmax(180px,1fr);padding:12px clamp(24px,3vw,58px)}
+.game-page .scorebar{height:88px;grid-template-columns:minmax(250px,.8fr) minmax(330px,420px) auto minmax(150px,.5fr);gap:clamp(14px,1.7vw,28px);padding:10px clamp(24px,3vw,58px)}
+.game-partners{display:flex;align-items:center;justify-content:center;gap:13px;min-width:0;height:54px;padding:7px 13px;border:1px solid rgba(255,255,255,.2);border-radius:10px;background:#fff;box-shadow:0 4px 12px rgba(0,0,0,.16)}.game-partners img{display:block;width:auto;max-width:31%;height:26px;object-fit:contain}.game-partners img:nth-child(2){height:23px}.game-partners img:nth-child(3){height:25px}
 .coding-workspace{width:100%;height:calc(100vh - 88px);min-height:0;margin:0;display:grid;grid-template-columns:minmax(480px,.82fr) minmax(680px,1.18fr);grid-template-rows:minmax(0,1fr) 218px;background:var(--paper);box-shadow:none}
 .coding-workspace .program-panel{grid-column:1;grid-row:1;min-height:0;padding:24px clamp(24px,2vw,38px) 16px;border:0;border-right:1px solid var(--line);display:grid;grid-template-rows:auto minmax(0,1fr) auto;background:var(--paper)}
 .coding-workspace .program-head{align-items:flex-start}.coding-workspace .program-head h1{margin:0;font:400 clamp(1.8rem,2vw,2.45rem) "Black Han Sans",sans-serif;letter-spacing:-.025em}.coding-workspace .program-head p{margin:4px 0 16px}.coding-canvas{position:relative;min-height:0;overflow:auto;padding:18px 22px 90px;background:#e3e8e4;box-shadow:inset 0 0 0 1px #c5cfca}.coding-canvas::before{content:"";position:absolute;inset:0;background-image:radial-gradient(circle,#b9c5c0 1.2px,transparent 1.2px);background-size:20px 20px;pointer-events:none;opacity:.58}.coding-workspace .program-list{position:relative;z-index:1;width:min(100%,560px);max-height:none;overflow:visible;gap:0}.coding-workspace .program-item{grid-template-columns:30px 1fr 26px 32px;min-height:52px;padding:8px 10px;clip-path:polygon(0 0,42% 0,45% 7%,56% 7%,59% 0,100% 0,100% 100%,59% 100%,56% 93%,45% 93%,42% 100%,0 100%);cursor:grab;box-shadow:0 4px 8px rgba(12,37,56,.2)}.coding-workspace .program-item:active{cursor:grabbing}.coding-workspace .start-block{grid-template-columns:20px 1fr auto;position:relative;top:auto;z-index:2;margin-bottom:2px;cursor:default;clip-path:polygon(0 0,42% 0,45% 7%,56% 7%,59% 0,100% 0,100% 100%,59% 100%,56% 93%,45% 93%,42% 100%,0 100%)}
@@ -35,9 +36,9 @@ body.game-page{height:100vh;overflow:hidden;background:var(--navy)}
 .coding-workspace .map-panel{grid-column:2;grid-row:1;min-height:0;padding:20px clamp(28px,3vw,58px) 18px;background-color:#e8ebe5;background-image:radial-gradient(circle at 55% 42%,rgba(255,255,255,.92),transparent 45%);display:grid;grid-template-rows:auto minmax(0,1fr) auto}.coding-workspace .map-topline{align-items:flex-start;margin:0 0 10px}.coding-workspace .map-topline>div{display:grid;grid-template-columns:auto 1fr;gap:3px 18px;align-items:center}.coding-workspace .route-status{grid-row:1/3;align-self:start;margin-top:5px}.coding-workspace .map-topline strong{font:400 1.35rem "Black Han Sans",sans-serif}.coding-workspace .map-topline p{margin:0;color:var(--muted);font-size:.78rem}.coding-workspace .game-grid{align-self:center;width:min(64vh,680px,90%);max-height:100%;margin:auto;aspect-ratio:1;border-width:10px;box-shadow:0 8px 18px rgba(12,37,56,.22)}.coding-workspace .map-caption{margin-top:10px}
 .command-dock{grid-column:1/-1;grid-row:2;display:grid;grid-template-columns:minmax(220px,280px) minmax(0,1fr) minmax(260px,330px);align-items:center;gap:24px;min-height:0;padding:22px clamp(28px,3vw,58px);border:0;border-top:1px solid var(--line);background:var(--paper)}.dock-heading h2{margin:0;font:400 1.75rem "Black Han Sans",sans-serif}.dock-heading>p{margin:3px 0 13px;color:var(--muted);font-size:.76rem}.dock-heading .legend{display:flex;flex-wrap:wrap;gap:7px 13px;margin:0;font-size:.67rem}.dock-heading .legend i{width:14px;height:14px}.command-dock .command-list{display:grid;grid-template-columns:repeat(5,minmax(118px,1fr));gap:12px}.command-dock .command{min-width:0;min-height:104px;justify-content:center;flex-direction:column;gap:6px;padding:10px;text-align:center;cursor:grab;box-shadow:0 5px 12px rgba(12,37,56,.22)}.command-dock .command:active{cursor:grabbing}.command-dock .command-icon{width:40px;height:40px}.command-dock .command small{font-size:.66rem}.command-dock .program-actions{display:grid;grid-template-columns:.72fr 1.28fr;gap:10px;margin:0;padding:0}.command-dock .undo-button,.command-dock .run-button{min-height:58px}.play-mark{width:0;height:0;border-top:7px solid transparent;border-bottom:7px solid transparent;border-left:12px solid currentColor;margin-right:8px}.run-button{display:flex;align-items:center;justify-content:center}.command.repeat-command.active{outline:4px solid var(--navy);outline-offset:3px}
 .game-page .leaderboard{inset:88px 0 0 auto}
-@media(max-width:1500px) and (min-width:1181px){.command-dock{grid-template-columns:210px minmax(0,1fr) 220px;gap:16px;padding-inline:24px}.command-dock .command-list{grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}.command-dock .command{min-height:96px;padding-inline:7px}.command-dock .command b{font-size:.88rem}.command-dock .program-actions{grid-template-columns:.65fr 1.35fr}.command-dock .undo-button,.command-dock .run-button{font-size:.82rem}}
-@media(max-width:1180px){body.game-page{height:auto;min-height:100vh;overflow:auto}.coding-workspace{height:auto;min-height:calc(100vh - 88px);grid-template-columns:minmax(360px,.9fr) minmax(440px,1.1fr);grid-template-rows:minmax(620px,1fr) auto}.command-dock{grid-template-columns:210px 1fr;grid-template-rows:auto auto}.command-dock .program-actions{grid-column:1/-1}.coding-workspace .game-grid{width:min(54vw,600px,92%)}}
-@media(max-width:760px){.game-page .scorebar{height:auto;padding:12px}.game-page .brand{font-size:1rem}.game-page .brand-mark{width:36px;height:36px}.game-page .leader-button{white-space:nowrap;padding:8px 10px;font-size:.68rem}.coding-workspace{display:flex;flex-direction:column;min-height:0}.coding-workspace .map-panel{order:1;min-height:470px;padding:16px 12px}.coding-workspace .program-panel{order:2;min-height:580px;border-right:0;border-top:1px solid var(--line)}.command-dock{order:3;display:block;padding:24px 20px 34px}.command-dock .command-list{grid-template-columns:repeat(2,1fr);margin:18px 0}.command-dock .command{min-height:90px}.command-dock .repeat-command{grid-column:1/-1}.command-dock .program-actions{position:sticky;bottom:10px;z-index:8;padding:10px;background:var(--paper);box-shadow:0 -10px 22px rgba(12,37,56,.14)}.coding-workspace .game-grid{width:min(100%,440px)}.coding-workspace .map-topline>div{grid-template-columns:1fr}.coding-workspace .route-status{grid-row:auto}.coding-workspace .map-topline p{display:none}.coding-workspace .program-list{width:100%}.coding-canvas{padding-inline:12px}.game-page .leaderboard{inset:0}}
+@media(max-width:1500px) and (min-width:1181px){.game-page .scorebar{grid-template-columns:minmax(215px,.7fr) minmax(260px,330px) auto minmax(135px,.45fr)}.game-page .brand{font-size:1.35rem}.game-partners{gap:9px;padding-inline:9px}.command-dock{grid-template-columns:210px minmax(0,1fr) 220px;gap:16px;padding-inline:24px}.command-dock .command-list{grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}.command-dock .command{min-height:96px;padding-inline:7px}.command-dock .command b{font-size:.88rem}.command-dock .program-actions{grid-template-columns:.65fr 1.35fr}.command-dock .undo-button,.command-dock .run-button{font-size:.82rem}}
+@media(max-width:1180px){body.game-page{height:auto;min-height:100vh;overflow:auto}.game-page .scorebar{grid-template-columns:1fr auto}.game-partners{grid-column:1/-1;grid-row:3;width:min(100%,520px);justify-self:center}.coding-workspace{height:auto;min-height:calc(100vh - 88px);grid-template-columns:minmax(360px,.9fr) minmax(440px,1.1fr);grid-template-rows:minmax(620px,1fr) auto}.command-dock{grid-template-columns:210px 1fr;grid-template-rows:auto auto}.command-dock .program-actions{grid-column:1/-1}.coding-workspace .game-grid{width:min(54vw,600px,92%)}}
+@media(max-width:760px){.game-page .scorebar{height:auto;padding:12px}.game-page .brand{font-size:1rem}.game-page .brand-mark{width:36px;height:36px}.game-partners{height:46px;padding:6px 9px;gap:8px}.game-partners img{height:22px}.game-partners img:nth-child(2){height:19px}.game-partners img:nth-child(3){height:21px}.game-page .leader-button{white-space:nowrap;padding:8px 10px;font-size:.68rem}.coding-workspace{display:flex;flex-direction:column;min-height:0}.coding-workspace .map-panel{order:1;min-height:470px;padding:16px 12px}.coding-workspace .program-panel{order:2;min-height:580px;border-right:0;border-top:1px solid var(--line)}.command-dock{order:3;display:block;padding:24px 20px 34px}.command-dock .command-list{grid-template-columns:repeat(2,1fr);margin:18px 0}.command-dock .command{min-height:90px}.command-dock .repeat-command{grid-column:1/-1}.command-dock .program-actions{position:sticky;bottom:10px;z-index:8;padding:10px;background:var(--paper);box-shadow:0 -10px 22px rgba(12,37,56,.14)}.coding-workspace .game-grid{width:min(100%,440px)}.coding-workspace .map-topline>div{grid-template-columns:1fr}.coding-workspace .route-status{grid-row:auto}.coding-workspace .map-topline p{display:none}.coding-workspace .program-list{width:100%}.coding-canvas{padding-inline:12px}.game-page .leaderboard{inset:0}}
 @media(pointer:coarse){.program-delete,.repeat-controls button{min-width:44px;min-height:44px}.command-dock .command{cursor:pointer}}
 
 /* 정사각형 명령 타일과 선명한 SVG 기호 */
@@ -70,3 +71,185 @@ body.game-page{height:100vh;overflow:hidden;background:var(--navy)}
 .coding-workspace .game-grid{place-self:center;width:auto;height:min(100%,680px);max-width:90%;max-height:none;aspect-ratio:var(--cols)/var(--rows)}
 @media(max-width:1180px) and (min-width:761px){.coding-workspace .game-grid{width:auto;height:min(54vw,600px);max-width:92%}}
 @media(max-width:760px){.coding-workspace .game-grid{width:min(100%,440px);height:auto;max-width:100%}}
+
+/* 레고처럼 맞물리는 블록: 위쪽 홈 + 아래쪽 돌기 */
+.command-dock .command{
+  padding-bottom:18px;
+  border-radius:0;
+  clip-path:polygon(0 0,39% 0,43% 7%,57% 7%,61% 0,100% 0,100% 39%,93% 43%,93% 57%,100% 61%,100% 93%,61% 93%,57% 100%,43% 100%,39% 93%,0 93%,0 61%,7% 57%,7% 43%,0 39%);
+}
+.coding-workspace .program-item{
+  min-height:54px;
+  padding:8px 10px 11px;
+  clip-path:polygon(0 0,42% 0,45% 7%,56% 7%,59% 0,100% 0,100% 93%,60% 93%,56% 100%,45% 100%,41% 93%,0 93%);
+}
+.coding-workspace .start-block{
+  margin-bottom:0;
+  clip-path:polygon(0 0,42% 0,45% 7%,56% 7%,59% 0,100% 0,100% 93%,60% 93%,56% 100%,45% 100%,41% 93%,0 93%);
+}
+.coding-workspace .repeat-block{
+  padding:0 0 14px;
+  border-radius:0;
+  clip-path:polygon(0 0,42% 0,45% 8px,56% 8px,59% 0,100% 0,100% calc(100% - 8px),60% calc(100% - 8px),56% 100%,45% 100%,41% calc(100% - 8px),0 calc(100% - 8px));
+}
+.coding-workspace .repeat-head{min-height:56px;padding:11px 10px 8px}
+.coding-workspace .nested-move{
+  min-height:46px;
+  padding:6px 7px 9px;
+  border-radius:0;
+  clip-path:polygon(0 0,39% 0,43% 8%,57% 8%,61% 0,100% 0,100% 92%,61% 92%,57% 100%,43% 100%,39% 92%,0 92%);
+}
+.coding-workspace .repeat-body{gap:2px}
+.program-drop{height:2px}
+.is-dragging .program-drop{height:34px}
+.program-item.drop-before{filter:drop-shadow(0 -5px 0 var(--yellow)) brightness(1.04)}
+.program-item.drop-after{filter:drop-shadow(0 5px 0 var(--yellow)) brightness(1.04)}
+
+/* 알고리즘 블록 아이콘 */
+.program-direction,.coding-workspace .repeat-symbol{
+  display:grid;
+  place-items:center;
+  width:27px;
+  height:27px;
+  border:0;
+  border-radius:7px;
+  background:rgba(255,255,255,.16);
+  color:#fff;
+}
+.program-symbol{display:block;width:19px;height:19px;fill:currentColor}
+.coding-workspace .repeat-symbol::after{content:none}
+
+/* 셀 사이를 실제로 이동하는 캐릭터 */
+.game-grid{position:relative}
+.game-grid .player{
+  position:absolute;
+  z-index:6;
+  left:0;
+  top:0;
+  box-sizing:border-box;
+  padding:2.2%;
+  object-fit:contain;
+  pointer-events:none;
+  transform:translate(var(--player-x),var(--player-y));
+  transform-origin:center;
+  transition:transform .42s cubic-bezier(.22,.72,.28,1),filter .2s ease;
+  filter:drop-shadow(0 3px 2px rgba(12,37,56,.2));
+}
+.game-grid .player.instant{transition:none}
+.game-grid .player.step{animation:none}
+.game-grid .player.hit{animation:none;filter:drop-shadow(0 3px 2px rgba(12,37,56,.2)) saturate(.7) brightness(.78)}
+.coding-canvas.canvas-drop-ready{box-shadow:inset 0 0 0 3px rgba(43,120,197,.42)}
+
+/* 실행 결과를 중앙에서 명확하게 알리는 오버레이 */
+.outcome-banner{position:fixed;z-index:40;inset:88px 0 0;display:grid;place-items:center;padding:24px;background:rgba(12,37,56,.34);backdrop-filter:blur(2px);pointer-events:none;animation:outcome-backdrop .18s ease-out both}
+.outcome-card{display:grid;place-items:center;min-width:min(440px,88vw);padding:32px 46px 36px;border:5px solid var(--white);border-radius:24px;color:var(--white);text-align:center;box-shadow:0 22px 60px rgba(0,0,0,.34);animation:outcome-pop .3s cubic-bezier(.16,1,.3,1) both}
+.outcome-banner.success .outcome-card{background:var(--green)}
+.outcome-banner.failure .outcome-card{background:var(--coral)}
+.outcome-card>span{display:grid;place-items:center;width:74px;height:74px;margin-bottom:12px;border:5px solid currentColor;border-radius:50%;font-size:3.5rem;font-weight:900;line-height:1}
+.outcome-card strong{font:400 clamp(3.2rem,7vw,6.2rem)/1 "Black Han Sans",sans-serif;letter-spacing:-.03em}
+.outcome-card p{margin:12px 0 0;font-size:1rem;font-weight:800}
+.outcome-banner.leaving{animation:outcome-leave .22s ease-in both}
+@keyframes outcome-backdrop{from{opacity:0}to{opacity:1}}
+@keyframes outcome-pop{from{opacity:0;transform:scale(.72) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes outcome-leave{to{opacity:0}}
+@media(max-width:1180px){.outcome-banner{inset:0}}
+@media(max-width:680px){.outcome-card{min-width:0;width:90vw;padding:26px 22px 30px}.outcome-card>span{width:60px;height:60px;font-size:2.8rem}.outcome-card p{font-size:.86rem}}
+@media(prefers-reduced-motion:reduce){.game-grid .player{transition-duration:.01ms}.outcome-banner,.outcome-card{animation-duration:.01ms!important}}
+.coding-workspace .program-panel{grid-template-rows:auto minmax(0,1fr)}
+.coding-workspace .map-panel{grid-template-rows:auto minmax(0,1fr)}
+
+/* 더 많은 명령이 한눈에 보이는 조밀한 알고리즘 블록 */
+.coding-canvas{padding:10px 16px 42px}
+.coding-workspace .program-list{gap:0}
+.coding-workspace .program-item{min-height:44px;padding:5px 8px 8px;font-size:.88rem}
+.coding-workspace .start-block{min-height:44px;padding-block:5px 8px}
+.coding-workspace .program-direction,.coding-workspace .repeat-symbol{width:23px;height:23px;border-radius:6px}
+.coding-workspace .program-symbol{width:16px;height:16px}
+.coding-workspace .drag-grip{transform:scale(.82)}
+.coding-workspace .program-delete,.coding-workspace .repeat-controls button{width:27px;height:27px;min-width:27px;min-height:27px}
+.coding-workspace .repeat-block{padding-bottom:10px}
+.coding-workspace .repeat-head{min-height:45px;padding:7px 8px 5px}
+.coding-workspace .repeat-body{min-height:46px;padding:6px 7px;gap:1px}
+.coding-workspace .nested-move{min-height:38px;padding:4px 6px 7px;font-size:.82rem}
+.coding-workspace .repeat-empty{min-height:36px;padding:5px 8px}.coding-workspace .repeat-empty span{font-size:.62rem}
+.coding-workspace .repeat-tail{height:14px;font-size:.56rem}
+.program-drop{height:1px}.is-dragging .program-drop{height:25px}
+
+/* 지메타 그림체에 맞춘 지도 오브젝트 */
+.cell.coin::after{width:47%;height:47%;border:clamp(2px,.26vw,4px) solid var(--navy);background:#f7c948;box-shadow:inset -4px -5px 0 #e5a918,0 4px 0 rgba(12,37,56,.16)}
+.cell.coin::before{z-index:2;width:19%;height:25%;border:0;border-left:clamp(3px,.3vw,5px) solid var(--navy);border-top:clamp(3px,.3vw,5px) solid var(--navy);border-bottom:clamp(3px,.3vw,5px) solid var(--navy);border-radius:50% 0 0 50%;box-shadow:none;transform:translateX(8%)}
+.cell.bomb::after{width:49%;height:49%;border:clamp(2px,.27vw,4px) solid #261a18;background:#30495c;box-shadow:inset -6px -7px 0 #172d3d,inset 5px 5px 0 #527084,0 4px 0 rgba(12,37,56,.18)}
+.cell.bomb::before{z-index:3;width:27%;height:24%;border-top:clamp(3px,.3vw,5px) solid #261a18;border-right:clamp(3px,.3vw,5px) solid #261a18;border-radius:0 70% 0 0;transform:translate(54%,-122%) rotate(-18deg);box-shadow:8px -5px 0 -4px #f7c948,11px -8px 0 -5px #ed6972}
+.cell.flag::before{width:7%;height:70%;border:clamp(1px,.13vw,2px) solid #261a18;border-radius:4px;background:#fff;box-shadow:inset -3px 0 #d8dcdd,0 4px 0 rgba(12,37,56,.14);transform:translate(-155%,10%)}
+.cell.flag::after{width:51%;height:43%;border:clamp(2px,.22vw,3px) solid #261a18;background:linear-gradient(135deg,#ed6972 0 49%,#55b4ca 50% 100%);clip-path:polygon(0 0,100% 11%,76% 49%,100% 86%,0 72%);filter:drop-shadow(0 3px 0 rgba(12,37,56,.16));transform:translate(8%,-27%)}
+.legend-coin{border:2px solid var(--navy)!important;background:#f7c948!important;box-shadow:inset -3px -3px #e5a918!important}.legend-bomb{border:2px solid #261a18!important;background:#30495c!important;box-shadow:inset -3px -3px #172d3d!important}.legend-flag{background:linear-gradient(135deg,#ed6972 0 49%,#55b4ca 50%)!important}
+
+/* 코인 획득과 폭탄 폭발 효과 */
+.cell-effect{position:absolute;z-index:9;inset:-25%;pointer-events:none;overflow:visible}.cell-effect>*{position:absolute;left:50%;top:50%}
+.effect-object{z-index:4;width:54%;height:54%;background-position:center;background-repeat:no-repeat;background-size:contain}
+.effect-core{z-index:3;width:22%;aspect-ratio:1;border-radius:50%}.effect-ring{z-index:2;width:24%;aspect-ratio:1;border-radius:50%}
+.coin-burst .effect-object{background-image:url("/assets/game-coin-gmeta-v2.png");animation:coin-lift .82s cubic-bezier(.16,1,.3,1) both}
+.coin-burst .effect-core{background:#fffdf7;box-shadow:0 0 16px 7px #f7c948;animation:coin-core .55s ease-out both}
+.coin-burst .effect-ring{border:3px solid #f7c948;box-shadow:0 0 0 3px rgba(255,253,247,.82);animation:coin-wave .72s cubic-bezier(.16,1,.3,1) both}
+.coin-burst i{z-index:5;width:7%;height:7%;border:2px solid #5a3518;border-radius:2px;background:#f7c948;animation:coin-spark .66s var(--delay) cubic-bezier(.18,.7,.25,1) both}.coin-burst i:nth-of-type(3n){width:4%;height:11%;border-color:#b73552;background:#ed6972}.coin-burst i:nth-of-type(3n+1){border-color:#15728b;background:#55b4ca}
+.bomb-burst .effect-object{background-image:url("/assets/game-bomb-gmeta-v2.png");animation:bomb-crush .34s ease-in both}
+.bomb-burst .effect-core{width:35%;background:#fffdf7;box-shadow:0 0 18px 9px #f7c948,0 0 34px 20px rgba(237,105,114,.85);animation:blast-core .58s .12s cubic-bezier(.16,1,.3,1) both}
+.bomb-burst .effect-ring{width:32%;border:5px solid #fffdf7;box-shadow:0 0 0 7px #ed6972,0 0 0 11px rgba(247,201,72,.8);animation:blast-wave .72s .14s cubic-bezier(.16,1,.3,1) both}
+.bomb-burst i{z-index:5;width:8%;height:5%;border:2px solid #5a201d;border-radius:50% 4px 50% 4px;background:#ed6972;box-shadow:inset 3px 0 #f7c948;animation:blast-spark .68s var(--delay) cubic-bezier(.18,.65,.25,1) both}.bomb-burst i:nth-of-type(3n){background:#f7c948;box-shadow:none}.bomb-burst i:nth-of-type(4n){background:#55b4ca;box-shadow:none}
+.bomb-burst b{z-index:6;width:20%;aspect-ratio:1;border:3px solid #382624;border-radius:50%;background:#667682;box-shadow:inset 5px 5px #a9b4ba;animation:smoke-puff .78s var(--delay) cubic-bezier(.16,1,.3,1) both}.cell.bomb.detonating::after{animation:bomb-vanish .36s ease-in both}
+.flag-burst .effect-object{background-image:url("/assets/game-flag-gmeta-v2.png");animation:flag-victory .9s cubic-bezier(.16,1,.3,1) both}.flag-burst .effect-core{width:28%;background:#fffdf7;box-shadow:0 0 18px 8px #55b4ca;animation:flag-core .72s ease-out both}.flag-burst .effect-ring{width:29%;border:4px solid #55b4ca;box-shadow:0 0 0 5px rgba(237,105,114,.7);animation:flag-wave .82s cubic-bezier(.16,1,.3,1) both}.flag-burst i{z-index:5;width:5%;height:12%;border:2px solid #5a201d;border-radius:3px;background:#ed6972;animation:flag-confetti .86s var(--delay) cubic-bezier(.18,.72,.25,1) both}.flag-burst i:nth-of-type(3n){background:#f7c948}.flag-burst i:nth-of-type(3n+1){background:#55b4ca}
+.game-grid .player.hit{animation:player-hit .58s ease-in-out!important}
+@keyframes coin-lift{0%{opacity:1;transform:translate(-50%,-50%) scale(.86) rotateY(0)}28%{transform:translate(-50%,-72%) scale(1.12) rotateY(150deg)}70%{opacity:1;transform:translate(-50%,-125%) scale(.8) rotateY(320deg)}100%{opacity:0;transform:translate(-50%,-180%) scale(.35) rotateY(430deg)}}
+@keyframes coin-core{0%{opacity:.9;transform:translate(-50%,-50%) scale(.2)}100%{opacity:0;transform:translate(-50%,-50%) scale(3.4)}}
+@keyframes coin-wave{0%{opacity:1;transform:translate(-50%,-50%) scale(.25)}100%{opacity:0;transform:translate(-50%,-50%) scale(4.5)}}
+@keyframes coin-spark{0%{opacity:0;transform:translate(-50%,-50%) rotate(var(--angle)) translateX(0) scale(.2)}18%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) rotate(var(--angle)) translateX(var(--distance)) rotate(220deg) scale(.55)}}
+@keyframes bomb-crush{0%{opacity:1;transform:translate(-50%,-50%) scale(1)}65%{transform:translate(-50%,-48%) scale(1.18,.82) rotate(-6deg)}100%{opacity:0;transform:translate(-50%,-50%) scale(.15)}}
+@keyframes blast-core{0%{opacity:1;transform:translate(-50%,-50%) scale(.1)}45%{opacity:1;transform:translate(-50%,-50%) scale(2.4)}100%{opacity:0;transform:translate(-50%,-50%) scale(3.7)}}
+@keyframes blast-wave{0%{opacity:1;transform:translate(-50%,-50%) scale(.15)}100%{opacity:0;transform:translate(-50%,-50%) scale(5.4)}}
+@keyframes blast-spark{0%{opacity:0;transform:translate(-50%,-50%) rotate(var(--angle)) translateX(0) scale(.3)}15%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) rotate(var(--angle)) translateX(var(--distance)) rotate(270deg) scale(.75)}}
+@keyframes smoke-puff{0%{opacity:0;transform:translate(-50%,-50%) scale(.2)}25%{opacity:.95}100%{opacity:0;transform:translate(calc(-50% + var(--smoke-x)),calc(-50% + var(--smoke-y))) scale(1.65)}}
+@keyframes bomb-vanish{to{opacity:0;transform:scale(.35) rotate(12deg)}}
+@keyframes flag-victory{0%{opacity:0;transform:translate(-50%,-42%) scale(.55) rotate(-8deg)}35%{opacity:1;transform:translate(-50%,-58%) scale(1.12) rotate(5deg)}70%{opacity:1;transform:translate(-50%,-54%) scale(1.03) rotate(-3deg)}100%{opacity:0;transform:translate(-50%,-70%) scale(.9) rotate(2deg)}}
+@keyframes flag-core{0%{opacity:.9;transform:translate(-50%,-50%) scale(.25)}100%{opacity:0;transform:translate(-50%,-50%) scale(4)}}
+@keyframes flag-wave{0%{opacity:1;transform:translate(-50%,-50%) scale(.2)}100%{opacity:0;transform:translate(-50%,-50%) scale(4.7)}}
+@keyframes flag-confetti{0%{opacity:0;transform:translate(-50%,-50%) rotate(var(--angle)) translateX(0) scale(.25)}20%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) rotate(var(--angle)) translateX(var(--distance)) rotate(420deg) scale(.7)}}
+@keyframes player-hit{0%,100%{transform:translate(var(--player-x),var(--player-y)) rotate(0)}20%{transform:translate(calc(var(--player-x) - 6px),var(--player-y)) rotate(-5deg)}40%{transform:translate(calc(var(--player-x) + 7px),var(--player-y)) rotate(5deg)}60%{transform:translate(calc(var(--player-x) - 5px),var(--player-y)) rotate(-3deg)}80%{transform:translate(calc(var(--player-x) + 4px),var(--player-y)) rotate(2deg)}}
+@media(prefers-reduced-motion:reduce){.cell-effect,.cell-effect *,.game-grid .player.hit,.cell.bomb.detonating::after{animation-duration:.01ms!important}}
+
+/* 지메타 원화 스타일로 생성한 게임 오브젝트 스프라이트 */
+.cell.coin::before,.cell.bomb::before,.cell.flag::before{content:none}
+.cell.coin::after,.cell.bomb::after,.cell.flag::after{
+  content:"";
+  position:absolute;
+  inset:4%;
+  z-index:2;
+  width:auto;
+  height:auto;
+  border:0;
+  border-radius:0;
+  background-color:transparent;
+  background-position:center;
+  background-repeat:no-repeat;
+  background-size:contain;
+  box-shadow:none;
+  filter:none;
+  clip-path:none;
+  transform:none;
+}
+.cell.coin::after{background-image:url("/assets/game-coin-gmeta-v2.png")}
+.cell.bomb::after{background-image:url("/assets/game-bomb-gmeta-v2.png")}
+.cell.flag::after{background-image:url("/assets/game-flag-gmeta-v2.png")}
+.legend-coin,.legend-bomb,.legend-flag{
+  border:0!important;
+  border-radius:0!important;
+  background-color:transparent!important;
+  background-position:center!important;
+  background-repeat:no-repeat!important;
+  background-size:contain!important;
+  box-shadow:none!important;
+  clip-path:none!important;
+  filter:none!important;
+}
+.legend-coin{background-image:url("/assets/game-coin-gmeta-v2.png")!important}
+.legend-bomb{background-image:url("/assets/game-bomb-gmeta-v2.png")!important}
+.legend-flag{background-image:url("/assets/game-flag-gmeta-v2.png")!important}
