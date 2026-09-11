@@ -4,3 +4,5 @@ work/
 .impeccable/sketches/
 .DS_Store
 *.log
+.vercel
+.env*
