@@ -2,3 +2,7 @@
 @media(max-width:1500px) and (min-width:1181px){.tutorial-page .tutorial-actions{grid-template-columns:1fr 1fr}.tutorial-page .run-button{grid-column:1/-1}}
 @media(max-width:1180px){.tutorial-page .scorebar{grid-template-columns:1fr auto}.tutorial-page .race-stats{grid-column:1/-1;grid-row:2}.tutorial-page .tutorial-actions{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:760px){.tutorial-page .tutorial-actions{grid-template-columns:1fr 1fr}.tutorial-page .run-button{grid-column:1/-1}.tutorial-page .tutorial-exit{font-size:.68rem}.tutorial-page .game-grid{width:min(100%,430px)}}
+
+/* Keep the practice grid square so its rows and columns paint at the same size. */
+.tutorial-page .coding-workspace .game-grid{width:auto;height:min(45vh,540px);max-width:86%;aspect-ratio:1}
+@media(max-width:760px){.tutorial-page .coding-workspace .game-grid{width:min(100%,430px);height:auto;max-width:100%}}
