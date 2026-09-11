@@ -4,7 +4,7 @@ const directionPaths={up:"M24 6 9 22h9v20h12V22h9L24 6Z",down:"m24 42 15-16h-9V6
 const directionIcon=dir=>`<span class="program-direction" aria-hidden="true"><svg class="program-symbol" viewBox="0 0 48 48"><path d="${directionPaths[dir]}"></path></svg></span>`;
 const repeatIcon='<span class="repeat-symbol" aria-hidden="true"><svg class="program-symbol" viewBox="0 0 48 48"><path d="M38.7 13.5A19 19 0 1 0 42 30h-8a11 11 0 1 1-1.8-10.7L25 26h19V7l-5.3 6.5Z"></path></svg></span>';
 const el=id=>document.getElementById(id),grid=el("gameGrid"),programList=el("programList"),codingCanvas=document.querySelector(".coding-canvas"),sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
-const map={rows:5,cols:5,start:[2,2],coins:[[0,2],[2,4],[4,2],[2,0]],flag:[0,4]};
+const map={rows:5,cols:5,start:[2,2],coins:[[0,2],[2,4],[4,2],[2,0]],bombs:[[4,0]],flag:[0,4]};
 const key=(r,c)=>`${r},${c}`;
 let program=[],openRepeat=null,player={r:2,c:2},collected=new Set(),running=false,dragPayload=null;
 
@@ -20,6 +20,7 @@ function renderGrid(){
     const cell=document.createElement("div");cell.className="cell";cell.dataset.key=key(r,c);cell.setAttribute("role","gridcell");
     if(r===map.start[0]&&c===map.start[1])cell.classList.add("practice-start");
     if(map.coins.some(([a,b])=>a===r&&b===c)&&!collected.has(key(r,c)))cell.classList.add("coin");
+    if(map.bombs.some(([a,b])=>a===r&&b===c))cell.classList.add("bomb");
     if(r===map.flag[0]&&c===map.flag[1])cell.classList.add("flag");grid.append(cell);
   }
   placePlayer("",true);el("coinCount").textContent=`${collected.size} / ${map.coins.length}`;
@@ -52,10 +53,18 @@ function renderProgram(){
 function addMove(dir){if(running||!canAdd())return;const move={type:"move",dir};if(openRepeat)openRepeat.body.push(move);else program.push(move);renderProgram()}
 function addRepeat(){if(running||!canAdd())return;openRepeat={type:"repeat",count:2,body:[]};program.push(openRepeat);renderProgram()}
 function setExecuting(path=""){document.querySelectorAll("[data-path].executing").forEach(node=>node.classList.remove("executing"));if(path)programList.querySelector(`[data-path="${path}"]`)?.classList.add("executing")}
-function playCoinEffect(r,c){const cell=grid.querySelector(`[data-key="${key(r,c)}"]`);if(!cell)return;const effect=document.createElement("span");effect.className="cell-effect coin-burst";effect.setAttribute("aria-hidden","true");effect.innerHTML='<span class="effect-object"></span><span class="effect-core"></span><span class="effect-ring"></span>';for(let index=0;index<10;index++){const particle=document.createElement("i");particle.style.setProperty("--angle",`${index*36}deg`);particle.style.setProperty("--distance",`${50+Math.random()*30}px`);particle.style.setProperty("--delay",`${Math.random()*.1}s`);effect.append(particle)}cell.append(effect);setTimeout(()=>effect.remove(),900)}
+function playCellEffect(r,c,type){const cell=grid.querySelector(`[data-key="${key(r,c)}"]`);if(!cell)return;const effect=document.createElement("span");effect.className=`cell-effect ${type}`;effect.setAttribute("aria-hidden","true");effect.innerHTML='<span class="effect-object"></span><span class="effect-core"></span><span class="effect-ring"></span>';const count=type==="bomb-burst"?14:10;for(let index=0;index<count;index++){const particle=document.createElement("i");particle.style.setProperty("--angle",`${index*360/count}deg`);particle.style.setProperty("--distance",`${50+Math.random()*34}px`);particle.style.setProperty("--delay",`${Math.random()*.1}s`);effect.append(particle)}if(type==="bomb-burst")for(let index=0;index<7;index++){const smoke=document.createElement("b");smoke.style.setProperty("--smoke-x",`${-42+(index%4)*28}px`);smoke.style.setProperty("--smoke-y",`${-24-Math.floor(index/4)*26}px`);smoke.style.setProperty("--delay",`${.13+index*.035}s`);effect.append(smoke)}cell.append(effect);if(type==="bomb-burst")cell.classList.add("detonating");setTimeout(()=>{effect.remove();cell.classList.remove("detonating")},1100)}
 async function runProgram(){
   const commands=expandProgram();if(running||!commands.length||program.some(node=>node.type==="repeat"&&!node.body.length))return;running=true;openRepeat=null;document.querySelectorAll("button.command,#clearButton,#resetButton").forEach(button=>button.disabled=true);renderProgram();setStatus("알고리즘 실행 중","running");let stopped=false;
-  for(const command of commands){setExecuting(command.path);const[dr,dc]=vectors[command.dir],nr=player.r+dr,nc=player.c+dc;if(nr<0||nc<0||nr>=map.rows||nc>=map.cols){placePlayer("hit");setStatus("지도 끝에 닿았어요");stopped=true;await sleep(520);break}player={r:nr,c:nc};if(map.coins.some(([r,c])=>r===player.r&&c===player.c)&&!collected.has(key(player.r,player.c))){collected.add(key(player.r,player.c));grid.querySelector(`[data-key="${key(player.r,player.c)}"]`)?.classList.remove("coin");playCoinEffect(player.r,player.c);el("coinCount").textContent=`${collected.size} / ${map.coins.length}`}placePlayer("step");await sleep(430)}
+  for(const command of commands){
+    setExecuting(command.path);const[dr,dc]=vectors[command.dir],nr=player.r+dr,nc=player.c+dc;
+    if(nr<0||nc<0||nr>=map.rows||nc>=map.cols){placePlayer("hit");setStatus("지도 끝에 닿았어요");stopped=true;await sleep(520);break}
+    player={r:nr,c:nc};const hitBomb=map.bombs.some(([r,c])=>r===player.r&&c===player.c);
+    if(map.coins.some(([r,c])=>r===player.r&&c===player.c)&&!collected.has(key(player.r,player.c))){collected.add(key(player.r,player.c));grid.querySelector(`[data-key="${key(player.r,player.c)}"]`)?.classList.remove("coin");playCellEffect(player.r,player.c,"coin-burst");el("coinCount").textContent=`${collected.size} / ${map.coins.length}`}
+    placePlayer(hitBomb?"hit":"step");
+    if(hitBomb){playCellEffect(player.r,player.c,"bomb-burst");setStatus("폭탄을 만났어요");stopped=true;await sleep(920);break}
+    await sleep(430);
+  }
   setExecuting();if(!stopped)setStatus(player.r===map.flag[0]&&player.c===map.flag[1]?"깃발에 도착했어요!":"실행 완료");placePlayer();running=false;document.querySelectorAll("button.command,#clearButton,#resetButton").forEach(button=>button.disabled=false);renderProgram();
 }
 
