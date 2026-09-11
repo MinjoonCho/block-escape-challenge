@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0c2538">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/tutorial.css">
+  <title>튜토리얼 · 블록 탈출 대회</title>
+</head>
+<body class="game-page tutorial-page">
+  <header class="scorebar">
+    <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">B</span><span>블록 조립 연습</span></a>
+    <div class="game-partners" aria-label="기관 로고"><img src="/assets/partners/seodaemun-gu.png" alt="서대문구"><img src="/assets/partners/korea-youth-foundation.png" alt="한국청소년재단"><img src="/assets/partners/gmeta-career-network.jpg" alt="G-META 가재울청소년센터"></div>
+    <div class="race-stats" aria-label="연습 정보"><span><small>모드</small><strong>자유 연습</strong></span><span><small>코인</small><strong id="coinCount">0 / 4</strong></span></div>
+    <a class="leader-button tutorial-exit" href="/game.html">대회 시작하기</a>
+  </header>
+  <main class="workspace coding-workspace tutorial-workspace">
+    <section class="program-panel" aria-labelledby="programTitle">
+      <div class="program-head"><div><h1 id="programTitle">내 알고리즘</h1><p><span id="blockCount">0개</span> · <span id="limitText">최대 20개</span></p></div><button id="clearButton" class="text-button" type="button">시작 빼고 지우기</button></div>
+      <div class="coding-canvas"><ol id="programList" class="program-list" aria-live="polite" aria-label="알고리즘 조립 영역"></ol><p id="emptyProgram" class="empty-program"><strong>블록을 자유롭게 조립해 보세요</strong><span>클릭하거나 끌어서 추가할 수 있어요.</span></p></div>
+    </section>
+    <section class="map-panel" aria-label="튜토리얼 지도">
+      <div class="map-topline"><div><span class="route-status"><i></i><span id="statusText">블록을 조립해 실행해 보세요</span></span><strong>자유 연습장</strong><p>현재 위치에서 알고리즘을 실행합니다.</p></div></div>
+      <div id="gameGrid" class="game-grid" role="grid" aria-label="자유롭게 이동할 수 있는 5×5 연습 지도"></div>
+      <div class="map-caption"><span>가운데에서 시작</span><span>원위치 버튼으로 언제든 초기화</span></div>
+    </section>
+    <section class="command-bay command-dock" aria-labelledby="commandTitle">
+      <div class="dock-heading"><h2 id="commandTitle">명령 창고</h2><p>방향과 반복을 마음대로 조립하세요.</p><div class="legend"><span><i class="legend-coin"></i>연습 코인</span><span><i class="legend-flag"></i>도착 지점</span></div></div>
+      <div class="command-list">
+        <button class="command move-up" data-move="up" draggable="true"><span class="command-icon" aria-hidden="true"><svg class="command-symbol" viewBox="0 0 48 48"><path d="M24 6 9 22h9v20h12V22h9L24 6Z"/></svg></span><span><b>위로</b><small>한 칸 이동</small></span></button>
+        <button class="command move-down" data-move="down" draggable="true"><span class="command-icon" aria-hidden="true"><svg class="command-symbol" viewBox="0 0 48 48"><path d="m24 42 15-16h-9V6H18v20H9l15 16Z"/></svg></span><span><b>아래로</b><small>한 칸 이동</small></span></button>
+        <button class="command move-left" data-move="left" draggable="true"><span class="command-icon" aria-hidden="true"><svg class="command-symbol" viewBox="0 0 48 48"><path d="M6 24 22 9v9h20v12H22v9L6 24Z"/></svg></span><span><b>왼쪽으로</b><small>한 칸 이동</small></span></button>
+        <button class="command move-right" data-move="right" draggable="true"><span class="command-icon" aria-hidden="true"><svg class="command-symbol" viewBox="0 0 48 48"><path d="m42 24-16-15v9H6v12h20v9l16-15Z"/></svg></span><span><b>오른쪽으로</b><small>한 칸 이동</small></span></button>
+        <button class="command repeat-command" id="repeatButton" draggable="true"><span class="command-icon" aria-hidden="true"><svg class="command-symbol" viewBox="0 0 48 48"><path d="M38.7 13.5A19 19 0 1 0 42 30h-8a11 11 0 1 1-1.8-10.7L25 26h19V7l-5.3 6.5Z"/></svg></span><span><b>반복하기</b><small>명령을 안에 넣기</small></span></button>
+      </div>
+      <div class="program-actions tutorial-actions"><button id="undoButton" class="undo-button" type="button" disabled>하나 취소</button><button id="resetButton" class="reset-button" type="button">원위치</button><button id="runButton" class="run-button" type="button" disabled><span class="play-mark" aria-hidden="true"></span>실행하기</button></div>
+    </section>
+  </main>
+  <div class="toast" id="toast" role="status"></div>
+  <script type="module" src="/tutorial.js"></script>
+</body>
+</html>
