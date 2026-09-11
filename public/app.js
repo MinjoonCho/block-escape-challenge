@@ -9,9 +9,10 @@ const key=(r,c)=>`${r},${c}`;
 const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 
 let stages=[],stageIndex=0,program=[],openRepeat=null,player={r:0,c:0},collected=new Set();
-let running=false,startedAt=Date.now(),totalScore=0,totalTime=0,totalCoins=0,timerId,soundOn=true,runId="",dragPayload=null;
+let running=true,startedAt=0,totalScore=0,totalTime=0,totalCoins=0,timerId,soundOn=true,runId="",dragPayload=null,audioContext=null;
 
-const runReady=fetch("/api/runs",{method:"POST"}).then(response=>response.json()).then(result=>{runId=result.runId;stages=result.stages;return runId});
+let runReady;
+const createRun=()=>fetch("/api/runs",{method:"POST"}).then(response=>response.json()).then(result=>{runId=result.runId;stages=result.stages;return runId});
 const stage=()=>stages[stageIndex];
 const sourceBlockCount=(nodes=program)=>nodes.reduce((sum,node)=>sum+1+(node.type==="repeat"?node.body.length:0),0);
 
@@ -105,12 +106,12 @@ function dropAtProgram(event,insertIndex){
   }else if(payload.origin==="program"){
     node=program[payload.index];if(!node)return endDrag();program.splice(payload.index,1);if(payload.index<insertIndex)insertIndex--;
   }else node=takeMove(payload);
-  if(!node)return endDrag();program.splice(Math.max(0,insertIndex),0,node);openRepeat=node.type==="repeat"?node:null;endDrag();renderProgram();
+  if(!node)return endDrag();program.splice(Math.max(0,insertIndex),0,node);openRepeat=node.type==="repeat"?node:null;endDrag();renderProgram();playSound("block");
 }
 
 function dropInRepeat(event,target){
   event.preventDefault();event.stopPropagation();const payload=readDrag(event);if(!payload||payload.type==="repeat"||(payload.origin==="program"&&program[payload.index]?.type==="repeat"))return endDrag();
-  const node=takeMove(payload);if(!node)return endDrag();target.body.push(node);openRepeat=target;endDrag();renderProgram();
+  const node=takeMove(payload);if(!node)return endDrag();target.body.push(node);openRepeat=target;endDrag();renderProgram();playSound("block");
 }
 
 function dropSlot(index){
@@ -174,14 +175,25 @@ function renderProgram(){
   el("limitText").textContent=`제한 ${stage().limit}개 · 시작 제외`;
 }
 
-function addMove(dir){if(running||!canAdd())return;const move={type:"move",dir};if(openRepeat)openRepeat.body.push(move);else program.push(move);renderProgram()}
-function addRepeat(){if(running||!canAdd())return;openRepeat={type:"repeat",count:2,body:[]};program.push(openRepeat);renderProgram()}
+function addMove(dir){if(running||!canAdd())return;const move={type:"move",dir};if(openRepeat)openRepeat.body.push(move);else program.push(move);renderProgram();playSound("block")}
+function addRepeat(){if(running||!canAdd())return;openRepeat={type:"repeat",count:2,body:[]};program.push(openRepeat);renderProgram();playSound("block")}
 function setStatus(text,state=""){el("statusText").textContent=text;el("statusText").parentElement.className=`route-status ${state}`}
 function blocked(r,c){const current=stage();return r<0||c<0||r>=current.rows||c>=current.cols||current.walls.some(([a,b])=>a===r&&b===c)}
 
-function beep(note=520,duration=.08){
-  if(!soundOn)return;const Audio=window.AudioContext||window.webkitAudioContext;if(!Audio)return;
-  const ctx=new Audio(),osc=ctx.createOscillator(),gain=ctx.createGain();osc.frequency.value=note;gain.gain.setValueAtTime(.035,ctx.currentTime);gain.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+duration);osc.connect(gain).connect(ctx.destination);osc.start();osc.stop(ctx.currentTime+duration);
+function getAudio(){
+  if(!soundOn)return null;const Audio=window.AudioContext||window.webkitAudioContext;if(!Audio)return null;
+  audioContext||=new Audio();if(audioContext.state==="suspended")audioContext.resume().catch(()=>{});return audioContext;
+}
+function beep(note=520,duration=.08,delay=0,type="sine",volume=.04){
+  const ctx=getAudio();if(!ctx||ctx.state!=="running")return;const at=ctx.currentTime+delay,osc=ctx.createOscillator(),gain=ctx.createGain();osc.type=type;osc.frequency.setValueAtTime(note,at);gain.gain.setValueAtTime(.0001,at);gain.gain.exponentialRampToValueAtTime(volume,at+.012);gain.gain.exponentialRampToValueAtTime(.0001,at+duration);osc.connect(gain).connect(ctx.destination);osc.start(at);osc.stop(at+duration+.03);
+}
+function playSound(name){
+  if(name==="block"){beep(260,.055,0,"square",.025);beep(390,.07,.045,"triangle",.03)}
+  else if(name==="coin"){beep(720,.1,0,"triangle",.04);beep(960,.12,.08,"triangle",.045);beep(1240,.16,.17,"sine",.04)}
+  else if(name==="bomb"){beep(135,.3,0,"sawtooth",.07);beep(78,.42,.09,"square",.055)}
+  else if(name==="flag"){[660,830,990,1320].forEach((note,index)=>beep(note,.17,index*.09,"triangle",.045))}
+  else if(name==="count"){beep(440,.13,0,"square",.035)}
+  else if(name==="go"){beep(660,.12,0,"triangle",.045);beep(990,.24,.1,"triangle",.05)}
 }
 
 function setExecuting(path=""){document.querySelectorAll("[data-path].executing").forEach(node=>node.classList.remove("executing"));if(path)programList.querySelector(`[data-path="${path}"]`)?.classList.add("executing")}
@@ -213,11 +225,11 @@ async function runProgram(){
     if(blocked(nr,nc)){crashed=true;failureMessage="벽에 막혔어요. 블록 순서를 고쳐보세요!";placePlayer("hit");beep(150,.2);break}
     player.r=nr;player.c=nc;
     const hitBomb=stage().bombs.some(([r,c])=>r===player.r&&c===player.c);
-    if(stage().coins.some(([r,c])=>r===player.r&&c===player.c)&&!collected.has(key(player.r,player.c))){collected.add(key(player.r,player.c));grid.querySelector(`[data-key="${key(player.r,player.c)}"]`)?.classList.remove("coin");playCellEffect(player.r,player.c,"coin-burst");beep(760);updateStats()}
+    if(stage().coins.some(([r,c])=>r===player.r&&c===player.c)&&!collected.has(key(player.r,player.c))){collected.add(key(player.r,player.c));grid.querySelector(`[data-key="${key(player.r,player.c)}"]`)?.classList.remove("coin");playCellEffect(player.r,player.c,"coin-burst");playSound("coin");updateStats()}
     placePlayer(hitBomb?"hit":"step");
-    if(hitBomb){playCellEffect(player.r,player.c,"bomb-burst");beep(120,.25);setTimeout(()=>beep(72,.18),90);await sleep(920);crashed=true;failureMessage="폭탄을 만났어요! 다른 경로를 찾아보세요.";break}
+    if(hitBomb){playCellEffect(player.r,player.c,"bomb-burst");playSound("bomb");await sleep(920);crashed=true;failureMessage="폭탄을 만났어요! 다른 경로를 찾아보세요.";break}
     await sleep(460);
-    if(stage().flag[0]===player.r&&stage().flag[1]===player.c){setExecuting();playCellEffect(player.r,player.c,"flag-burst");beep(980,.16);await sleep(480);await finishStage();return}
+    if(stage().flag[0]===player.r&&stage().flag[1]===player.c){setExecuting();playCellEffect(player.r,player.c,"flag-burst");playSound("flag");await sleep(480);await finishStage();return}
   }
   setExecuting();setStatus(crashed?"블록을 고쳐 다시 실행하세요":"깃발까지 명령이 더 필요해요");await showOutcome("failure","실패",failureMessage);resetPlayer();renderGrid();updateStats();running=false;document.querySelectorAll("button.command").forEach(button=>button.disabled=false);renderProgram();
 }
@@ -235,6 +247,12 @@ function renderStage(){el("stageLabel").textContent=`${stageIndex+1} / ${stages.
 function updateStats(){el("coinLabel").textContent=totalCoins+collected.size;el("scoreLabel").textContent=totalScore.toLocaleString()}
 function updateTimer(){if(!el("resultScreen").hidden)return;const seconds=Math.floor((Date.now()-startedAt)/1000);el("timeLabel").textContent=`${String(Math.floor(seconds/60)).padStart(2,"0")}:${String(seconds%60).padStart(2,"0")}`}
 function toast(message){el("toast").textContent=message;el("toast").classList.add("show");clearTimeout(toast.timer);toast.timer=setTimeout(()=>el("toast").classList.remove("show"),2200)}
+async function playCountdown(){
+  const screen=el("countdownScreen"),number=el("countdownNumber");
+  await sleep(180);
+  for(const value of [3,2,1]){number.className="";number.textContent=value;void number.offsetWidth;playSound("count");await sleep(780)}
+  number.className="go";number.textContent="시작!";void number.offsetWidth;playSound("go");await sleep(650);
+}
 function showResult(){clearInterval(timerId);el("finalScore").textContent=totalScore.toLocaleString();el("finalCoins").textContent=totalCoins;const sec=Math.floor(totalTime/1000);el("finalTime").textContent=`${String(Math.floor(sec/60)).padStart(2,"0")}:${String(sec%60).padStart(2,"0")}`;el("resultScreen").hidden=false;el("playerName").focus()}
 const escapeHtml=value=>String(value).replace(/[&<>"']/g,character=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[character]));
 async function loadScores(){const list=el("leaderList");list.innerHTML='<li class="leader-empty">순위를 불러오는 중...</li>';try{const data=await fetch("/api/scores").then(response=>response.json());list.innerHTML=data.length?data.map((score,index)=>`<li class="leader-row"><span class="leader-rank">${index+1}</span><span><strong>${escapeHtml(score.name)}</strong><small class="leader-meta">코인 ${score.coins}개 · ${Math.round(score.timeMs/1000)}초</small></span><span class="leader-score">${score.score.toLocaleString()}점</span></li>`).join(""):'<li class="leader-empty">첫 번째 기록의 주인공이 되어보세요!</li>'}catch{list.innerHTML='<li class="leader-empty">순위를 불러오지 못했어요.<br>잠시 후 다시 열어주세요.</li>'}}
@@ -247,6 +265,7 @@ el("undoButton").onclick=()=>{if(openRepeat?.body.length)openRepeat.body.pop();e
 el("clearButton").onclick=()=>{if(!running){program=[];openRepeat=null;renderProgram()}};el("runButton").onclick=runProgram;
 el("leaderButton").onclick=()=>{el("leaderboard").hidden=false;loadScores()};el("closeLeader").onclick=()=>el("leaderboard").hidden=true;
 el("soundToggle").onclick=()=>{soundOn=!soundOn;el("soundToggle").setAttribute("aria-pressed",String(soundOn));el("soundToggle").textContent=soundOn?"소리 켬":"소리 끔"};
+document.addEventListener("pointerdown",()=>getAudio(),{capture:true});
 document.addEventListener("dragend",endDrag);
 codingCanvas.ondragover=event=>{if(running||!readDrag(event))return;event.preventDefault();event.dataTransfer.dropEffect=dragPayload?.origin==="palette"?"copy":"move";codingCanvas.classList.add("canvas-drop-ready")};
 codingCanvas.ondragleave=event=>{if(!codingCanvas.contains(event.relatedTarget))codingCanvas.classList.remove("canvas-drop-ready")};
@@ -254,4 +273,4 @@ codingCanvas.ondrop=event=>{if(running)return endDrag();dropAtProgram(event,near
 
 el("scoreForm").onsubmit=async event=>{event.preventDefault();const button=event.submitter;button.disabled=true;el("formMessage").textContent="점수를 등록하고 있어요...";try{const response=await fetch("/api/scores",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({name:el("playerName").value,runId})}),result=await response.json();if(!response.ok)throw new Error(result.error);el("formMessage").textContent=`등록 완료! 현재 ${result.rank}위예요.`;button.textContent="등록 완료";setTimeout(()=>window.location.replace("/"),900)}catch(error){el("formMessage").textContent=error.message||"등록하지 못했어요. 다시 시도해 주세요.";button.disabled=false}};
 
-await runReady;renderStage();timerId=setInterval(updateTimer,250);
+await playCountdown();runReady=createRun();await runReady;running=false;renderStage();const countdownScreen=el("countdownScreen");countdownScreen.classList.add("leaving");await sleep(380);countdownScreen.hidden=true;startedAt=Date.now();timerId=setInterval(updateTimer,250);
