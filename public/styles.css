@@ -175,6 +175,12 @@ body.game-page{height:100vh;overflow:hidden;background:var(--navy)}
 .coding-workspace .repeat-tail{height:14px;font-size:.56rem}
 .program-drop{height:1px}.is-dragging .program-drop{height:25px}
 
+/* 삭제 아이콘은 글꼴의 × 위치에 기대지 않고 버튼의 기하학적 중앙에 그린다. */
+.coding-workspace .program-delete{position:relative;display:grid;place-items:center;padding:0;font-size:0;line-height:1}
+.coding-workspace .program-delete::before,.coding-workspace .program-delete::after{content:"";position:absolute;left:50%;top:50%;width:13px;height:2px;border-radius:2px;background:currentColor;transform-origin:center}
+.coding-workspace .program-delete::before{transform:translate(-50%,-50%) rotate(45deg)}
+.coding-workspace .program-delete::after{transform:translate(-50%,-50%) rotate(-45deg)}
+
 /* 지메타 그림체에 맞춘 지도 오브젝트 */
 .cell.coin::after{width:47%;height:47%;border:clamp(2px,.26vw,4px) solid var(--navy);background:#f7c948;box-shadow:inset -4px -5px 0 #e5a918,0 4px 0 rgba(12,37,56,.16)}
 .cell.coin::before{z-index:2;width:19%;height:25%;border:0;border-left:clamp(3px,.3vw,5px) solid var(--navy);border-top:clamp(3px,.3vw,5px) solid var(--navy);border-bottom:clamp(3px,.3vw,5px) solid var(--navy);border-radius:50% 0 0 50%;box-shadow:none;transform:translateX(8%)}
