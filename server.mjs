@@ -45,20 +45,20 @@ async function isAdmin(req){
 }
 async function requireAdmin(req,res){if(await isAdmin(req))return true;send(res,401,{error:"관리자 로그인이 필요합니다."});return false}
 
-function decodeProgram(nodes,limit){
-  if(!Array.isArray(nodes)||!nodes.length||!Number.isInteger(limit))return null;
+function decodeProgram(nodes){
+  if(!Array.isArray(nodes)||!nodes.length)return null;
   const commands=[];let blocks=0;
   for(const node of nodes){
     if(node?.type==="move"&&["up","down","left","right"].includes(node.dir)){blocks++;commands.push(node.dir)}
     else if(node?.type==="repeat"&&Number.isInteger(node.count)&&node.count>=2&&node.count<=6&&Array.isArray(node.body)&&node.body.length){blocks++;const body=[];for(const child of node.body){if(child?.type!=="move"||!["up","down","left","right"].includes(child.dir))return null;blocks++;body.push(child.dir)}for(let count=0;count<node.count;count++)commands.push(...body)}
     else return null;
-    if(blocks>limit||commands.length>120)return null;
+    if(commands.length>120)return null;
   }
   return{commands,blocks};
 }
 
 function verifyStage(maps,stage,program){
-  const map=maps?.[stage],decoded=decodeProgram(program,map?.limit);if(!map||!decoded)return null;
+  const map=maps?.[stage],decoded=decodeProgram(program);if(!map||!decoded)return null;
   let[r,c]=map.start;const collected=new Set(),at=(list,row,col)=>list.some(([a,b])=>a===row&&b===col),vectors={up:[-1,0],down:[1,0],left:[0,-1],right:[0,1]};
   for(const command of decoded.commands){const[dr,dc]=vectors[command],nr=r+dr,nc=c+dc;if(nr<0||nc<0||nr>=map.rows||nc>=map.cols||at(map.walls,nr,nc)||at(map.bombs,nr,nc))return null;r=nr;c=nc;if(at(map.coins,r,c))collected.add(`${r},${c}`);if(r===map.flag[0]&&c===map.flag[1])return{coins:collected.size,blocks:decoded.blocks}}
   return null;

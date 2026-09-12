@@ -23,6 +23,6 @@ stages.forEach((stage,index)=>{
     if(stage.start[0]===r&&stage.start[1]===c)cell.classList.add("start");
     board.append(cell);
   }
-  item.innerHTML=`<div class="ticket-label"><span>${index+1}</span><strong>${stage.title}</strong><small>최대 ${stage.limit}블록</small></div>`;
+  item.innerHTML=`<div class="ticket-label"><span>${index+1}</span><strong>${stage.title}</strong><small>최소 ${stage.idealBlocks}블록 도전</small></div>`;
   item.append(board);previews.append(item);
 });

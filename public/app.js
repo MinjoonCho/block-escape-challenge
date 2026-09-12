@@ -25,11 +25,6 @@ function expandProgram(){
   return result;
 }
 
-function canAdd(amount=1){
-  if(sourceBlockCount()+amount<=stage().limit)return true;
-  toast(`이 스테이지는 블록을 ${stage().limit}개까지만 쓸 수 있어요.`);return false;
-}
-
 function resetPlayer(){const[r,c]=stage().start;player={r,c};collected=new Set()}
 
 function renderGrid(){
@@ -88,7 +83,7 @@ function endDrag(event){
 
 function takeMove(payload){
   if(!payload)return null;
-  if(payload.origin==="palette")return payload.type==="move"&&canAdd()?{type:"move",dir:payload.dir}:null;
+  if(payload.origin==="palette")return payload.type==="move"?{type:"move",dir:payload.dir}:null;
   if(payload.origin==="program"){
     const node=program[payload.index];if(node?.type!=="move")return null;program.splice(payload.index,1);return node;
   }
@@ -102,7 +97,7 @@ function dropAtProgram(event,insertIndex){
   event.preventDefault();event.stopPropagation();const payload=readDrag(event);if(!payload||running)return endDrag();
   let node;
   if(payload.origin==="palette"){
-    if(!canAdd())return endDrag();node=payload.type==="repeat"?{type:"repeat",count:2,body:[]}:{type:"move",dir:payload.dir};
+    node=payload.type==="repeat"?{type:"repeat",count:2,body:[]}:{type:"move",dir:payload.dir};
   }else if(payload.origin==="program"){
     node=program[payload.index];if(!node)return endDrag();program.splice(payload.index,1);if(payload.index<insertIndex)insertIndex--;
   }else node=takeMove(payload);
@@ -169,14 +164,14 @@ function renderProgram(){
   programList.querySelectorAll(".repeat-head").forEach(head=>head.onclick=()=>{const node=program[Number(head.closest(".repeat-block").dataset.index)];openRepeat=openRepeat===node?null:node;renderProgram()});
 
   const used=sourceBlockCount(),valid=expandProgram().length>0&&!program.some(node=>node.type==="repeat"&&!node.body.length);
-  el("blockCount").textContent=`${used} / ${stage().limit}`;el("emptyProgram").hidden=program.length>0;
+  el("blockCount").textContent=`${used}개`;el("emptyProgram").hidden=program.length>0;
   el("runButton").disabled=!valid||running;el("undoButton").disabled=!program.length||running;
   el("repeatButton").classList.remove("active");el("repeatButton").querySelector("b").textContent="반복하기";
-  el("limitText").textContent=`제한 ${stage().limit}개 · 시작 제외`;
+  el("limitText").textContent="적게 쓸수록 높은 점수";
 }
 
-function addMove(dir){if(running||!canAdd())return;const move={type:"move",dir};if(openRepeat)openRepeat.body.push(move);else program.push(move);renderProgram();playSound("block")}
-function addRepeat(){if(running||!canAdd())return;openRepeat={type:"repeat",count:2,body:[]};program.push(openRepeat);renderProgram();playSound("block")}
+function addMove(dir){if(running)return;const move={type:"move",dir};if(openRepeat)openRepeat.body.push(move);else program.push(move);renderProgram();playSound("block")}
+function addRepeat(){if(running)return;openRepeat={type:"repeat",count:2,body:[]};program.push(openRepeat);renderProgram();playSound("block")}
 function setStatus(text,state=""){el("statusText").textContent=text;el("statusText").parentElement.className=`route-status ${state}`}
 function blocked(r,c){const current=stage();return r<0||c<0||r>=current.rows||c>=current.cols||current.walls.some(([a,b])=>a===r&&b===c)}
 
