@@ -1,5 +1,5 @@
 ---
-name: "블록 탈출 대회"
+name: "G메타ㄹ출"
 description: "명령 블록으로 지메타의 안전한 탈출 경로를 설계하는 코딩 경기 작전판"
 colors:
   operations-navy: "#0c2538"
@@ -85,7 +85,7 @@ components:
     height: "48px"
 ---
 
-# Design System: 블록 탈출 대회
+# Design System: G메타ㄹ출
 
 ## Overview
 

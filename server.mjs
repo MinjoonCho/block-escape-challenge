@@ -88,5 +88,5 @@ export async function handler(req,res){
   try{const data=await readFile(filePath);res.writeHead(200,{"content-type":types[extname(filePath)]||"application/octet-stream"});res.end(data)}catch{send(res,404,"Not found","text/plain; charset=utf-8")}
 }
 
-if(!process.env.VERCEL)createServer(handler).listen(port,"0.0.0.0",()=>console.log(`블록 탈출 대회: http://localhost:${port}`));
+if(!process.env.VERCEL)createServer(handler).listen(port,"0.0.0.0",()=>console.log(`G메타ㄹ출: http://localhost:${port}`));
 export default handler;
