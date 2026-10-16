@@ -1,66 +1,60 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-11T10:40:42Z",
-  "title": "Design System: G메타ㄹ출",
+  "generatedAt": "2026-10-16T18:13:21Z",
+  "title": "Design System: 코딩할고양",
   "extensions": {
     "colorMeta": {
-      "operations-navy": {
+      "festival-green": {
         "role": "primary",
-        "displayName": "Operations Navy",
-        "canonical": "#0c2538",
-        "tonalRamp": ["#07141f", "#0c2538", "#173b55", "#31566e", "#547387", "#8198a7", "#b7c5cd", "#eaf0f2"]
+        "displayName": "Festival Green",
+        "canonical": "#114b2f",
+        "tonalRamp": ["#061b10", "#0b3320", "#114b2f", "#1c6742", "#38835b", "#66a27e", "#a4c9b3", "#edf7f0"]
       },
-      "command-blue": {
+      "festival-green-deep": {
+        "role": "primary",
+        "displayName": "Deep Festival Green",
+        "canonical": "#082f1c",
+        "tonalRamp": ["#03150c", "#082f1c", "#124c31", "#286a49", "#4b8967", "#78aa8c", "#add0bc", "#eef7f1"]
+      },
+      "coding-yellow": {
+        "role": "primary",
+        "displayName": "Coding Yellow",
+        "canonical": "#ffe22d",
+        "tonalRamp": ["#3d3300", "#695800", "#987f00", "#c9aa0a", "#ffe22d", "#ffea65", "#fff1a0", "#fffbe4"]
+      },
+      "energetic-orange": {
         "role": "secondary",
-        "displayName": "Command Blue",
+        "displayName": "Energetic Orange",
+        "canonical": "#ff7a00",
+        "tonalRamp": ["#3d1900", "#6c2d00", "#9c4300", "#d05b00", "#ff7a00", "#ff9d42", "#ffc083", "#ffe8cf"]
+      },
+      "repeat-orange": {
+        "role": "secondary",
+        "displayName": "Repeat Orange",
+        "canonical": "#f0642f",
+        "tonalRamp": ["#3a1308", "#67230f", "#963619", "#c94b23", "#f0642f", "#f58c63", "#f9b59a", "#fde4d9"]
+      },
+      "direction-blue": {
+        "role": "secondary",
+        "displayName": "Direction Blue",
         "canonical": "#2b78c5",
         "tonalRamp": ["#09243e", "#123c68", "#1d5792", "#2b78c5", "#5797d3", "#88b6e1", "#bdd7ef", "#edf6fc"]
       },
-      "route-green": {
+      "direction-purple": {
         "role": "secondary",
-        "displayName": "Route Green",
-        "canonical": "#16836b",
-        "tonalRamp": ["#06271f", "#0a4437", "#10634f", "#16836b", "#42a18b", "#76bdaa", "#aed9cc", "#e8f5f1"]
+        "displayName": "Direction Purple",
+        "canonical": "#7257b8",
+        "tonalRamp": ["#201638", "#37265f", "#513989", "#7257b8", "#9278c9", "#b19cda", "#d3c7ea", "#f1edfa"]
       },
-      "safety-yellow": {
-        "role": "primary",
-        "displayName": "Safety Yellow",
-        "canonical": "#f7c948",
-        "tonalRamp": ["#3b2b03", "#654b07", "#946f0c", "#c99a1c", "#f7c948", "#f9d978", "#fce9ae", "#fff9e6"]
+      "direction-green": {
+        "role": "secondary",
+        "displayName": "Direction Green",
+        "canonical": "#11833f",
+        "tonalRamp": ["#062713", "#09441f", "#0d622e", "#11833f", "#40a064", "#75bc89", "#add8ba", "#e8f5ec"]
       },
-      "hazard-coral": {
-        "role": "tertiary",
-        "displayName": "Hazard Coral",
-        "canonical": "#e7523e",
-        "tonalRamp": ["#3b100b", "#681c14", "#98291f", "#c83c2d", "#e7523e", "#ed7c6d", "#f3aaa1", "#fbe1dd"]
-      },
-      "operations-ink": {
+      "warm-paper": {
         "role": "neutral",
-        "displayName": "Operations Ink",
-        "canonical": "#102331",
-        "tonalRamp": ["#081118", "#102331", "#273c4a", "#455b69", "#687c88", "#93a3ac", "#c1cbd0", "#eef2f4"]
-      },
-      "instruction-muted": {
-        "role": "neutral",
-        "displayName": "Instruction Muted",
-        "canonical": "#597080",
-        "tonalRamp": ["#152027", "#293943", "#405460", "#597080", "#7b909c", "#a0b0b9", "#c8d2d7", "#f0f4f5"]
-      },
-      "divider-steel": {
-        "role": "neutral",
-        "displayName": "Divider Steel",
-        "canonical": "#b9c3c7",
-        "tonalRamp": ["#20282b", "#384346", "#566164", "#768184", "#98a2a5", "#b9c3c7", "#d7dddf", "#f3f5f6"]
-      },
-      "map-mist": {
-        "role": "neutral",
-        "displayName": "Map Mist",
-        "canonical": "#e8ebe5",
-        "tonalRamp": ["#252924", "#424741", "#626760", "#848a82", "#a7aca4", "#c8ccc5", "#e8ebe5", "#f8faf7"]
-      },
-      "board-paper": {
-        "role": "neutral",
-        "displayName": "Board Paper",
+        "displayName": "Warm Paper",
         "canonical": "#f4f1e8",
         "tonalRamp": ["#2b2922", "#49463c", "#6a665a", "#8d887b", "#b0ab9e", "#d2cec2", "#f4f1e8", "#fdfcf8"]
       },
@@ -69,123 +63,159 @@
         "displayName": "Grid White",
         "canonical": "#fffdf7",
         "tonalRamp": ["#2d2c28", "#4b4a45", "#6d6b65", "#908e87", "#b4b1aa", "#d8d5cf", "#eeeae4", "#fffdf7"]
+      },
+      "map-mist": {
+        "role": "neutral",
+        "displayName": "Map Mist",
+        "canonical": "#e8ebe5",
+        "tonalRamp": ["#252924", "#424741", "#626760", "#848a82", "#a7aca4", "#c8ccc5", "#e8ebe5", "#f8faf7"]
+      },
+      "evergreen-ink": {
+        "role": "neutral",
+        "displayName": "Evergreen Ink",
+        "canonical": "#173225",
+        "tonalRamp": ["#0a1710", "#173225", "#2e4e3d", "#4a6b59", "#6c8a78", "#94aa9c", "#c0cec5", "#eff4f1"]
+      },
+      "sage-muted": {
+        "role": "neutral",
+        "displayName": "Sage Muted",
+        "canonical": "#617568",
+        "tonalRamp": ["#19221c", "#2d3c32", "#46574c", "#617568", "#829388", "#a5b2aa", "#ccd4cf", "#f2f5f3"]
+      },
+      "soft-divider": {
+        "role": "neutral",
+        "displayName": "Soft Divider",
+        "canonical": "#c7d4ca",
+        "tonalRamp": ["#202a22", "#39463c", "#56645a", "#758378", "#98a69b", "#bac6bc", "#dce4de", "#f5f8f6"]
       }
     },
     "typographyMeta": {
-      "display": { "displayName": "Stamped Display", "purpose": "Verified completion headlines only." },
-      "headline": { "displayName": "Panel Headline", "purpose": "Names operational bays and drawers." },
-      "body": { "displayName": "Instruction Body", "purpose": "Mission guidance and supporting explanation." },
-      "label": { "displayName": "Operational Label", "purpose": "Scores, statuses, legends, captions, and control labels." }
+      "display": { "displayName": "Festival Display", "purpose": "The landing name and largest invitation statement." },
+      "headline": { "displayName": "Workbench Headline", "purpose": "Panels, outcome overlays, and route-level titles." },
+      "body": { "displayName": "Instruction Body", "purpose": "Mission guidance and short explanations." },
+      "label": { "displayName": "Operational Label", "purpose": "Scores, statuses, legends, credits, and controls." }
     },
     "shadows": [
-      { "name": "board-lift", "value": "0 12px 24px rgba(2,24,39,.16)", "purpose": "Lifts the unified workspace above the page." },
-      { "name": "magnetic-block", "value": "0 5px 0 rgba(12,37,56,.28)", "purpose": "Creates the hard mounted edge under source command blocks." },
-      { "name": "program-move", "value": "0 3px 0 #17466e", "purpose": "Seats compact absolute-direction commands in the program." },
-      { "name": "program-repeat", "value": "0 3px 0 #0b5646", "purpose": "Seats compact repeat containers in the program." },
-      { "name": "safety-rail", "value": "0 9px 0 #80909a", "purpose": "Anchors the protected grid frame." },
-      { "name": "drawer", "value": "-18px 0 40px rgba(0,0,0,.25)", "purpose": "Separates the right-side leaderboard drawer." },
-      { "name": "result-modal", "value": "0 20px 60px rgba(0,0,0,.3)", "purpose": "Lifts the verified result above its scrim." }
+      { "name": "festival-action", "value": "0 7px 18px rgba(0,0,0,.25)", "purpose": "Lifts the landing start action from the green hero." },
+      { "name": "partner-plate", "value": "0 4px 12px rgba(0,0,0,.16)", "purpose": "Separates authoritative partner marks from the green scoreboard." },
+      { "name": "magnetic-tile", "value": "0 7px 16px rgba(12,37,56,.2)", "purpose": "Gives draggable source commands tangible lift." },
+      { "name": "program-block", "value": "0 4px 8px rgba(12,37,56,.2)", "purpose": "Keeps assembled commands readable on the dotted canvas." },
+      { "name": "map-frame", "value": "0 8px 18px rgba(12,37,56,.22)", "purpose": "Seats the execution grid on the mist field." },
+      { "name": "result-modal", "value": "0 20px 60px rgba(0,0,0,.3)", "purpose": "Lifts verified completion and score submission." }
     ],
     "motion": [
-      { "name": "command-response", "value": "160ms ease", "purpose": "Quick lift, brightness, and press feedback on command blocks." },
-      { "name": "mascot-step", "value": "220ms cubic-bezier(.16,1,.3,1)", "purpose": "A lively but controlled cell-to-cell mascot response." },
-      { "name": "route-pulse", "value": "800ms steps(2,end)", "purpose": "Signals that the assembled route is currently executing." },
-      { "name": "toast-arrival", "value": "200ms ease", "purpose": "Slides transient coaching feedback upward into view." }
+      { "name": "festival-action-response", "value": "180ms cubic-bezier(.16,1,.3,1)", "purpose": "Moves primary landing actions with a short confident rise." },
+      { "name": "command-response", "value": "160ms ease", "purpose": "Provides immediate lift and press feedback on command tiles." },
+      { "name": "mascot-step", "value": "420ms cubic-bezier(.22,.72,.28,1)", "purpose": "Moves the official mascot between grid cells without rotating the artwork." },
+      { "name": "outcome-pop", "value": "300ms cubic-bezier(.16,1,.3,1)", "purpose": "Centers success or failure feedback after execution." },
+      { "name": "reduced-motion", "value": "0.01ms", "purpose": "Collapses animations and transitions when reduced motion is requested." }
     ],
     "breakpoints": [
-      { "name": "compact-desktop", "value": "1000px" },
-      { "name": "mobile", "value": "680px" }
+      { "name": "workbench-compact", "value": "1180px" },
+      { "name": "game-mobile", "value": "760px" },
+      { "name": "landing-mobile", "value": "680px" }
     ]
   },
   "components": [
     {
-      "name": "Direction Command Block",
+      "name": "Festival Start Button",
       "kind": "button",
-      "refersTo": "command-move",
-      "description": "Adds one absolute up, down, left, or right movement instruction with the signature interlocking magnetic silhouette.",
-      "html": "<button class=\"ds-command ds-command-up\" type=\"button\"><span class=\"ds-command-icon\" aria-hidden=\"true\">↑</span><span><strong>위로</strong><small>한 칸 이동</small></span></button>",
-      "css": ".ds-command{display:flex;align-items:center;gap:13px;width:280px;min-height:68px;border:0;border-radius:12px;padding:10px 13px;text-align:left;color:var(--white);font-family:'Noto Sans KR',sans-serif;font-weight:700;box-shadow:0 5px 0 rgba(12,37,56,.28);clip-path:polygon(0 0,40% 0,43% 7%,57% 7%,60% 0,100% 0,100% 40%,94% 43%,94% 57%,100% 60%,100% 100%,60% 100%,57% 93%,43% 93%,40% 100%,0 100%);transition:transform .16s ease,filter .16s ease}.ds-command-up{background:var(--blue)}.ds-command:hover{transform:translateY(-2px);filter:brightness(1.06)}.ds-command:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(12,37,56,.28)}.ds-command:focus-visible{outline:4px solid #55b7ff;outline-offset:3px}.ds-command-icon{display:grid;place-items:center;width:42px;height:42px;border-radius:9px;background:rgba(255,255,255,.15);font-size:1.8rem}.ds-command span:last-child{display:grid}.ds-command strong{font-size:1rem}.ds-command small{font-size:.72rem;color:rgba(255,255,255,.82)}"
+      "refersTo": "button-start",
+      "description": "The landing page's primary invitation into the competition.",
+      "html": "<a class=\"ds-start\" href=\"#\"><span class=\"ds-play\" aria-hidden=\"true\"></span>대회 시작하기</a>",
+      "css": ".ds-start{display:inline-flex;align-items:center;gap:11px;min-height:58px;padding:0 24px;border-radius:11px;background:var(--yellow);color:var(--navy);text-decoration:none;font-family:'Noto Sans KR',sans-serif;font-size:1.04rem;font-weight:900;box-shadow:0 7px 18px rgba(0,0,0,.25);transition:transform .18s cubic-bezier(.16,1,.3,1),filter .18s ease,box-shadow .18s ease}.ds-start:hover{transform:translateY(-3px);filter:brightness(1.05);box-shadow:0 11px 25px rgba(0,0,0,.28)}.ds-start:focus-visible{outline:4px solid #55b7ff;outline-offset:4px}.ds-play{width:0;height:0;border-top:7px solid transparent;border-bottom:7px solid transparent;border-left:12px solid currentColor}"
     },
     {
-      "name": "Repeat Command Block",
+      "name": "Direction Command Tile",
+      "kind": "button",
+      "refersTo": "command-up",
+      "description": "A square, interlocking source tile for one absolute movement direction.",
+      "html": "<button class=\"ds-command ds-command-up\" type=\"button\"><span class=\"ds-command-icon\" aria-hidden=\"true\"><svg viewBox=\"0 0 48 48\"><path d=\"M24 6 9 22h9v20h12V22h9L24 6Z\"/></svg></span><span><strong>위로</strong><small>한 칸 이동</small></span></button>",
+      "css": ".ds-command{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;width:156px;aspect-ratio:1;border:0;padding:14px 10px 18px;background:var(--blue);color:var(--white);font-family:'Noto Sans KR',sans-serif;text-align:center;clip-path:polygon(0 0,39% 0,43% 7%,57% 7%,61% 0,100% 0,100% 39%,93% 43%,93% 57%,100% 61%,100% 93%,61% 93%,57% 100%,43% 100%,39% 93%,0 93%,0 61%,7% 57%,7% 43%,0 39%);box-shadow:0 7px 16px rgba(12,37,56,.2);transition:transform .16s ease,filter .16s ease}.ds-command:hover{transform:translateY(-2px);filter:brightness(1.06)}.ds-command:focus-visible{outline:4px solid #55b7ff;outline-offset:3px}.ds-command-icon{display:grid;place-items:center;width:52px;height:52px;border-radius:12px;background:rgba(255,255,255,.17)}.ds-command-icon svg{width:35px;height:35px;fill:currentColor}.ds-command strong{display:block;font-size:1.02rem}.ds-command small{font-size:.68rem;color:rgba(255,255,255,.82)}"
+    },
+    {
+      "name": "Repeat Command Tile",
       "kind": "button",
       "refersTo": "command-repeat",
-      "description": "Opens or closes a green repeat container that nests direction instructions and exposes a compact repeat count.",
-      "html": "<button class=\"ds-command ds-command-repeat\" type=\"button\"><span class=\"ds-command-icon\" aria-hidden=\"true\">↻</span><span><strong>반복하기</strong><small>방향 묶기</small></span></button>",
-      "css": ".ds-command{display:flex;align-items:center;gap:13px;width:280px;min-height:68px;border:0;border-radius:12px;padding:10px 13px;text-align:left;color:var(--white);font-family:'Noto Sans KR',sans-serif;font-weight:700;box-shadow:0 5px 0 rgba(12,37,56,.28);clip-path:polygon(0 0,40% 0,43% 7%,57% 7%,60% 0,100% 0,100% 40%,94% 43%,94% 57%,100% 60%,100% 100%,60% 100%,57% 93%,43% 93%,40% 100%,0 100%);transition:transform .16s ease,filter .16s ease}.ds-command-repeat{background:var(--green)}.ds-command:hover{transform:translateY(-2px);filter:brightness(1.06)}.ds-command:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(12,37,56,.28)}.ds-command:focus-visible{outline:4px solid #55b7ff;outline-offset:3px}.ds-command-icon{display:grid;place-items:center;width:42px;height:42px;border-radius:9px;background:rgba(255,255,255,.15);font-size:1.8rem}.ds-command span:last-child{display:grid}.ds-command strong{font-size:1rem}.ds-command small{font-size:.72rem;color:rgba(255,255,255,.82)}"
+      "description": "The orange source tile that introduces nested program structure.",
+      "html": "<button class=\"ds-command ds-command-repeat\" type=\"button\"><span class=\"ds-command-icon\" aria-hidden=\"true\"><svg viewBox=\"0 0 48 48\"><path d=\"M38.7 13.5A19 19 0 1 0 42 30h-8a11 11 0 1 1-1.8-10.7L25 26h19V7l-5.3 6.5Z\"/></svg></span><span><strong>반복하기</strong><small>명령을 안에 넣기</small></span></button>",
+      "css": ".ds-command{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;width:156px;aspect-ratio:1;border:0;padding:14px 10px 18px;background:var(--coral);color:var(--white);font-family:'Noto Sans KR',sans-serif;text-align:center;clip-path:polygon(0 0,39% 0,43% 7%,57% 7%,61% 0,100% 0,100% 39%,93% 43%,93% 57%,100% 61%,100% 93%,61% 93%,57% 100%,43% 100%,39% 93%,0 93%,0 61%,7% 57%,7% 43%,0 39%);box-shadow:0 7px 16px rgba(12,37,56,.2);transition:transform .16s ease,filter .16s ease}.ds-command:hover{transform:translateY(-2px);filter:brightness(1.06)}.ds-command:focus-visible{outline:4px solid #55b7ff;outline-offset:3px}.ds-command-icon{display:grid;place-items:center;width:52px;height:52px;border-radius:12px;background:rgba(255,255,255,.17)}.ds-command-icon svg{width:35px;height:35px;fill:currentColor}.ds-command strong{display:block;font-size:1.02rem}.ds-command small{font-size:.68rem;color:rgba(255,255,255,.82)}"
+    },
+    {
+      "name": "Program Repeat Container",
+      "kind": "custom",
+      "refersTo": "command-repeat",
+      "description": "An orange C-shaped program block that visibly contains nested directions.",
+      "html": "<div class=\"ds-repeat\"><div class=\"ds-repeat-head\"><strong>반복 3회</strong></div><div class=\"ds-repeat-body\"><div class=\"ds-nested\">위로</div><div class=\"ds-nested ds-nested-green\">오른쪽으로</div></div><div class=\"ds-repeat-tail\"></div></div>",
+      "css": ".ds-repeat{width:300px;padding:0 0 14px;background:var(--coral);color:var(--white);font-family:'Noto Sans KR',sans-serif;clip-path:polygon(0 0,42% 0,45% 8px,56% 8px,59% 0,100% 0,100% calc(100% - 8px),60% calc(100% - 8px),56% 100%,45% 100%,41% calc(100% - 8px),0 calc(100% - 8px));box-shadow:0 5px 10px rgba(77,28,22,.24)}.ds-repeat-head{min-height:45px;display:flex;align-items:center;padding:7px 10px}.ds-repeat-body{position:relative;display:grid;gap:2px;min-height:46px;margin:0 12px 0 36px;padding:6px 7px;background:var(--paper);box-shadow:inset 0 0 0 2px rgba(12,37,56,.18)}.ds-repeat-body::before{content:'';position:absolute;left:-24px;inset-block:0;width:24px;background:var(--coral)}.ds-nested{min-height:38px;padding:9px 10px;background:var(--blue);color:var(--white);font-weight:800;clip-path:polygon(0 0,39% 0,43% 8%,57% 8%,61% 0,100% 0,100% 92%,61% 92%,57% 100%,43% 100%,39% 92%,0 92%)}.ds-nested-green{background:var(--green)}.ds-repeat-tail{height:14px;background:var(--coral)}"
     },
     {
       "name": "Run Button",
       "kind": "button",
       "refersTo": "button-run",
-      "description": "Executes the assembled evacuation route as the primary safety-yellow action.",
+      "description": "Executes the assembled program as the strongest action in the dock.",
       "html": "<button class=\"ds-run\" type=\"button\"><span aria-hidden=\"true\">▶</span> 실행하기</button>",
-      "css": ".ds-run{min-width:190px;min-height:52px;border:0;border-radius:10px;padding:0 18px;background:var(--yellow);color:var(--navy);font-family:'Noto Sans KR',sans-serif;font-weight:900;box-shadow:0 5px 0 #b17b12;transition:transform .16s ease,filter .16s ease}.ds-run:hover{filter:brightness(1.05);transform:translateY(-1px)}.ds-run:active{transform:translateY(3px);box-shadow:0 2px 0 #b17b12}.ds-run:focus-visible{outline:4px solid #55b7ff;outline-offset:3px}.ds-run:disabled{cursor:not-allowed;opacity:.45}"
-    },
-    {
-      "name": "Program Command",
-      "kind": "custom",
-      "refersTo": "program-forward",
-      "description": "Shows an ordered command in the assembled algorithm and highlights it during execution.",
-      "html": "<div class=\"ds-program ds-program-active\"><span class=\"ds-program-index\">1</span><strong>위로</strong><button class=\"ds-program-delete\" type=\"button\" aria-label=\"1번 블록 삭제\">×</button></div>",
-      "css": ".ds-program{display:grid;grid-template-columns:28px 1fr 30px;align-items:center;gap:8px;width:280px;min-height:48px;padding:7px 8px;border-radius:9px;background:var(--blue);color:var(--white);font-family:'Noto Sans KR',sans-serif;box-shadow:0 3px 0 #17466e;clip-path:polygon(0 0,40% 0,43% 7%,57% 7%,60% 0,100% 0,100% 40%,94% 43%,94% 57%,100% 60%,100% 100%,60% 100%,57% 93%,43% 93%,40% 100%,0 100%)}.ds-program-active{outline:4px solid var(--yellow);outline-offset:2px}.ds-program-index{display:grid;place-items:center;width:25px;height:25px;border-radius:50%;background:rgba(255,255,255,.18);font-size:.72rem;font-weight:800}.ds-program-delete{border:0;background:rgba(0,0,0,.16);color:var(--white);border-radius:7px;width:28px;height:28px;font-size:1.1rem}.ds-program-delete:hover{background:rgba(0,0,0,.28)}.ds-program-delete:focus-visible{outline:4px solid #55b7ff;outline-offset:2px}"
+      "css": ".ds-run{display:flex;align-items:center;justify-content:center;gap:8px;min-width:190px;min-height:58px;border:0;border-radius:10px;padding:0 18px;background:var(--yellow);color:var(--navy);font-family:'Noto Sans KR',sans-serif;font-weight:900;box-shadow:0 5px 0 #b17b12;transition:transform .16s ease,filter .16s ease}.ds-run:hover{filter:brightness(1.05);transform:translateY(-1px)}.ds-run:active{transform:translateY(3px);box-shadow:0 2px 0 #b17b12}.ds-run:focus-visible{outline:4px solid #55b7ff;outline-offset:3px}.ds-run:disabled{cursor:not-allowed;opacity:.45}"
     },
     {
       "name": "Scoreboard Stat",
       "kind": "nav",
-      "description": "Pairs a pale operational label with a bright live value in the navy race header.",
+      "description": "Pairs a quiet label with a bright live value in the festival-green scoreboard.",
       "html": "<div class=\"ds-stat\"><small>스테이지</small><strong>1 / 5</strong></div>",
-      "css": ".ds-stat{display:grid;gap:2px;min-width:68px;text-align:center;padding:8px 12px;background:var(--navy);color:var(--white);font-family:'Noto Sans KR',sans-serif}.ds-stat small{font-size:.75rem;color:#bad0dd}.ds-stat strong{font-size:1.05rem;font-weight:800;font-variant-numeric:tabular-nums}"
+      "css": ".ds-stat{display:grid;gap:2px;min-width:68px;padding:8px 12px;background:var(--navy);color:var(--white);font-family:'Noto Sans KR',sans-serif;text-align:center}.ds-stat small{font-size:.75rem;color:#c9dfd1}.ds-stat strong{font-size:1.05rem;font-weight:800;font-variant-numeric:tabular-nums}"
     },
     {
       "name": "Name Submission Field",
       "kind": "input",
-      "description": "Collects the short display name only after all five stages have been verified.",
-      "html": "<div class=\"ds-name-row\"><label class=\"ds-name-label\" for=\"ds-name\">이름</label><div><input id=\"ds-name\" maxlength=\"12\" placeholder=\"이름을 입력하세요\"><button type=\"button\">순위 등록</button></div></div>",
-      "css": ".ds-name-row{font-family:'Noto Sans KR',sans-serif}.ds-name-label{display:block;margin-bottom:8px;color:var(--ink);font-weight:800}.ds-name-row>div{display:flex}.ds-name-row input{min-width:0;width:220px;border:2px solid var(--navy);border-radius:0;padding:13px;background:var(--white);color:var(--ink)}.ds-name-row button{border:0;border-radius:0;padding:0 18px;background:var(--yellow);color:var(--navy);font-weight:900}.ds-name-row input:focus-visible,.ds-name-row button:focus-visible{outline:4px solid #55b7ff;outline-offset:3px}"
+      "refersTo": "input-name",
+      "description": "Collects one short display name only after the five-stage result is verified.",
+      "html": "<div class=\"ds-name\"><label for=\"ds-player\">순위표에 올릴 이름</label><div><input id=\"ds-player\" maxlength=\"12\" placeholder=\"이름 또는 별명\"><button type=\"button\">점수 등록</button></div></div>",
+      "css": ".ds-name{font-family:'Noto Sans KR',sans-serif;color:var(--ink)}.ds-name label{display:block;margin-bottom:8px;font-weight:800}.ds-name>div{display:flex}.ds-name input{min-width:0;width:220px;border:2px solid var(--navy);border-radius:0;padding:13px;background:var(--white);color:var(--ink)}.ds-name button{border:0;border-radius:0;padding:0 18px;background:var(--yellow);color:var(--navy);font-weight:900}.ds-name input:focus-visible,.ds-name button:focus-visible{outline:4px solid #55b7ff;outline-offset:3px}"
     },
     {
-      "name": "Route Status",
-      "kind": "chip",
-      "description": "Reports whether the child is designing, running, retrying, or has cleared the stage.",
-      "html": "<span class=\"ds-route-status ds-route-running\"><i aria-hidden=\"true\"></i><span>알고리즘 실행 중</span></span>",
-      "css": ".ds-route-status{display:inline-flex;align-items:center;gap:9px;color:var(--ink);font-family:'Noto Sans KR',sans-serif;font-size:.9rem;font-weight:800}.ds-route-status i{width:11px;height:11px;border-radius:50%;background:var(--yellow)}.ds-route-running i{animation:ds-pulse .8s steps(2,end) infinite}.ds-route-status:focus-visible{outline:4px solid #55b7ff;outline-offset:3px}@keyframes ds-pulse{50%{transform:scale(1.5)}}@media(prefers-reduced-motion:reduce){.ds-route-running i{animation-duration:.01ms}}"
+      "name": "Persistent Attribution",
+      "kind": "custom",
+      "description": "Keeps creator and Goyang City character-license credit visible on every public surface.",
+      "html": "<p class=\"ds-credit\"><span>제작: 연세대학교 컴퓨터과학과 조민준</span> · <a href=\"#\">캐릭터 제공: 고양특례시 · 공공누리 제3유형</a></p>",
+      "css": ".ds-credit{margin:0;padding:10px 14px;background:#082f1c;color:#c6d8cd;font-family:'Noto Sans KR',sans-serif;font-size:.7rem;line-height:1.45}.ds-credit a{color:var(--yellow);font-weight:800;text-decoration:none}.ds-credit a:focus-visible{outline:4px solid #55b7ff;outline-offset:3px}"
     }
   ],
   "narrative": {
-    "northStar": "The Laminated Evacuation Board",
-    "overview": "The interface turns a child's command sequence into a visible evacuation route. It feels like a durable operations board prepared for a friendly school safety drill: navy framing establishes command, warm paper and mist surfaces keep the work legible, striped rails protect the play field, and magnetic-looking blocks make every instruction feel placed by hand.\n\nThe tone is alert without becoming alarming. Safety yellow identifies action and the planned path, coral marks hazards and errors, four distinct colors separate absolute movement directions, and green identifies repetition and safe completion. The upright G-META mascot remains the emotional center of the map while the interface stays compact, direct, and readable for elementary-school players.",
+    "northStar": "The Youth Festival Coding Ground",
+    "overview": "코딩할고양 is a bright, event-ready identity for the Goyang Youth Harmony Festival. Deep green creates a recognizable civic frame; vivid yellow and orange deliver the energy of a youth event; and warm paper surfaces keep the coding task calm enough to operate. The system should feel welcoming and official at once—more like a well-produced festival activity than a generic educational dashboard.\n\nThe official Goyang City cat mascot is the human connection across the experience. Use the supplied artwork unmodified: preserve its pixels, proportions, colors, and silhouette, and change only its rendered size and position. The event slogan, Tanhyeon Youth Center logo, and PROTEEN logo are also authoritative supplied assets. Persistent creator and character-license attribution is part of the public visual system, not optional fine print.\n\nThe game retains its purpose-built coding topology: algorithm canvas on the left, execution map on the right, and a full-width command dock below. Interlocking direction blocks and the open repeat container make program structure tangible, while the mascot’s actual movement—not a predicted route—shows the result of the child’s reasoning.",
     "keyCharacteristics": [
-      "A laminated navy-and-paper operations board rather than a generic rounded learning dashboard.",
-      "Interlocking magnetic command blocks with tactile press depth.",
-      "Safety-yellow rails and numbered markers that make the planned route visible before execution.",
-      "Coral hazards, deep navy structure, four color-coded directions, and a distinct green repeat category.",
-      "A 1920×1080 coding workbench with algorithm left, execution map right, and the command inventory spanning the bottom."
+      "Deep festival green paired with high-energy yellow and orange.",
+      "Official, unmodified Goyang City cat mascot artwork as the primary character.",
+      "Supplied event and partner logos presented clearly on neutral surfaces.",
+      "A focused algorithm-left, map-right, command-dock workbench for the competition.",
+      "Persistent creator and public-license attribution on every public surface."
     ],
     "rules": [
-      { "name": "The Safety Signal Rule", "body": "Safety yellow means route or action, while hazard coral means danger, destructive action, or error; never swap their jobs.", "section": "colors" },
-      { "name": "The Color-Coded Command Rule", "body": "Up, down, left, right, and repeat keep distinct, consistent colors everywhere they appear, so children can recognize a sequence before reading every label.", "section": "colors" },
-      { "name": "The Stamped Heading Rule", "body": "Use Black Han Sans only where a sign, panel, or result needs a bold operational title; all instructional copy remains Noto Sans KR.", "section": "typography" },
-      { "name": "The Numbers-at-a-Glance Rule", "body": "Timers, scores, block counts, and ranks use bold weight and tabular numerals where values update in place.", "section": "typography" },
-      { "name": "The Map Owns the Mission Rule", "body": "The grid is always the largest working surface and moves ahead of editing controls on narrow screens.", "section": "layout" },
-      { "name": "The Single Board Rule", "body": "Adjacent work areas share edges and dividers; do not break the core workspace into floating dashboard cards.", "section": "layout" },
-      { "name": "The Mounted, Not Floating Rule", "body": "Use short vertical shadows for controls and map hardware; reserve soft diffuse shadows for the workspace, drawer, and result overlay.", "section": "elevation" },
-      { "name": "The Purposeful Geometry Rule", "body": "Rounded corners belong to touch controls and circular game symbols; operational containers stay square and engineered.", "section": "shapes" },
-      { "name": "The Interlock Rule", "body": "Command blocks retain their magnetic notch silhouette in every sequence-building context.", "section": "shapes" }
+      { "name": "The Festival Signal Rule", "body": "Green establishes the event, yellow identifies the primary next action or active execution, and orange supplies energy or repetition; keep those roles stable.", "section": "colors" },
+      { "name": "The Command Recognition Rule", "body": "Up, down, horizontal movement, and repeat retain their category colors everywhere they appear, but labels and arrow geometry always accompany color.", "section": "colors" },
+      { "name": "The One Festival Voice Rule", "body": "Black Han Sans is reserved for the event name and decisive headings; all operational language remains Noto Sans KR.", "section": "typography" },
+      { "name": "The Live Number Rule", "body": "Timers, scores, coin totals, block counts, and ranks use bold weight and tabular numerals where values update in place.", "section": "typography" },
+      { "name": "The Coding Topology Rule", "body": "On competition displays, algorithm stays left, observed result stays right, and source commands stay in the full-width dock below.", "section": "layout" },
+      { "name": "The Map-First Mobile Rule", "body": "On narrow screens, show the execution map before the algorithm and dock without hiding the run action.", "section": "layout" },
+      { "name": "The Functional Lift Rule", "body": "Apply elevation to actions, movable code, partner-logo plates, and transient overlays; keep reading and working surfaces flat or inset.", "section": "elevation" },
+      { "name": "The Interlocking Code Rule", "body": "Every movable direction command retains a visible connection profile in both the source dock and the assembled algorithm.", "section": "shapes" },
+      { "name": "The Container Means Structure Rule", "body": "Repeat is not a differently colored row; it must visibly contain its nested movement commands.", "section": "shapes" }
     ],
     "dos": [
-      "**Do** keep the 1920×1080 hierarchy as scoreboard, algorithm left, map right, and command inventory across the bottom.",
-      "**Do** highlight the active code block and show only actual movement results on the map.",
-      "**Do** keep G-META upright and express direction through the four absolute movement blocks.",
-      "**Do** preserve keyboard focus, touch-sized controls, Korean labels, and reduced-motion behavior.",
-      "**Do** use hard-edged depth and clipped geometry to make controls feel mounted and magnetic."
+      "**Do** lead every public route with the 코딩할고양 name and festival green/yellow/orange identity.",
+      "**Do** use the official Goyang City mascot artwork unchanged and alter only rendered size and position.",
+      "**Do** preserve supplied event and partner logos at their natural proportions on neutral surfaces.",
+      "**Do** retain creator and public-license attribution on every public surface.",
+      "**Do** keep the game’s algorithm-left, map-right, command-dock topology at competition width.",
+      "**Do** pair command color with Korean text and distinct arrow or repeat geometry."
     ],
     "donts": [
-      "**Don't** turn the workspace into a collection of soft floating cards or pastel learning-app panels.",
-      "**Don't** use safety yellow as decoration or hazard coral for ordinary navigation.",
-      "**Don't** rotate, crop, or replace the recognizable G-META silhouette to indicate direction.",
-      "**Don't** hide the run action below long content on mobile; retain the quick-run control by the map and sticky full controls.",
-      "**Don't** communicate bombs, coins, flags, or execution state through color alone."
+      "**Don't** reintroduce the former robot-led dark operations-board identity.",
+      "**Don't** recolor, redraw, rotate, crop, stylize, or replace the official Goyang City mascot.",
+      "**Don't** recolor or distort the event slogan, Tanhyeon Youth Center logo, or PROTEEN logo.",
+      "**Don't** turn the competition workbench into unrelated floating dashboard cards.",
+      "**Don't** show a predicted route before execution or rely on color alone for game state.",
+      "**Don't** hide or remove the required attribution to gain layout space."
     ]
   }
 }

@@ -1,30 +1,33 @@
 ---
-name: "G메타ㄹ출"
-description: "명령 블록으로 지메타의 안전한 탈출 경로를 설계하는 코딩 경기 작전판"
+name: "코딩할고양"
+description: "고양 청소년어울림마당에서 공식 고양시 마스코트와 함께 즐기는 블록 코딩 챌린지"
 colors:
-  operations-navy: "#0c2538"
-  command-blue: "#2b78c5"
-  route-green: "#16836b"
-  safety-yellow: "#f7c948"
-  hazard-coral: "#e7523e"
-  operations-ink: "#102331"
-  instruction-muted: "#597080"
-  divider-steel: "#b9c3c7"
-  map-mist: "#e8ebe5"
-  board-paper: "#f4f1e8"
+  festival-green: "#114b2f"
+  festival-green-deep: "#082f1c"
+  coding-yellow: "#ffe22d"
+  energetic-orange: "#ff7a00"
+  repeat-orange: "#f0642f"
+  direction-blue: "#2b78c5"
+  direction-purple: "#7257b8"
+  direction-green: "#11833f"
+  warm-paper: "#f4f1e8"
   grid-white: "#fffdf7"
+  map-mist: "#e8ebe5"
+  evergreen-ink: "#173225"
+  sage-muted: "#617568"
+  soft-divider: "#c7d4ca"
 typography:
   display:
     fontFamily: "Black Han Sans, sans-serif"
-    fontSize: "clamp(2rem, 4vw, 3.5rem)"
+    fontSize: "clamp(3.5rem, 7.2vw, 7.1rem)"
     fontWeight: 400
-    lineHeight: 1.05
-    letterSpacing: "-0.02em"
+    lineHeight: 0.98
+    letterSpacing: "-0.035em"
   headline:
     fontFamily: "Black Han Sans, sans-serif"
-    fontSize: "1.7rem"
+    fontSize: "clamp(1.8rem, 2vw, 2.45rem)"
     fontWeight: 400
-    letterSpacing: "-0.02em"
+    letterSpacing: "-0.025em"
   body:
     fontFamily: "Noto Sans KR, sans-serif"
     fontSize: "0.9rem"
@@ -35,106 +38,108 @@ typography:
     fontSize: "0.75rem"
     fontWeight: 800
 rounded:
-  xs: "7px"
+  xs: "6px"
   sm: "8px"
-  md: "9px"
-  lg: "10px"
-  xl: "12px"
+  md: "10px"
+  lg: "11px"
+  xl: "14px"
   round: "50%"
 spacing:
   xs: "4px"
   sm: "8px"
   md: "12px"
   lg: "18px"
-  xl: "26px"
+  xl: "24px"
   2xl: "32px"
 components:
-  command-move:
-    backgroundColor: "{colors.command-blue}"
-    textColor: "{colors.grid-white}"
-    rounded: "{rounded.xl}"
-    padding: "10px 13px"
-    height: "68px"
-  command-repeat:
-    backgroundColor: "{colors.route-green}"
-    textColor: "{colors.grid-white}"
-    rounded: "{rounded.xl}"
-    padding: "10px 13px"
-    height: "68px"
+  button-start:
+    backgroundColor: "{colors.coding-yellow}"
+    textColor: "{colors.festival-green}"
+    rounded: "{rounded.lg}"
+    padding: "0 24px"
+    height: "58px"
   button-run:
-    backgroundColor: "{colors.safety-yellow}"
-    textColor: "{colors.operations-navy}"
-    rounded: "{rounded.lg}"
-    height: "52px"
-  button-secondary:
-    backgroundColor: "{colors.map-mist}"
-    textColor: "{colors.operations-navy}"
-    rounded: "{rounded.lg}"
-    height: "52px"
-  program-move:
-    backgroundColor: "{colors.command-blue}"
-    textColor: "{colors.grid-white}"
+    backgroundColor: "{colors.coding-yellow}"
+    textColor: "{colors.festival-green}"
     rounded: "{rounded.md}"
-    padding: "7px 8px"
-    height: "48px"
-  program-repeat:
-    backgroundColor: "{colors.route-green}"
+    height: "58px"
+  command-up:
+    backgroundColor: "{colors.direction-blue}"
     textColor: "{colors.grid-white}"
-    rounded: "{rounded.md}"
-    padding: "7px 8px"
-    height: "48px"
+    padding: "14px 10px 18px"
+    size: "156px"
+  command-down:
+    backgroundColor: "{colors.direction-purple}"
+    textColor: "{colors.grid-white}"
+    padding: "14px 10px 18px"
+    size: "156px"
+  command-horizontal:
+    backgroundColor: "{colors.direction-green}"
+    textColor: "{colors.grid-white}"
+    padding: "14px 10px 18px"
+    size: "156px"
+  command-repeat:
+    backgroundColor: "{colors.repeat-orange}"
+    textColor: "{colors.grid-white}"
+    padding: "14px 10px 18px"
+    size: "156px"
+  input-name:
+    backgroundColor: "{colors.grid-white}"
+    textColor: "{colors.evergreen-ink}"
+    padding: "13px"
 ---
 
-# Design System: G메타ㄹ출
+# Design System: 코딩할고양
 
 ## Overview
 
-**Creative North Star: "The Laminated Evacuation Board"**
+**Creative North Star: "The Youth Festival Coding Ground"**
 
-The interface turns a child's command sequence into a visible evacuation route. It feels like a durable operations board prepared for a friendly school safety drill: navy framing establishes command, warm paper and mist surfaces keep the work legible, striped rails protect the play field, and magnetic-looking blocks make every instruction feel placed by hand.
+코딩할고양 is a bright, event-ready identity for the Goyang Youth Harmony Festival. Deep green creates a recognizable civic frame; vivid yellow and orange deliver the energy of a youth event; and warm paper surfaces keep the coding task calm enough to operate. The system should feel welcoming and official at once—more like a well-produced festival activity than a generic educational dashboard.
 
-The tone is alert without becoming alarming. Safety yellow identifies action and the planned path, coral marks hazards and errors, four distinct colors separate absolute movement directions, and green identifies repetition and safe completion. The upright G-META mascot remains the emotional center of the map while the interface stays compact, direct, and readable for elementary-school players.
+The official Goyang City cat mascot is the human connection across the experience. Use the supplied artwork unmodified: preserve its pixels, proportions, colors, and silhouette, and change only its rendered size and position. The event slogan, Tanhyeon Youth Center logo, and PROTEEN logo are also authoritative supplied assets. Persistent creator and character-license attribution is part of the public visual system, not optional fine print.
+
+The game retains its purpose-built coding topology: algorithm canvas on the left, execution map on the right, and a full-width command dock below. Interlocking direction blocks and the open repeat container make program structure tangible, while the mascot’s actual movement—not a predicted route—shows the result of the child’s reasoning.
 
 **Key Characteristics:**
 
-- A laminated navy-and-paper operations board rather than a generic rounded learning dashboard.
-- Interlocking magnetic command blocks with tactile press depth.
-- Safety-yellow rails and numbered markers that make the planned route visible before execution.
-- Coral hazards, deep navy structure, four color-coded directions, and a distinct green repeat category.
-- A 1920×1080 coding workbench with algorithm left, execution map right, and the command inventory spanning the bottom.
+- Deep festival green paired with high-energy yellow and orange.
+- Official, unmodified Goyang City cat mascot artwork as the primary character.
+- Supplied event and partner logos presented clearly on neutral surfaces.
+- A focused algorithm-left, map-right, command-dock workbench for the competition.
+- Persistent creator and public-license attribution on every public surface.
 
 ## Colors
 
-The palette combines institutional navy and steel with warm paper, then reserves saturated color for commands, safe progress, and hazards.
+The brand palette leads with civic green, then uses yellow and orange as festival signals; directional blue, purple, and green remain functional coding categories.
 
 ### Primary
 
-- **Operations Navy:** The structural color for the race header, grid frame, headings, directional marks, and high-contrast text.
-- **Safety Yellow:** The action color for execution, active-code focus, hazard rails, coins, and the brand tile.
+- **Festival Green:** The principal brand field for headers, the landing hero, dark controls, and high-contrast framing.
+- **Coding Yellow:** The most important action color for starts, execution, active-code focus, wordmark emphasis, and celebratory highlights.
 
 ### Secondary
 
-- **Command Blue:** Identifies upward movement; the remaining directions use their own consistent category colors.
-- **Route Green:** Identifies repeat containers and marks the escape flag and verified completion state.
-
-### Tertiary
-
-- **Hazard Coral:** Identifies bombs, destructive text actions, validation messages, and final-score emphasis.
+- **Energetic Orange:** Brings warmth to the landing-page start line, flag, and event accents.
+- **Repeat Orange:** Identifies repeat commands and the C/ㄷ-shaped container in the algorithm.
+- **Direction Blue:** Identifies upward movement blocks.
+- **Direction Purple:** Identifies downward movement blocks.
+- **Direction Green:** Identifies left and right movement blocks while remaining visually distinct through arrow direction and Korean labels.
 
 ### Neutral
 
-- **Board Paper:** The warm main workspace and modal surface.
-- **Grid White:** The clean playable cells and white-on-color content.
-- **Map Mist:** Separates the planning field and secondary controls from the paper bays.
-- **Operations Ink:** The darkest reading color on light surfaces.
-- **Instruction Muted:** Supporting instructions, captions, metadata, and disabled-feeling copy.
-- **Divider Steel:** Thin bay separators and list dividers.
+- **Warm Paper:** The algorithm panel, command dock, dialog, and results surface.
+- **Grid White:** Playable cells, light text, and neutral component previews.
+- **Map Mist:** The map field and subdued secondary controls.
+- **Evergreen Ink:** Primary text on light backgrounds.
+- **Sage Muted:** Instructions, metadata, captions, and quieter status copy.
+- **Soft Divider:** Panel seams, rules, and quiet structural borders.
 
 ### Named Rules
 
-**The Safety Signal Rule.** Safety yellow means route or action, while hazard coral means danger, destructive action, or error; never swap their jobs.
+**The Festival Signal Rule.** Green establishes the event, yellow identifies the primary next action or active execution, and orange supplies energy or repetition; keep those roles stable.
 
-**The Color-Coded Command Rule.** Up, down, left, right, and repeat keep distinct, consistent colors everywhere they appear, so children can recognize a sequence before reading every label.
+**The Command Recognition Rule.** Up, down, horizontal movement, and repeat retain their category colors everywhere they appear, but labels and arrow geometry always accompany color.
 
 ## Typography
 
@@ -142,119 +147,123 @@ The palette combines institutional navy and steel with warm paper, then reserves
 **Body Font:** Noto Sans KR (with sans-serif fallback)
 **Label Font:** Noto Sans KR (with sans-serif fallback)
 
-**Character:** Black Han Sans gives headings the unmistakable voice of stamped Korean signage. Noto Sans KR keeps instructions, scores, and controls dense but clear, with heavier weights used as functional wayfinding rather than decoration.
+**Character:** Black Han Sans gives the Korean name and major headings a compact, cheerful event voice. Noto Sans KR carries every instruction and live value with high legibility, using weight rather than decorative styling to establish hierarchy.
 
 ### Hierarchy
 
-- **Display** (400, fluid 2rem–3.5rem, 1.05): Reserved for the completion headline.
-- **Headline** (400, 1.7rem): Names the command bay and program panel; leaderboard headings may rise to 2rem.
-- **Body** (500, 0.9rem, 1.55): Explains missions and next actions in short, direct sentences.
-- **Label** (800, 0.75rem): Carries scorebar labels, status text, legends, captions, and button emphasis.
+- **Display** (400, fluid 3.5rem–7.1rem, 0.98): The landing name and its large invitation statement.
+- **Headline** (400, fluid 1.8rem–2.45rem): Workbench panels, modal outcomes, and route-level titles.
+- **Body** (500, 0.9rem, 1.55): Mission explanations and direct task guidance.
+- **Label** (800, 0.75rem): Scoreboard labels, statuses, legends, credits, and control emphasis.
 
 ### Named Rules
 
-**The Stamped Heading Rule.** Use Black Han Sans only where a sign, panel, or result needs a bold operational title; all instructional copy remains Noto Sans KR.
+**The One Festival Voice Rule.** Black Han Sans is reserved for the event name and decisive headings; all operational language remains Noto Sans KR.
 
-**The Numbers-at-a-Glance Rule.** Timers, scores, block counts, and ranks use bold weight and tabular numerals where values update in place.
+**The Live Number Rule.** Timers, scores, coin totals, block counts, and ranks use bold weight and tabular numerals where values update in place.
 
 ## Layout
 
-The competition shell begins with an 88px navy scoreboard and fills the remaining 1920×1080 viewport. Its upper work area places the algorithm canvas on the left at roughly 42% and the execution map on the right at roughly 58%; the command inventory spans the full bottom rail beside undo and run controls. One-pixel steel dividers create the feeling of a single fabricated board instead of unrelated cards.
+The landing page uses an 82px festival-green header, a two-column hero, a 128px partner strip, and a 44px attribution footer on desktop. The first viewport keeps the 코딩할고양 name, short rules summary, start and tutorial actions, official running mascot, event slogan, and partner identities visible together. At 680px and below, the hero becomes a vertical invitation and the logo strip and footer stack without removing attribution.
 
-Below 1180px, the algorithm and map remain side by side while the command rail gains a second action row. Below 760px, content becomes a map-first vertical flow—scoreboard, map, algorithm canvas, then command inventory. Click-to-add remains available wherever touch devices cannot provide native drag-and-drop, and the run controls stay sticky near the bottom.
+The competition surface targets 1920×1080. An 88px scoreboard combines the brand, partner logos, live race values, and leaderboard action. Beneath it, the upper work area places the algorithm canvas on the left at roughly 42% and the execution map on the right at roughly 58%; a 218px command dock spans the full bottom edge. The five source commands sit as centered square tiles between the dock explanation and undo/run actions.
 
-Spacing is compact and purposeful: 8–13px inside block controls, 18–26px between working groups, and 26–32px for major panel or result-card padding. The map remains square and centered; its scale, not its cell count, adapts to the viewport.
+Below 1180px, the algorithm and map remain side by side while the dock actions move to a second row. Below 760px, the surface becomes map-first—map, algorithm, then command dock—with sticky execution controls. Click-to-add remains alongside drag-and-drop for touch use. The grid derives both row and column tracks from the stage and preserves true square cells.
 
 ### Named Rules
 
-**The Map Owns the Mission Rule.** The grid is always the largest working surface and moves ahead of editing controls on narrow screens.
+**The Coding Topology Rule.** On competition displays, algorithm stays left, observed result stays right, and source commands stay in the full-width dock below.
 
-**The Single Board Rule.** Adjacent work areas share edges and dividers; do not break the core workspace into floating dashboard cards.
+**The Map-First Mobile Rule.** On narrow screens, show the execution map before the algorithm and dock without hiding the run action.
 
 ## Elevation & Depth
 
-Depth is structural rather than ambient. The full operations board has one broad shadow, the grid and command controls use short hard-edged drops that feel physically mounted, and transient overlays use larger directional or modal shadows. Most internal surfaces remain flat so state and play objects stay easy to read.
+Depth is selective and functional. The brand surfaces rely primarily on color fields; controls, movable blocks, the partner-logo plate, and overlays receive soft lift. The coding canvas uses an inset boundary and dotted working texture rather than a floating card shadow. Map objects and effects use dimensional rendering, but the supplied official mascot and institutional logos remain visually unaltered.
 
 ### Shadow Vocabulary
 
-- **Board Lift** (`0 12px 24px rgba(2,24,39,.16)`): Lifts the complete workspace from the page background.
-- **Magnetic Block** (`0 5px 0 rgba(12,37,56,.28)`): Gives command blocks a pressable bottom edge; active press shortens it to 2px.
-- **Program Block** (`0 3px 0 #17466e` / `0 3px 0 #0b5646`): Keeps assembled commands tactile at a smaller scale.
-- **Safety Rail** (`0 9px 0 #80909a`): Seats the striped grid frame on the map panel.
-- **Drawer** (`-18px 0 40px rgba(0,0,0,.25)`): Pulls the leaderboard above the workspace from the right.
-- **Result Modal** (`0 20px 60px rgba(0,0,0,.3)`): Separates the verified final result from its navy scrim.
+- **Festival Action** (`0 7px 18px rgba(0,0,0,.25)`): Lifts the landing start action from the green hero.
+- **Partner Plate** (`0 4px 12px rgba(0,0,0,.16)`): Separates institutional logos from the dark scoreboard.
+- **Magnetic Tile** (`0 7px 16px rgba(12,37,56,.2)`): Gives draggable square source commands visible lift.
+- **Program Block** (`0 4px 8px rgba(12,37,56,.2)`): Keeps assembled commands tangible without overpowering the canvas.
+- **Map Frame** (`0 8px 18px rgba(12,37,56,.22)`): Seats the execution grid on the mist field.
+- **Result Modal** (`0 20px 60px rgba(0,0,0,.3)`): Separates verified completion and score submission from the game.
 
 ### Named Rules
 
-**The Mounted, Not Floating Rule.** Use short vertical shadows for controls and map hardware; reserve soft diffuse shadows for the workspace, drawer, and result overlay.
+**The Functional Lift Rule.** Apply elevation to actions, movable code, partner-logo plates, and transient overlays; keep reading and working surfaces flat or inset.
 
 ## Shapes
 
-The system mixes modestly rounded utility controls with hard operational framing. Buttons and list items use 7–12px corners for safe touch affordances, while the workspace and result card remain rectangular. The signature command silhouette is an interlocking notched polygon, repeated in both the source command bay and assembled program so a block keeps its identity when moved.
+The event identity uses approachable 8–14px rounding for links, primary actions, logo plates, and modal feedback. The yellow C brand tile is a rounded square. By contrast, direction blocks use a distinctive interlocking silhouette with a top socket, bottom tab, and side connections; assembled program blocks keep the top-and-bottom connection profile.
 
-Circles are semantic: score indicators, command indices, coins, and bombs. The brand mark, flag, arrowheads, and command notches use clipped geometry. The grid itself is square and bounded by a 12px navy frame overlaid with alternating navy-and-yellow safety stripes; on mobile, that rail narrows to 7px.
+The repeat command is the signature algorithm shape: an orange C/ㄷ-like container with a header, left spine, inset body, and bottom tail that visibly wraps nested direction blocks. Circles are reserved for live status dots, score indices, coins, and outcome symbols. The game grid remains rectilinear and mechanically regular.
 
 ### Named Rules
 
-**The Purposeful Geometry Rule.** Rounded corners belong to touch controls and circular game symbols; operational containers stay square and engineered.
+**The Interlocking Code Rule.** Every movable direction command retains a visible connection profile in both the source dock and the assembled algorithm.
 
-**The Interlock Rule.** Command blocks retain their magnetic notch silhouette in every sequence-building context.
+**The Container Means Structure Rule.** Repeat is not a differently colored row; it must visibly contain its nested movement commands.
 
 ## Components
 
 ### Buttons
 
-- **Shape:** Utility buttons use gently rounded corners (8–10px); command buttons use larger 12px corners plus the interlocking notch silhouette.
-- **Primary:** The run button is safety yellow with navy type, a 52px minimum height, heavy label weight, and a 5px hard bottom edge.
-- **Hover / Focus:** Enabled run buttons brighten and rise by 1px. Command blocks rise by 2px on hover, press down by 3px on active, and all controls receive a 4px sky-blue focus outline offset by 3px.
-- **Secondary / Ghost:** Undo uses a mist fill and navy type. Leaderboard and quiet text actions stay transparent, using a border or coral text to communicate their different roles.
+- **Shape:** Start and tutorial actions use 11px corners and a 58px minimum height; utility and run controls use 8–10px corners.
+- **Primary:** Start and run actions use Coding Yellow with Festival Green text and heavy labels.
+- **Hover / Focus:** Primary actions rise and brighten on hover. Keyboard focus uses a 4px sky-blue outline with clear offset, and reduced-motion preferences collapse transitions.
+- **Secondary / Ghost:** Tutorial uses a dark green-toned field with a light border. Undo and quiet text actions retain lower contrast than run or start.
 
 ### Cards / Containers
 
-- **Corner Style:** The main workspace and result card are square; the first-place leaderboard row alone uses a 12px celebratory corner.
-- **Background:** Paper for work bays and results, mist for the map, navy for the global race header and modal scrim.
-- **Shadow Strategy:** Structural lift only, following the Mounted, Not Floating Rule.
-- **Border:** Single-pixel steel dividers separate bays; the map uses a thick striped safety rail.
-- **Internal Padding:** Working bays use 26px; leaderboard and result surfaces use 28–32px.
+- **Corner Style:** The core workspace stays edge-to-edge and rectilinear; only interactive or transient containers receive stronger rounding.
+- **Background:** Warm Paper for construction and results, Map Mist for execution, white for partner identity plates.
+- **Shadow Strategy:** Follow the Functional Lift Rule.
+- **Border:** Soft Divider defines the algorithm/map seam and dock boundary; the canvas uses a one-pixel inset edge.
+- **Internal Padding:** Major working regions use 18–38px depending on viewport; compact controls use 8–14px.
 
 ### Inputs / Fields
 
-- **Style:** The score-submission name field is a rectangular white field with a 2px navy stroke and 13px inset space, joined directly to its yellow submit action.
-- **Focus:** The universal 4px sky-blue outline remains visible beyond the navy border.
-- **Error / Disabled:** Validation text uses hazard coral. Disabled controls retain their shape and category color at 45% opacity with a non-interactive cursor.
+- **Style:** The final name field is a rectangular Grid White input with a 2px Festival Green border and 13px inset, joined directly to its yellow submit action.
+- **Focus:** The global 4px sky-blue focus outline remains visible beyond the field border.
+- **Error / Disabled:** Validation uses Repeat Orange. Disabled controls preserve their form and become 45% opaque.
 
 ### Navigation
 
-The navy scorebar combines the clipped yellow brand tile, live centered race statistics, and a bordered leaderboard action. On smaller screens, the brand and leaderboard share the first row while four equally sized statistics form a second row. Labels are compact and pale; live values are bright, bold, and tabular.
+The landing header pairs the C tile and two-part 코딩할고양 wordmark with ranking and game-entry links. The game scoreboard adds a white partner-logo plate between the brand and live statistics. On small screens, navigation simplifies while the brand, critical race values, and partner identity remain readable.
 
-### Competition Landing Page
+### Official Mascot & Partner Marks
 
-The landing page is the race's starting gate. A large two-part Korean headline and the real G-META character share the first navy viewport, connected by a safety-yellow start line and a single prominent entry action. Below it, all five real maps appear as one continuous bordered stage rail rather than separate promotional cards, letting children understand the rising challenge before entering the game.
+The official Goyang City cat artwork appears as the landing hero, the moving game character, and the completion character. It is never redrawn, recolored, cropped, rotated, filtered into a new style, or composited into a replacement silhouette; only size and position may change. The event slogan, Tanhyeon Youth Center logo, and PROTEEN logo retain their supplied artwork and proportions on neutral backgrounds.
 
-On phones the headline, action, and mascot stack in that order. The five-stage rail becomes two columns with the final 5×5 map centered across the last row, while the four rules become a single compact checklist.
+### Attribution
+
+Every public surface retains `제작: 연세대학교 컴퓨터과학과 조민준` and `캐릭터 제공: 고양특례시 · 공공누리 제3유형`. The landing page uses a full footer; the game and tutorial keep a persistent low-edge credit and repeat it in completion context where appropriate; ceremony and administrative surfaces include their own visible credit.
 
 ### Command Blocks
 
-Command blocks are the signature object. The bottom inventory exposes five equal square draggable source blocks with a translucent icon tile, bold Korean action, and short explanation. Direction and repeat symbols are inline SVGs, so their stroke weight and proportions remain crisp across browsers and display densities. Their assembled form compresses to a numbered row with a visible drag grip and delete control. A fixed start block anchors the top of every program. The coral repeat block forms a clear C/ㄷ-shaped shell with a left spine, header, bottom tail, and inset drop area for direction blocks. The executing command gains a thick safety-yellow outline, directly connecting code order to actual movement.
+The bottom dock presents five square commands: four absolute directions and repeat. Each uses an inline SVG symbol, bold Korean label, short explanation, and interlocking silhouette. The algorithm begins with a fixed, non-removable start block. Assembled directions become compact draggable rows; the orange repeat container wraps its nested blocks. A thick yellow outline identifies the command currently executing.
 
-### Evacuation Grid
+### Execution Grid
 
-The grid derives both column and row tracks from each stage and preserves their ratio, with every playable and wall cell locked to a true square. It uses warm-white cells and layered CSS-built objects: beveled steel wall panels with rivets, ringed gold coins, glossy dark bombs with a lit fuse, and a dimensional green flag on a metallic pole. The legend repeats the same visual language at small scale. The map deliberately shows no predicted route while code is being assembled; only the character's actual execution changes the map. The character remains upright because movement is expressed through absolute direction blocks rather than rotation. The outer striped rail turns the whole map into a protected operational zone.
+The grid shows square cells, dimensional walls and game objects, and the official mascot’s actual position. It deliberately omits a predicted route: children diagnose the result from execution. Success, collision, coin, and flag effects provide immediate visible feedback, with status text and active-code treatment ensuring state is never communicated by color alone.
 
 ## Do's and Don'ts
 
 ### Do:
 
-- **Do** keep the 1920×1080 hierarchy as scoreboard, algorithm left, map right, and command inventory across the bottom.
-- **Do** highlight the active code block and show only actual movement results on the map.
-- **Do** keep G-META upright and express direction through the four absolute movement blocks.
-- **Do** preserve keyboard focus, touch-sized controls, Korean labels, and reduced-motion behavior.
-- **Do** use hard-edged depth and clipped geometry to make controls feel mounted and magnetic.
+- **Do** lead every public route with the 코딩할고양 name and festival green/yellow/orange identity.
+- **Do** use the official Goyang City mascot artwork unchanged and alter only rendered size and position.
+- **Do** preserve supplied event and partner logos at their natural proportions on neutral surfaces.
+- **Do** retain creator and public-license attribution on every public surface.
+- **Do** keep the game’s algorithm-left, map-right, command-dock topology at competition width.
+- **Do** pair command color with Korean text and distinct arrow or repeat geometry.
 
 ### Don't:
 
-- **Don't** turn the workspace into a collection of soft floating cards or pastel learning-app panels.
-- **Don't** use safety yellow as decoration or hazard coral for ordinary navigation.
-- **Don't** rotate, crop, or replace the recognizable G-META silhouette to indicate direction.
-- **Don't** hide the run action below long content on mobile; retain the quick-run control by the map and sticky full controls.
-- **Don't** communicate bombs, coins, flags, or execution state through color alone.
+- **Don't** reintroduce the former robot-led dark operations-board identity.
+- **Don't** recolor, redraw, rotate, crop, stylize, or replace the official Goyang City mascot.
+- **Don't** recolor or distort the event slogan, Tanhyeon Youth Center logo, or PROTEEN logo.
+- **Don't** turn the competition workbench into unrelated floating dashboard cards.
+- **Don't** show a predicted route before execution or rely on color alone for game state.
+- **Don't** hide or remove the required attribution to gain layout space.

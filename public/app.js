@@ -41,7 +41,7 @@ function renderGrid(){
 
 function placePlayer(className="",instant=false){
   let img=grid.querySelector(".player");
-  if(!img){img=document.createElement("img");img.src="/assets/gmeta-run.webp";img.alt="지메타 캐릭터";grid.append(img)}
+  if(!img){img=document.createElement("img");img.src="/assets/goyang-cat-run.png";img.alt="고양시 마스코트";grid.append(img)}
   img.className=`player ${className}${instant?" instant":""}`;img.style.width=`${100/stage().cols}%`;img.style.height=`${100/stage().rows}%`;img.style.setProperty("--player-x",`${player.c*100}%`);img.style.setProperty("--player-y",`${player.r*100}%`);
   if(instant)requestAnimationFrame(()=>img.classList.remove("instant"));
 }
@@ -165,7 +165,7 @@ function renderProgram(){
 
   const used=sourceBlockCount(),valid=expandProgram().length>0&&!program.some(node=>node.type==="repeat"&&!node.body.length);
   el("blockCount").textContent=`${used}개`;el("emptyProgram").hidden=program.length>0;
-  el("runButton").disabled=!valid||running;el("undoButton").disabled=!program.length||running;
+  el("runButton").disabled=!valid||running;el("mobileRunButton").disabled=!valid||running;el("undoButton").disabled=!program.length||running;
   el("repeatButton").classList.remove("active");el("repeatButton").querySelector("b").textContent="반복하기";
   el("limitText").textContent="적게 쓸수록 높은 점수";
 }
@@ -257,7 +257,7 @@ document.querySelectorAll("[data-move]").forEach(button=>{
 });
 el("repeatButton").onclick=addRepeat;el("repeatButton").ondragstart=event=>startDrag(event,{origin:"palette",type:"repeat"});el("repeatButton").ondragend=endDrag;
 el("undoButton").onclick=()=>{if(openRepeat?.body.length)openRepeat.body.pop();else if(program.length){if(openRepeat===program.at(-1))openRepeat=null;program.pop()}renderProgram()};
-el("clearButton").onclick=()=>{if(!running){program=[];openRepeat=null;renderProgram()}};el("runButton").onclick=runProgram;
+el("clearButton").onclick=()=>{if(!running){program=[];openRepeat=null;renderProgram()}};el("runButton").onclick=runProgram;el("mobileRunButton").onclick=runProgram;
 el("leaderButton").onclick=()=>{el("leaderboard").hidden=false;loadScores()};el("closeLeader").onclick=()=>el("leaderboard").hidden=true;
 el("soundToggle").onclick=()=>{soundOn=!soundOn;el("soundToggle").setAttribute("aria-pressed",String(soundOn));el("soundToggle").textContent=soundOn?"소리 켬":"소리 끔"};
 document.addEventListener("pointerdown",()=>getAudio(),{capture:true});

@@ -6,17 +6,17 @@
   <meta name="theme-color" content="#081c2d">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/admin.css">
-  <title>순위표 관리 · G메타ㄹ출</title>
+  <link rel="stylesheet" href="/admin-brand.css">
+  <title>순위표 관리 · 코딩할고양</title>
 </head>
 <body>
   <header class="admin-header">
-    <a class="admin-brand" href="/" aria-label="G메타ㄹ출 메인으로"><span class="brand-mark" aria-hidden="true">G</span><strong>메타ㄹ출</strong></a>
+    <a class="admin-brand" href="/" aria-label="코딩할고양 메인으로"><span class="brand-mark" aria-hidden="true">C</span><strong>코딩할고양</strong></a>
     <a class="ranking-link" href="/ranking.html">순위 발표 화면</a>
   </header>
 
   <main>
     <section class="login-panel" id="loginPanel" aria-labelledby="loginTitle">
-      <p class="eyebrow">ADMIN</p>
       <h1 id="loginTitle">순위표 관리</h1>
       <form id="loginForm">
         <label for="adminPassword">비밀번호</label>
@@ -30,7 +30,7 @@
 
     <section class="admin-panel" id="adminPanel" aria-labelledby="adminTitle" hidden>
       <div class="panel-heading">
-        <div><p class="eyebrow">LEADERBOARD</p><h1 id="adminTitle">참가자 기록</h1></div>
+        <div><h1 id="adminTitle">참가자 기록</h1></div>
         <div class="panel-actions"><span id="scoreCount">0명</span><button class="logout-button" id="logoutButton" type="button">로그아웃</button><button class="delete-all-button" id="deleteAllButton" type="button">전체 삭제</button></div>
       </div>
       <p class="status-message" id="statusMessage" aria-live="polite"></p>
@@ -43,6 +43,7 @@
       </div>
     </section>
   </main>
+  <footer class="admin-credit">제작: 연세대학교 컴퓨터과학과 조민준 · 캐릭터 제공: 고양특례시 · 공공누리 제3유형</footer>
   <script type="module" src="/admin.js"></script>
 </body>
 </html>

@@ -7,12 +7,12 @@
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/styles.css">
   <link rel="stylesheet" href="/tutorial.css">
-  <title>튜토리얼 · G메타ㄹ출</title>
+  <title>튜토리얼 · 코딩할고양</title>
 </head>
 <body class="game-page tutorial-page">
   <header class="scorebar">
-    <a class="brand" href="/" aria-label="G메타ㄹ출 메인으로"><span class="brand-mark" aria-hidden="true">G</span><span>블록 조립 연습</span></a>
-    <div class="game-partners" aria-label="기관 로고"><img src="/assets/partners/seodaemun-gu.png" alt="서대문구"><img src="/assets/partners/korea-youth-foundation.png" alt="한국청소년재단"><img src="/assets/partners/gmeta-career-network.jpg" alt="G-META 가재울청소년센터"></div>
+    <a class="brand" href="/" aria-label="코딩할고양 메인으로"><span class="brand-mark" aria-hidden="true">C</span><span>코딩할고양 연습</span></a>
+    <div class="game-partners" aria-label="기관 로고"><img src="/assets/branding/tanhyeon-youth-center.png" alt="고양시청소년재단 탄현청소년문화의집"><span class="proteen-frame"><img src="/assets/branding/proteen.png" alt="PROTEEN"></span></div>
     <div class="race-stats" aria-label="연습 정보"><span><small>모드</small><strong>자유 연습</strong></span><span><small>코인</small><strong id="coinCount">0 / 4</strong></span></div>
     <a class="leader-button tutorial-exit" href="/game.html">대회 시작하기</a>
   </header>
@@ -22,7 +22,7 @@
       <div class="coding-canvas"><ol id="programList" class="program-list" aria-live="polite" aria-label="알고리즘 조립 영역"></ol><p id="emptyProgram" class="empty-program"><strong>블록을 자유롭게 조립해 보세요</strong><span>클릭하거나 끌어서 추가할 수 있어요.</span></p></div>
     </section>
     <section class="map-panel" aria-label="튜토리얼 지도">
-      <div class="map-topline"><div><span class="route-status"><i></i><span id="statusText">블록을 조립해 실행해 보세요</span></span><strong>자유 연습장</strong><p>현재 위치에서 알고리즘을 실행합니다.</p></div></div>
+      <div class="map-topline"><div><span class="route-status"><i></i><span id="statusText">블록을 조립해 실행해 보세요</span></span><strong>자유 연습장</strong><p>현재 위치에서 알고리즘을 실행합니다.</p></div><button class="mobile-run" id="mobileRunButton" type="button" disabled><span aria-hidden="true">▶</span> 실행</button></div>
       <div id="gameGrid" class="game-grid" role="grid" aria-label="자유롭게 이동할 수 있는 5×5 연습 지도"></div>
       <div class="map-caption"><span>가운데에서 시작</span><span>원위치 버튼으로 언제든 초기화</span></div>
     </section>
@@ -39,6 +39,7 @@
     </section>
   </main>
   <div class="toast" id="toast" role="status"></div>
+  <p class="legal-credit"><span>제작: 연세대학교 컴퓨터과학과 조민준</span> · <a href="https://www.goyang.go.kr/www/user/bbs/BD_selectBbsList.do?q_bbsCode=1054">캐릭터 제공: 고양특례시 · 공공누리 제3유형</a></p>
   <script type="module" src="/tutorial.js"></script>
 </body>
 </html>

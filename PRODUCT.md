@@ -24,7 +24,7 @@ The game makes an algorithm directly observable: children build a command sequen
 
 ## Operating Context
 
-The initial build assumes event computers running a modern browser on a shared local network. A facilitator starts the Node.js server, children complete all five stages, then enter their name once to submit the combined result.
+The build is branded for the Goyang Youth Harmony Festival and assumes event computers running a modern browser on a shared local network. A facilitator starts the Node.js server, children complete all five stages, then enter their name once to submit the combined result.
 
 ## Capabilities and Constraints
 
@@ -34,7 +34,7 @@ The initial build assumes event computers running a modern browser on a shared l
 - The game withholds route prediction so children reason from their code and learn from the actual execution result.
 - The primary competition setup targets a 1920×1080 desktop with the algorithm on the left, map on the right, and command inventory across the bottom.
 - A fixed, non-removable start block anchors every program.
-- Each stage enforces its own source-block limit, excluding the fixed start block.
+- There is no hard source-block limit; using fewer blocks earns a higher score.
 - Bomb collision ends the current attempt; the stage can be retried.
 - Coins award bonus points, and faster completion earns more points.
 - Ranking submission is unlocked only after all five stages are completed.
@@ -44,11 +44,11 @@ The initial build assumes event computers running a modern browser on a shared l
 
 ## Evidence on Hand
 
-The organizer supplied a folder of G-META robot character artwork with standing, moving, greeting, cheering, dancing, heart, pointing, angled, and victory poses. These are real project assets and should be reused without destructive edits.
+The organizer supplied three brand images: the ten-year event slogan, the Tanhyeon Youth Center logo, and the PROTEEN logo. Official Goyang City mascot artwork is sourced from the city website and stored unchanged in the project.
 
 ## Brand Commitments
 
-The G-META robot is the main character. Preserve its oversized round head, side ear panels, large dark oval eyes, small smile, white segmented body, coral-pink chest display, and G-META emblem. Adaptation may simplify shading and strengthen outlines for small grid tiles, but must not replace its silhouette or personality.
+The game name is `코딩할고양`. The official Goyang City cat mascot is the main character and must not be visually modified. It may only be sized and positioned in the interface. Every public surface must retain the attribution `캐릭터 제공: 고양특례시 · 공공누리 제3유형` and the creator credit `제작: 연세대학교 컴퓨터과학과 조민준`.
 
 No finalized competition rule sheet, testimonials, or benchmark claims were supplied and none should be invented.
 
