@@ -23,7 +23,7 @@ async function request(url,options={}){
 function renderScores(scores){
   scoreRows.replaceChildren();scoreCount.textContent=`${scores.length}명`;emptyMessage.hidden=scores.length>0;deleteAllButton.disabled=!scores.length;
   scores.forEach((score,index)=>{
-    const row=document.createElement("tr"),values=[`${index+1}위`,score.name,`${Number(score.score||0).toLocaleString()}점`,`${Number(score.coins||0)}개`,formatTime(score.timeMs),formatDate(score.createdAt)];
+    const row=document.createElement("tr"),values=[`${index+1}위`,score.name,score.missionLabel||"이전 기록",`${Number(score.score||0).toLocaleString()}점`,`${Number(score.coins||0)}개`,formatTime(score.timeMs),formatDate(score.createdAt)];
     values.forEach(value=>{const cell=document.createElement("td");cell.textContent=value;row.append(cell)});
     const action=document.createElement("td"),button=document.createElement("button");button.type="button";button.className="delete-button";button.textContent="삭제";button.setAttribute("aria-label",`${score.name} 기록 삭제`);button.addEventListener("click",()=>deleteScore(score));action.append(button);row.append(action);scoreRows.append(row);
   });

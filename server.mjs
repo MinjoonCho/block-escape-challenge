@@ -3,7 +3,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import { extname, join, normalize } from "node:path";
 import { fileURLToPath } from "node:url";
 import { Redis } from "@upstash/redis";
-import { createStageSet } from "./stage-catalog.mjs";
+import { createMissionStageSet, missionCatalog } from "./stage-catalog.mjs";
 
 const root=fileURLToPath(new URL("./public",import.meta.url));
 const scoreFile=fileURLToPath(new URL("./data/scores.json",import.meta.url));
@@ -57,8 +57,9 @@ function decodeProgram(nodes){
   return{commands,blocks};
 }
 
-function verifyStage(maps,stage,program){
+export function verifyStage(maps,stage,program){
   const map=maps?.[stage],decoded=decodeProgram(program);if(!map||!decoded)return null;
+  if(decoded.blocks>map.blockLimit)return null;
   let[r,c]=map.start;const collected=new Set(),at=(list,row,col)=>list.some(([a,b])=>a===row&&b===col),vectors={up:[-1,0],down:[1,0],left:[0,-1],right:[0,1]};
   for(const command of decoded.commands){const[dr,dc]=vectors[command],nr=r+dr,nc=c+dc;if(nr<0||nc<0||nr>=map.rows||nc>=map.cols||at(map.walls,nr,nc)||at(map.bombs,nr,nc))return null;r=nr;c=nc;if(at(map.coins,r,c))collected.add(`${r},${c}`);if(r===map.flag[0]&&c===map.flag[1])return{coins:collected.size,blocks:decoded.blocks}}
   return null;
@@ -74,14 +75,16 @@ export async function handler(req,res){
   if(url.pathname==="/api/admin/scores"&&req.method==="DELETE"){if(!await requireAdmin(req,res))return;await clearScores();return send(res,200,{ok:true,deleted:"all"})}
   const adminScoreMatch=url.pathname.match(/^\/api\/admin\/scores\/([a-f0-9-]+)$/);
   if(adminScoreMatch&&req.method==="DELETE"){if(!await requireAdmin(req,res))return;if(!await deleteScore(adminScoreMatch[1]))return send(res,404,{error:"해당 기록을 찾지 못했습니다."});return send(res,200,{ok:true,deleted:adminScoreMatch[1]})}
-  if(url.pathname==="/api/runs"&&req.method==="POST"){cleanupRuns();const id=crypto.randomUUID(),stages=createStageSet(id);await setRun(id,{createdAt:Date.now(),stageStartedAt:Date.now(),nextStage:0,score:0,timeMs:0,coins:0,complete:false,stages});return send(res,201,{runId:id,stages})}
+  if(url.pathname==="/api/runs"&&req.method==="POST"){
+    try{cleanupRuns();const input=await bodyJson(req),mission=missionCatalog[input.mission];if(!mission)return send(res,400,{error:"중급 또는 고급 미션을 선택해 주세요."});const id=crypto.randomUUID(),stages=createMissionStageSet(id,mission.id);await setRun(id,{createdAt:Date.now(),stageStartedAt:Date.now(),nextStage:0,score:0,timeMs:0,coins:0,complete:false,mission:mission.id,missionLabel:mission.label,stages});return send(res,201,{runId:id,mission:mission.id,missionLabel:mission.label,stages})}catch{return send(res,400,{error:"미션을 시작하지 못했어요."})}
+  }
   const stageMatch=url.pathname.match(/^\/api\/runs\/([a-f0-9-]+)\/stage$/);
   if(stageMatch&&req.method==="POST"){
     try{const run=await getRun(stageMatch[1]),input=await bodyJson(req),stage=Math.round(Number(input.stage)),proof=verifyStage(run?.stages,stage,input.program);if(!run||run.complete||stage!==run.nextStage||!proof)return send(res,400,{error:"실제로 깃발에 도착한 명령이 필요해요."});const{coins,blocks}=proof,now=Date.now(),elapsed=Math.max(500,now-run.stageStartedAt),stageScore=Math.max(500,Math.round(5000-elapsed/25-blocks*45+coins*700));run.score+=stageScore;run.timeMs+=elapsed;run.coins+=coins;run.nextStage++;run.stageStartedAt=now;run.complete=run.nextStage===run.stages.length;await setRun(stageMatch[1],run);return send(res,200,{stageScore,score:run.score,timeMs:run.timeMs,coins:run.coins,complete:run.complete})}catch{return send(res,400,{error:"스테이지 결과를 확인하지 못했어요."})}
   }
   if(url.pathname==="/api/scores"&&req.method==="GET")return send(res,200,(await readScores()).slice(0,20));
   if(url.pathname==="/api/scores"&&req.method==="POST"){
-    try{const input=await bodyJson(req),name=String(input.name||"").trim().replace(/[<>]/g,"").slice(0,12),runId=String(input.runId||""),run=await getRun(runId);if(!name||!run?.complete||run.submitted)return send(res,400,{error:"완료된 경기 기록이 필요해요."});run.submitted=true;await setRun(runId,run);const entry={id:runId,name,score:run.score,timeMs:run.timeMs,coins:run.coins,createdAt:new Date().toISOString()},rank=await addScore(entry);return send(res,201,{ok:true,rank})}catch{return send(res,400,{error:"점수를 저장하지 못했어요. 다시 시도해 주세요."})}
+    try{const input=await bodyJson(req),name=String(input.name||"").trim().replace(/[<>]/g,"").slice(0,12),runId=String(input.runId||""),run=await getRun(runId);if(!name||!run?.complete||run.submitted)return send(res,400,{error:"완료된 미션 기록이 필요해요."});run.submitted=true;await setRun(runId,run);const entry={id:runId,name,score:run.score,timeMs:run.timeMs,coins:run.coins,mission:run.mission,missionLabel:run.missionLabel,createdAt:new Date().toISOString()},rank=await addScore(entry);return send(res,201,{ok:true,rank})}catch{return send(res,400,{error:"점수를 저장하지 못했어요. 다시 시도해 주세요."})}
   }
   if(req.method!=="GET")return send(res,405,{error:"지원하지 않는 요청입니다."});
   const requestPath=url.pathname==="/"?"/index.html":url.pathname,filePath=normalize(join(root,requestPath));if(!filePath.startsWith(root))return send(res,403,"Forbidden","text/plain");

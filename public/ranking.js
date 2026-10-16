@@ -10,7 +10,7 @@ function formatTime(ms){
 
 function fillCard(card,score){
   card.querySelector(".winner-name").textContent=score?.name||"기록 없음";
-  card.querySelector(".winner-score").textContent=score?`${Number(score.score).toLocaleString()}점 · ${formatTime(score.timeMs)}`:"-";
+  card.querySelector(".winner-score").textContent=score?`${score.missionLabel||"전체 미션"} · ${Number(score.score).toLocaleString()}점 · ${formatTime(score.timeMs)}`:"-";
 }
 
 function celebrate(rank){

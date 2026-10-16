@@ -9,12 +9,16 @@ const key=(r,c)=>`${r},${c}`;
 const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 
 let stages=[],stageIndex=0,program=[],openRepeat=null,player={r:0,c:0},collected=new Set();
-let running=true,startedAt=0,totalScore=0,totalTime=0,totalCoins=0,timerId,soundOn=true,runId="",dragPayload=null,audioContext=null;
+let running=true,startedAt=0,totalScore=0,totalTime=0,totalCoins=0,timerId,soundOn=true,runId="",missionLabel="",dragPayload=null,audioContext=null;
 
 let runReady;
-const createRun=()=>fetch("/api/runs",{method:"POST"}).then(response=>response.json()).then(result=>{runId=result.runId;stages=result.stages;return runId});
+const createRun=mission=>fetch("/api/runs",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({mission})}).then(async response=>{const result=await response.json();if(!response.ok)throw new Error(result.error);runId=result.runId;stages=result.stages;missionLabel=result.missionLabel;return runId});
 const stage=()=>stages[stageIndex];
 const sourceBlockCount=(nodes=program)=>nodes.reduce((sum,node)=>sum+1+(node.type==="repeat"?node.body.length:0),0);
+const canAddBlock=()=>{
+  if(sourceBlockCount()<stage().blockLimit)return true;
+  toast(`블록은 ${stage().blockLimit}개까지 사용할 수 있어요.`);return false;
+};
 
 function expandProgram(){
   const result=[];
@@ -95,6 +99,7 @@ function takeMove(payload){
 
 function dropAtProgram(event,insertIndex){
   event.preventDefault();event.stopPropagation();const payload=readDrag(event);if(!payload||running)return endDrag();
+  if(payload.origin==="palette"&&!canAddBlock())return endDrag();
   let node;
   if(payload.origin==="palette"){
     node=payload.type==="repeat"?{type:"repeat",count:2,body:[]}:{type:"move",dir:payload.dir};
@@ -106,6 +111,7 @@ function dropAtProgram(event,insertIndex){
 
 function dropInRepeat(event,target){
   event.preventDefault();event.stopPropagation();const payload=readDrag(event);if(!payload||payload.type==="repeat"||(payload.origin==="program"&&program[payload.index]?.type==="repeat"))return endDrag();
+  if(payload.origin==="palette"&&!canAddBlock())return endDrag();
   const node=takeMove(payload);if(!node)return endDrag();target.body.push(node);openRepeat=target;endDrag();renderProgram();playSound("block");
 }
 
@@ -163,15 +169,15 @@ function renderProgram(){
   programList.querySelectorAll("[data-repeat-plus]").forEach(button=>button.onclick=event=>{event.stopPropagation();const node=program[Number(button.dataset.repeatPlus)];node.count=Math.min(6,node.count+1);renderProgram()});
   programList.querySelectorAll(".repeat-head").forEach(head=>head.onclick=()=>{const node=program[Number(head.closest(".repeat-block").dataset.index)];openRepeat=openRepeat===node?null:node;renderProgram()});
 
-  const used=sourceBlockCount(),valid=expandProgram().length>0&&!program.some(node=>node.type==="repeat"&&!node.body.length);
-  el("blockCount").textContent=`${used}개`;el("emptyProgram").hidden=program.length>0;
+  const currentStage=stage(),used=sourceBlockCount(),limit=currentStage?.blockLimit??0,withinLimit=!currentStage||used<=limit,valid=Boolean(currentStage)&&expandProgram().length>0&&!program.some(node=>node.type==="repeat"&&!node.body.length)&&withinLimit;
+  el("blockCount").textContent=currentStage?`${used} / ${limit}개`:`${used}개`;el("blockCount").classList.toggle("over-limit",!withinLimit);el("emptyProgram").hidden=program.length>0;
   el("runButton").disabled=!valid||running;el("mobileRunButton").disabled=!valid||running;el("undoButton").disabled=!program.length||running;
   el("repeatButton").classList.remove("active");el("repeatButton").querySelector("b").textContent="반복하기";
-  el("limitText").textContent="적게 쓸수록 높은 점수";
+  el("limitText").textContent=!currentStage?"미션을 선택해 주세요":withinLimit?`최대 ${limit}개 · 적게 쓸수록 고득점`:`${used-limit}개를 줄여 주세요`;
 }
 
-function addMove(dir){if(running)return;const move={type:"move",dir};if(openRepeat)openRepeat.body.push(move);else program.push(move);renderProgram();playSound("block")}
-function addRepeat(){if(running)return;openRepeat={type:"repeat",count:2,body:[]};program.push(openRepeat);renderProgram();playSound("block")}
+function addMove(dir){if(running||!canAddBlock())return;const move={type:"move",dir};if(openRepeat)openRepeat.body.push(move);else program.push(move);renderProgram();playSound("block")}
+function addRepeat(){if(running||!canAddBlock())return;openRepeat={type:"repeat",count:2,body:[]};program.push(openRepeat);renderProgram();playSound("block")}
 function setStatus(text,state=""){el("statusText").textContent=text;el("statusText").parentElement.className=`route-status ${state}`}
 function blocked(r,c){const current=stage();return r<0||c<0||r>=current.rows||c>=current.cols||current.walls.some(([a,b])=>a===r&&b===c)}
 
@@ -213,7 +219,7 @@ async function showOutcome(state,title,message){
 }
 
 async function runProgram(){
-  const commands=expandProgram();if(running||!commands.length||program.some(node=>node.type==="repeat"&&!node.body.length))return;
+  const commands=expandProgram();if(running||!commands.length||sourceBlockCount()>stage().blockLimit||program.some(node=>node.type==="repeat"&&!node.body.length))return;
   openRepeat=null;running=true;document.querySelectorAll("button.command").forEach(button=>button.disabled=true);renderProgram();resetPlayer();renderGrid();setStatus("알고리즘 실행 중","running");let crashed=false,failureMessage="깃발까지 도착하지 못했어요.";
   for(const command of commands){
     setExecuting(command.path);const[dr,dc]=vectors[command.dir],nr=player.r+dr,nc=player.c+dc;
@@ -235,10 +241,10 @@ async function finishStage(){
     totalScore=result.score;totalTime=result.timeMs;totalCoins=result.coins;updateStats();beep(960,.3);setStatus(`스테이지 성공 · ${result.stageScore.toLocaleString()}점`);await showOutcome("success","성공!",`${result.stageScore.toLocaleString()}점을 획득했어요.`);
     if(result.complete){running=false;showResult();return}
     stageIndex++;program=[];openRepeat=null;resetPlayer();startedAt=Date.now();running=false;document.querySelectorAll("button.command").forEach(button=>button.disabled=false);renderStage();toast(`${stageIndex+1}단계 시작!`);
-  }catch(error){setStatus("기록 서버를 확인해 주세요");await showOutcome("failure","확인 실패",error.message||"경기 기록을 저장하지 못했어요.");resetPlayer();renderGrid();updateStats();running=false;document.querySelectorAll("button.command").forEach(button=>button.disabled=false);renderProgram()}
+  }catch(error){setStatus("기록 서버를 확인해 주세요");await showOutcome("failure","확인 실패",error.message||"미션 기록을 저장하지 못했어요.");resetPlayer();renderGrid();updateStats();running=false;document.querySelectorAll("button.command").forEach(button=>button.disabled=false);renderProgram()}
 }
 
-function renderStage(){el("stageLabel").textContent=`${stageIndex+1} / ${stages.length}`;el("missionTitle").textContent=stage().title;el("missionText").textContent=stage().text;resetPlayer();renderGrid();renderProgram();setStatus("블록을 조립하세요");updateStats()}
+function renderStage(){el("missionLabel").textContent=missionLabel;el("stageLabel").textContent=`${stageIndex+1} / ${stages.length}`;el("missionTitle").textContent=stage().title;el("missionText").textContent=stage().text;resetPlayer();renderGrid();renderProgram();setStatus("블록을 조립하세요");updateStats()}
 function updateStats(){el("coinLabel").textContent=totalCoins+collected.size;el("scoreLabel").textContent=totalScore.toLocaleString()}
 function updateTimer(){if(!el("resultScreen").hidden)return;const seconds=Math.floor((Date.now()-startedAt)/1000);el("timeLabel").textContent=`${String(Math.floor(seconds/60)).padStart(2,"0")}:${String(seconds%60).padStart(2,"0")}`}
 function toast(message){el("toast").textContent=message;el("toast").classList.add("show");clearTimeout(toast.timer);toast.timer=setTimeout(()=>el("toast").classList.remove("show"),2200)}
@@ -248,9 +254,9 @@ async function playCountdown(){
   for(const value of [3,2,1]){number.className="";number.textContent=value;void number.offsetWidth;playSound("count");await sleep(780)}
   number.className="go";number.textContent="시작!";void number.offsetWidth;playSound("go");await sleep(650);
 }
-function showResult(){clearInterval(timerId);el("finalScore").textContent=totalScore.toLocaleString();el("finalCoins").textContent=totalCoins;const sec=Math.floor(totalTime/1000);el("finalTime").textContent=`${String(Math.floor(sec/60)).padStart(2,"0")}:${String(sec%60).padStart(2,"0")}`;el("resultScreen").hidden=false;el("playerName").focus()}
+function showResult(){clearInterval(timerId);el("resultStamp").textContent=`${missionLabel} · 3개 단계 완료`;el("finalScore").textContent=totalScore.toLocaleString();el("finalCoins").textContent=totalCoins;const sec=Math.floor(totalTime/1000);el("finalTime").textContent=`${String(Math.floor(sec/60)).padStart(2,"0")}:${String(sec%60).padStart(2,"0")}`;el("resultScreen").hidden=false;el("playerName").focus()}
 const escapeHtml=value=>String(value).replace(/[&<>"']/g,character=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[character]));
-async function loadScores(){const list=el("leaderList");list.innerHTML='<li class="leader-empty">순위를 불러오는 중...</li>';try{const data=await fetch("/api/scores").then(response=>response.json());list.innerHTML=data.length?data.map((score,index)=>`<li class="leader-row"><span class="leader-rank">${index+1}</span><span><strong>${escapeHtml(score.name)}</strong><small class="leader-meta">코인 ${score.coins}개 · ${Math.round(score.timeMs/1000)}초</small></span><span class="leader-score">${score.score.toLocaleString()}점</span></li>`).join(""):'<li class="leader-empty">첫 번째 기록의 주인공이 되어보세요!</li>'}catch{list.innerHTML='<li class="leader-empty">순위를 불러오지 못했어요.<br>잠시 후 다시 열어주세요.</li>'}}
+async function loadScores(){const list=el("leaderList");list.innerHTML='<li class="leader-empty">순위를 불러오는 중...</li>';try{const data=await fetch("/api/scores").then(response=>response.json());list.innerHTML=data.length?data.map((score,index)=>`<li class="leader-row"><span class="leader-rank">${index+1}</span><span><strong>${escapeHtml(score.name)}</strong><small class="leader-meta">${escapeHtml(score.missionLabel||"전체 미션")} · 코인 ${score.coins}개 · ${Math.round(score.timeMs/1000)}초</small></span><span class="leader-score">${score.score.toLocaleString()}점</span></li>`).join(""):'<li class="leader-empty">첫 번째 기록의 주인공이 되어보세요!</li>'}catch{list.innerHTML='<li class="leader-empty">순위를 불러오지 못했어요.<br>잠시 후 다시 열어주세요.</li>'}}
 
 document.querySelectorAll("[data-move]").forEach(button=>{
   button.onclick=()=>addMove(button.dataset.move);button.ondragstart=event=>startDrag(event,{origin:"palette",type:"move",dir:button.dataset.move});button.ondragend=endDrag;
@@ -268,4 +274,12 @@ codingCanvas.ondrop=event=>{if(running)return endDrag();dropAtProgram(event,near
 
 el("scoreForm").onsubmit=async event=>{event.preventDefault();const button=event.submitter;button.disabled=true;el("formMessage").textContent="점수를 등록하고 있어요...";try{const response=await fetch("/api/scores",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({name:el("playerName").value,runId})}),result=await response.json();if(!response.ok)throw new Error(result.error);el("formMessage").textContent=`등록 완료! 현재 ${result.rank}위예요.`;button.textContent="등록 완료";setTimeout(()=>window.location.replace("/"),900)}catch(error){el("formMessage").textContent=error.message||"등록하지 못했어요. 다시 시도해 주세요.";button.disabled=false}};
 
-await playCountdown();runReady=createRun();await runReady;running=false;renderStage();const countdownScreen=el("countdownScreen");countdownScreen.classList.add("leaving");await sleep(380);countdownScreen.hidden=true;startedAt=Date.now();timerId=setInterval(updateTimer,250);
+async function startMission(mission,button){
+  const select=el("missionSelect"),status=el("missionSelectStatus");document.querySelectorAll("[data-mission]").forEach(item=>item.disabled=true);button.classList.add("selected");status.textContent="미션을 준비하고 있어요...";
+  try{
+    const countdownScreen=el("countdownScreen");select.hidden=true;countdownScreen.hidden=false;await playCountdown();runReady=createRun(mission);await runReady;running=false;renderStage();countdownScreen.classList.add("leaving");await sleep(380);countdownScreen.hidden=true;startedAt=Date.now();timerId=setInterval(updateTimer,250);
+  }catch(error){select.hidden=false;el("countdownScreen").hidden=true;status.textContent=error.message||"미션을 시작하지 못했어요. 다시 선택해 주세요.";document.querySelectorAll("[data-mission]").forEach(item=>item.disabled=false);button.classList.remove("selected")}
+}
+
+document.querySelectorAll("[data-mission]").forEach(button=>button.onclick=()=>startMission(button.dataset.mission,button));
+renderProgram();

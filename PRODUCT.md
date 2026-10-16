@@ -12,11 +12,11 @@ Delegated: dependency-light Node.js server with a responsive HTML/CSS/JavaScript
 
 ## Users
 
-Primary users are children participating in an in-person coding competition. The initial build assumes elementary-school reading and motor skills; the precise age range remains open.
+Primary users are children participating in an in-person coding mission activity. The initial build assumes elementary-school reading and motor skills; the precise age range remains open.
 
 ## Product Purpose
 
-Teach sequencing, repetition, and basic algorithm design by having players assemble block-like commands that guide a character through five stages. Success means reaching each flag quickly, avoiding bombs, collecting coins, and understanding why a shorter or smarter program scores better.
+Teach sequencing, repetition, and basic algorithm design by having players assemble block-like commands through a three-stage intermediate or advanced mission. Success means reaching each flag quickly, avoiding bombs, collecting coins, and understanding why a shorter or smarter program scores better.
 
 ## Positioning
 
@@ -24,7 +24,7 @@ The game makes an algorithm directly observable: children build a command sequen
 
 ## Operating Context
 
-The build is branded for the Goyang Youth Harmony Festival and assumes event computers running a modern browser on a shared local network. A facilitator starts the Node.js server, children complete all five stages, then enter their name once to submit the combined result.
+The build is branded for the Goyang Youth Harmony Festival and assumes event computers running a modern browser on a shared local network. A facilitator starts the Node.js server, children choose a three-stage mission, then enter their name once to submit the combined result.
 
 ## Capabilities and Constraints
 
@@ -34,10 +34,10 @@ The build is branded for the Goyang Youth Harmony Festival and assumes event com
 - The game withholds route prediction so children reason from their code and learn from the actual execution result.
 - The primary competition setup targets a 1920×1080 desktop with the algorithm on the left, map on the right, and command inventory across the bottom.
 - A fixed, non-removable start block anchors every program.
-- There is no hard source-block limit; using fewer blocks earns a higher score.
+- Source-block limits are intentionally generous: stages 1–5 allow 8, 9, 9, 10, and 12 blocks. Repeat containers and their inner commands each count as source blocks.
 - Bomb collision ends the current attempt; the stage can be retried.
 - Coins award bonus points, and faster completion earns more points.
-- Ranking submission is unlocked only after all five stages are completed.
+- Ranking submission is unlocked only after all three stages in the chosen mission are completed.
 - The shared leaderboard persists to a small server-side JSON file.
 - No account system or personal data beyond a short display name.
 - Exact competition scoring constants and deployment environment remain configurable decisions.

@@ -106,7 +106,7 @@ The game retains its purpose-built coding topology: algorithm canvas on the left
 - Deep festival green paired with high-energy yellow and orange.
 - Official, unmodified Goyang City cat mascot artwork as the primary character.
 - Supplied event and partner logos presented clearly on neutral surfaces.
-- A focused algorithm-left, map-right, command-dock workbench for the competition.
+- A focused algorithm-left, map-right, command-dock workbench for the mission.
 - Persistent creator and public-license attribution on every public surface.
 
 ## Colors
@@ -166,13 +166,13 @@ The brand palette leads with civic green, then uses yellow and orange as festiva
 
 The landing page uses an 82px festival-green header, a two-column hero, a 128px partner strip, and a 44px attribution footer on desktop. The first viewport keeps the 코딩할고양 name, short rules summary, start and tutorial actions, official running mascot, event slogan, and partner identities visible together. At 680px and below, the hero becomes a vertical invitation and the logo strip and footer stack without removing attribution.
 
-The competition surface targets 1920×1080. An 88px scoreboard combines the brand, partner logos, live race values, and leaderboard action. Beneath it, the upper work area places the algorithm canvas on the left at roughly 42% and the execution map on the right at roughly 58%; a 218px command dock spans the full bottom edge. The five source commands sit as centered square tiles between the dock explanation and undo/run actions.
+The mission surface targets 1920×1080. Before play, a two-choice selector presents intermediate and advanced missions. An 88px scoreboard combines the brand, partner logos, selected mission, live values, and leaderboard action. Beneath it, the upper work area places the algorithm canvas on the left at roughly 42% and the execution map on the right at roughly 58%; a 218px command dock spans the full bottom edge. The five source commands sit as centered square tiles between the dock explanation and undo/run actions.
 
 Below 1180px, the algorithm and map remain side by side while the dock actions move to a second row. Below 760px, the surface becomes map-first—map, algorithm, then command dock—with sticky execution controls. Click-to-add remains alongside drag-and-drop for touch use. The grid derives both row and column tracks from the stage and preserves true square cells.
 
 ### Named Rules
 
-**The Coding Topology Rule.** On competition displays, algorithm stays left, observed result stays right, and source commands stay in the full-width dock below.
+**The Coding Topology Rule.** On event displays, algorithm stays left, observed result stays right, and source commands stay in the full-width dock below.
 
 **The Map-First Mobile Rule.** On narrow screens, show the execution map before the algorithm and dock without hiding the run action.
 

@@ -27,7 +27,7 @@ footer{display:flex;justify-content:space-between;align-items:center;padding:24p
   .partner-strip{height:112px;min-height:112px}
 }
 
-/* 메인 페이지 미니맵 오브젝트도 경기장과 같은 재질을 사용한다. */
+/* 메인 페이지 미니맵 오브젝트도 미션 화면과 같은 재질을 사용한다. */
 .mini-cell.wall{background:linear-gradient(145deg,#9ba9b0 0 46%,#7c8b93 47% 100%);box-shadow:inset 0 0 0 2px #697880}
 .mini-cell.coin::after{border:0;background:radial-gradient(circle at 34% 28%,#fff5b0 0 9%,#ffd95b 10% 40%,#e9a915 41% 68%,#b96c05 69% 80%,#f7c948 81%)}
 .mini-cell.bomb::after{border:1px solid #151e26;background:radial-gradient(circle at 34% 28%,#9ca8b2 0 10%,#424d58 11% 61%,#161f27 62%)}
@@ -42,7 +42,7 @@ footer{display:flex;justify-content:space-between;align-items:center;padding:24p
 .home-mark{background:var(--yellow);border-radius:12px;clip-path:none}.brand-wordmark em{color:var(--yellow)}
 .hero{background:linear-gradient(135deg,#0b4026 0%,#14623a 68%,#197546 100%)}.hero::after{background:repeating-linear-gradient(135deg,var(--yellow) 0 14px,#ff8a00 14px 28px)}.hero-visual::before{border-color:rgba(255,255,255,.28);box-shadow:0 0 0 34px rgba(255,226,45,.09),0 0 0 76px rgba(255,255,255,.05)}
 .hero-visual img{width:min(100%,510px);max-height:470px}.hero-visual>p{color:var(--yellow)}.flag-sign span{background:#ff8a00}
-.partner-strip{display:grid;grid-template-columns:minmax(320px,1fr) auto;gap:clamp(30px,5vw,88px);height:128px;min-height:128px;padding-block:10px}.event-slogan{display:block;width:min(100%,650px);height:100px;object-fit:contain}.partner-logos{gap:24px}.partner-logos>img{max-width:280px;height:48px!important}.proteen-frame{position:relative;display:block;width:170px!important;height:54px!important;overflow:hidden;background:#fff}.proteen-frame img{position:absolute!important;left:-8px;top:-67px;width:190px!important;max-width:none!important;height:auto!important}
+.partner-strip{display:grid;grid-template-columns:minmax(320px,1fr) auto;gap:clamp(30px,5vw,88px);height:128px;min-height:128px;padding-block:10px}.event-slogan{display:block;width:min(100%,650px);height:100px;object-fit:contain}.partner-logos{gap:24px}.partner-logos>img{max-width:280px;height:48px!important}.proteen-frame{display:grid;place-items:center;width:190px!important;height:54px!important;overflow:visible;background:transparent}.proteen-frame img{position:static!important;width:190px!important;max-width:100%!important;height:auto!important}
 footer{height:44px;padding-block:0;background:#082f1c}footer a{color:var(--yellow)}
 @media(min-width:681px){body{grid-template-rows:82px minmax(0,1fr) 44px}.hero{padding-top:clamp(24px,4vh,48px);padding-bottom:clamp(28px,4vh,48px)}main{grid-template-rows:minmax(0,1fr) 128px}.partner-strip{height:128px;min-height:128px}}
-@media(max-width:680px){.partner-strip{display:grid;grid-template-columns:1fr;height:auto;gap:14px}.event-slogan{width:100%;height:80px}.partner-logos>img{max-width:56%;height:38px!important}.proteen-frame{width:130px!important;height:42px!important}.proteen-frame img{left:-6px;top:-52px;width:146px!important}footer{height:auto;align-items:flex-start;flex-direction:column;gap:7px;padding-block:18px}}
+@media(max-width:680px){.partner-strip{display:grid;grid-template-columns:1fr;height:auto;gap:14px}.event-slogan{width:100%;height:80px}.partner-logos>img{max-width:56%;height:38px!important}.proteen-frame{width:146px!important;height:42px!important}.proteen-frame img{width:146px!important}footer{height:auto;align-items:flex-start;flex-direction:column;gap:7px;padding-block:18px}}
