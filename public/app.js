@@ -1,4 +1,4 @@
-import { createMissionStageSet } from "./stages.js?v=gmeta-layouts-20261017";
+import { createMissionStageSet } from "./stages.js?v=gmeta-layouts-20261017-2";
 
 const labels={up:"위로",down:"아래로",left:"왼쪽으로",right:"오른쪽으로"};
 const vectors={up:[-1,0],down:[1,0],left:[0,-1],right:[0,1]};
