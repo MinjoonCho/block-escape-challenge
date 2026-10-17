@@ -57,7 +57,7 @@ function renderGrid(){
 function placePlayer(className="",instant=false){
   let img=grid.querySelector(".player");
   if(!img){img=document.createElement("img");img.src="/assets/goyang-cat-run.png";img.alt="고양시 마스코트";grid.append(img)}
-  img.className=`player ${className}${instant?" instant":""}`;img.style.width=`${120/stage().cols}%`;img.style.height=`${120/stage().rows}%`;img.style.setProperty("--player-x",`${player.c*100}%`);img.style.setProperty("--player-y",`${player.r*100}%`);
+  img.className=`player ${className}${instant?" instant":""}`;img.style.width=`${120/stage().cols}%`;img.style.height=`${120/stage().rows}%`;img.style.setProperty("--player-x",`${player.c*100-10}%`);img.style.setProperty("--player-y",`${player.r*100-10}%`);
   if(instant)requestAnimationFrame(()=>img.classList.remove("instant"));
 }
 
