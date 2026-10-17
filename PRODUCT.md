@@ -8,7 +8,7 @@ web
 
 ## Stack
 
-Delegated: dependency-free Node.js server with a responsive HTML/CSS/JavaScript client. This keeps event setup and Vercel deployment simple without external storage.
+Static HTML/CSS/JavaScript client with a dependency-free Node.js static server for local preview. Vercel serves the same frontend without functions, APIs, storage, or environment variables.
 
 ## Users
 
@@ -24,7 +24,7 @@ The game makes an algorithm directly observable: children build a command sequen
 
 ## Operating Context
 
-The build is branded for the Goyang Youth Harmony Festival and assumes event computers running a modern browser on a shared local network. A facilitator starts the Node.js server, children choose a three-stage mission, then enter their name once to submit the combined result.
+The build is branded for the Goyang Youth Harmony Festival and assumes event computers running a modern browser. Children choose a three-stage mission and see their combined result locally after completion; no name or result is submitted.
 
 ## Capabilities and Constraints
 
@@ -56,7 +56,7 @@ No finalized competition rule sheet, testimonials, or benchmark claims were supp
 - Make cause and effect visible after every command.
 - Reward correct and efficient algorithms without making failure punitive.
 - Keep the full competition flow understandable without facilitator explanation.
-- Prevent accidental score submission before the run is complete.
+- Keep scoring local and show the result only after the run is complete.
 - Make retrying fast so experimentation feels safe.
 
 ## Accessibility & Inclusion

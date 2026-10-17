@@ -83,10 +83,6 @@ components:
     textColor: "{colors.grid-white}"
     padding: "14px 10px 18px"
     size: "156px"
-  input-name:
-    backgroundColor: "{colors.grid-white}"
-    textColor: "{colors.evergreen-ink}"
-    padding: "13px"
 ---
 
 # Design System: 코딩할고양
@@ -187,7 +183,7 @@ Depth is selective and functional. The brand surfaces rely primarily on color fi
 - **Magnetic Tile** (`0 7px 16px rgba(12,37,56,.2)`): Gives draggable square source commands visible lift.
 - **Program Block** (`0 4px 8px rgba(12,37,56,.2)`): Keeps assembled commands tangible without overpowering the canvas.
 - **Map Frame** (`0 8px 18px rgba(12,37,56,.22)`): Seats the execution grid on the mist field.
-- **Result Modal** (`0 20px 60px rgba(0,0,0,.3)`): Separates verified completion and score submission from the game.
+- **Result Modal** (`0 20px 60px rgba(0,0,0,.3)`): Separates the local completion summary from the game.
 
 ### Named Rules
 
@@ -221,12 +217,6 @@ The repeat command is the signature algorithm shape: an orange C/ㄷ-like contai
 - **Shadow Strategy:** Follow the Functional Lift Rule.
 - **Border:** Soft Divider defines the algorithm/map seam and dock boundary; the canvas uses a one-pixel inset edge.
 - **Internal Padding:** Major working regions use 18–38px depending on viewport; compact controls use 8–14px.
-
-### Inputs / Fields
-
-- **Style:** The final name field is a rectangular Grid White input with a 2px Festival Green border and 13px inset, joined directly to its yellow submit action.
-- **Focus:** The global 4px sky-blue focus outline remains visible beyond the field border.
-- **Error / Disabled:** Validation uses Repeat Orange. Disabled controls preserve their form and become 45% opaque.
 
 ### Navigation
 

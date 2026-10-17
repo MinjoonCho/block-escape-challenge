@@ -1,3 +1,5 @@
+import { stages as stageCatalog } from "./stages.js?v=static-20261017";
+
 const labels={up:"위로",down:"아래로",left:"왼쪽으로",right:"오른쪽으로"};
 const vectors={up:[-1,0],down:[1,0],left:[0,-1],right:[0,1]};
 const directionPaths={up:"M24 6 9 22h9v20h12V22h9L24 6Z",down:"m24 42 15-16h-9V6H18v20H9l15 16Z",left:"M6 24 22 9v9h20v12H22v9L6 24Z",right:"m42 24-16-15v9H6v12h20v9l16-15Z"};
@@ -11,13 +13,15 @@ const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 let stages=[],stageIndex=0,program=[],openRepeat=null,player={r:0,c:0},collected=new Set();
 let running=true,startedAt=0,totalScore=0,totalTime=0,totalCoins=0,timerId,soundOn=true,missionLabel="",dragPayload=null,audioContext=null;
 
-async function loadMission(mission){
-  const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),6000);
-  try{
-    const response=await fetch("/api/runs",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({mission}),signal:controller.signal}),result=await response.json().catch(()=>({}));
-    if(!response.ok)throw new Error(result.error||"미션 서버에 연결하지 못했어요. 잠시 후 다시 시도해 주세요.");
-    stages=result.stages;missionLabel=result.missionLabel;
-  }catch(error){if(error.name==="AbortError")throw new Error("미션 준비 시간이 너무 길어졌어요. 네트워크를 확인하고 다시 시도해 주세요.");throw error}finally{clearTimeout(timeout)}
+function loadMission(mission){
+  const missionConfig={
+    intermediate:{label:"중급 미션",indexes:[0,1,2]},
+    advanced:{label:"고급 미션",indexes:[2,3,4]}
+  }[mission];
+  if(!missionConfig)return false;
+  stages=missionConfig.indexes.map(index=>stageCatalog[index]);
+  missionLabel=missionConfig.label;
+  return true;
 }
 const stage=()=>stages[stageIndex];
 const sourceBlockCount=(nodes=program)=>nodes.reduce((sum,node)=>sum+1+(node.type==="repeat"?node.body.length:0),0);
@@ -276,11 +280,9 @@ codingCanvas.ondrop=event=>{if(running)return endDrag();dropAtProgram(event,near
 el("playAgainButton").onclick=()=>window.location.reload();
 
 async function startMission(mission,button){
-  const select=el("missionSelect"),status=el("missionSelectStatus");document.querySelectorAll("[data-mission]").forEach(item=>item.disabled=true);button.classList.add("selected");status.textContent="미션을 준비하고 있어요...";
-  try{
-    await loadMission(mission);
-    const countdownScreen=el("countdownScreen");select.hidden=true;countdownScreen.hidden=false;await playCountdown();running=false;renderStage();countdownScreen.classList.add("leaving");await sleep(380);countdownScreen.hidden=true;countdownScreen.classList.remove("leaving");startedAt=Date.now();timerId=setInterval(updateTimer,250);
-  }catch(error){select.hidden=false;const countdownScreen=el("countdownScreen");countdownScreen.hidden=true;countdownScreen.classList.remove("leaving");status.textContent=error.message||"미션을 시작하지 못했어요. 다시 선택해 주세요.";document.querySelectorAll("[data-mission]").forEach(item=>item.disabled=false);button.classList.remove("selected")}
+  const select=el("missionSelect"),status=el("missionSelectStatus");document.querySelectorAll("[data-mission]").forEach(item=>item.disabled=true);button.classList.add("selected");status.textContent="미션을 시작할게요!";
+  if(!loadMission(mission)){status.textContent="미션을 다시 선택해 주세요.";document.querySelectorAll("[data-mission]").forEach(item=>item.disabled=false);button.classList.remove("selected");return}
+  const countdownScreen=el("countdownScreen");select.hidden=true;countdownScreen.hidden=false;await playCountdown();running=false;renderStage();countdownScreen.classList.add("leaving");await sleep(380);countdownScreen.hidden=true;countdownScreen.classList.remove("leaving");startedAt=Date.now();timerId=setInterval(updateTimer,250);
 }
 
 document.querySelectorAll("[data-mission]").forEach(button=>button.onclick=()=>startMission(button.dataset.mission,button));

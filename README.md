@@ -38,9 +38,9 @@ npm start
 - `public/game.html`: 블록 코딩 미션 화면
 - `public/home.css`, `public/home.js`: 메인 페이지와 스테이지 미리보기
 - `public/styles.css`: 반응형 디자인과 게임 표현
-- `stage-catalog.mjs`: 서버가 사용하는 5개 스테이지 변형과 미션 구성
+- `public/stages.js`: 프론트에 고정된 5개 스테이지와 블록 제한
 - `public/app.js`: 블록 실행과 게임 상태
-- `server.mjs`: 정적 파일과 랜덤 미션 맵 생성 API
+- `server.mjs`: 로컬 실행용 정적 파일 서버
 - `public/assets/branding/`: 행사·기관·PROTEEN 로고
 - `public/assets/goyang-cat-*.png`: 고양특례시 공식 캐릭터 원본
 
@@ -50,4 +50,4 @@ npm start
 - 전달된 5단계 원본은 시작 지점의 출구가 폭탄으로 모두 막혀 있어, 진행 가능하도록 시작점 바로 위 폭탄 한 개를 제외했습니다.
 - 미션 화면은 1920×1080에서 왼쪽 알고리즘, 오른쪽 지도, 하단 명령 창고가 한 화면에 들어오도록 설계했습니다.
 - 행사 규칙에 맞춰 점수 공식을 바꾸려면 `public/app.js`의 `stageScore` 계산식을 수정합니다.
-- Vercel 배포에는 데이터베이스나 별도 환경변수가 필요하지 않습니다.
+- 미션 데이터와 점수 계산은 모두 프론트에 들어 있으며 API, 데이터베이스, 환경변수가 필요하지 않습니다.
