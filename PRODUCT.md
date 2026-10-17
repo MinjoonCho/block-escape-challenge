@@ -28,7 +28,7 @@ The build is branded for the Goyang Youth Harmony Festival and assumes event com
 
 ## Capabilities and Constraints
 
-- Five organizer-supplied grid layouts: two centered 3×3 play areas with wall borders, two 4×4 maps, and one 5×5 final map.
+- Five Gmeta-era stage pools with eight layouts each: two 3×3 stages, two 5×5 stages, and one 7×7 final stage. One layout per stage is selected in the browser when a mission starts.
 - Absolute up, down, left, and right movement blocks plus a repeat container; there is no rotation mechanic.
 - Blocks support click-to-add and drag-and-drop assembly, including dropping movement commands into a C-shaped repeat container.
 - The game withholds route prediction so children reason from their code and learn from the actual execution result.

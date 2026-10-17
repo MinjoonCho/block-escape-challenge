@@ -1,4 +1,4 @@
-import { stages as stageCatalog } from "./stages.js?v=static-20261017";
+import { createMissionStageSet } from "./stages.js?v=gmeta-layouts-20261017";
 
 const labels={up:"위로",down:"아래로",left:"왼쪽으로",right:"오른쪽으로"};
 const vectors={up:[-1,0],down:[1,0],left:[0,-1],right:[0,1]};
@@ -15,11 +15,12 @@ let running=true,startedAt=0,totalScore=0,totalTime=0,totalCoins=0,timerId,sound
 
 function loadMission(mission){
   const missionConfig={
-    intermediate:{label:"중급 미션",indexes:[0,1,2]},
-    advanced:{label:"고급 미션",indexes:[2,3,4]}
+    intermediate:{label:"중급 미션"},
+    advanced:{label:"고급 미션"}
   }[mission];
   if(!missionConfig)return false;
-  stages=missionConfig.indexes.map(index=>stageCatalog[index]);
+  const seed=globalThis.crypto?.randomUUID?.()||`${Date.now()}-${Math.random()}`;
+  stages=createMissionStageSet(mission,seed);
   missionLabel=missionConfig.label;
   return true;
 }
