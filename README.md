@@ -53,3 +53,9 @@ npm start
 - `data/scores.json`을 `[]`로 비우면 순위표를 초기화할 수 있습니다.
 - 행사 규칙에 맞춰 점수 공식을 바꾸려면 `server.mjs`의 `stageScore` 계산식을 수정합니다.
 - 여러 행사 서버가 동시에 필요하면 각 서버는 별도의 순위표 파일을 사용합니다.
+
+## Vercel 배포
+
+Vercel에서는 실행 기록과 순위표를 유지하기 위해 Upstash Redis 연결이 필요합니다. 프로젝트 환경 변수에 `UPSTASH_REDIS_REST_URL`과 `UPSTASH_REDIS_REST_TOKEN`을 등록한 뒤 Production을 다시 배포하세요. 이전 Vercel KV 연동에서 쓰던 `KV_REST_API_URL`과 `KV_REST_API_TOKEN`도 호환하지만, 두 설정이 함께 있으면 현재 Upstash 설정을 먼저 사용하고 연결 실패 시에만 기존 KV 설정을 시도합니다.
+
+저장소가 응답하지 않으면 서버는 2.5초 안에 요청을 중단하고 `503`과 복구 안내를 반환합니다. 게임 화면은 서버 준비가 확인된 뒤에만 카운트다운을 시작하므로, 저장소 장애가 발생해도 `시작!` 화면에 머무르지 않습니다.

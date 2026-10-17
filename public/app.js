@@ -12,7 +12,14 @@ let stages=[],stageIndex=0,program=[],openRepeat=null,player={r:0,c:0},collected
 let running=true,startedAt=0,totalScore=0,totalTime=0,totalCoins=0,timerId,soundOn=true,runId="",missionLabel="",dragPayload=null,audioContext=null;
 
 let runReady;
-const createRun=mission=>fetch("/api/runs",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({mission})}).then(async response=>{const result=await response.json();if(!response.ok)throw new Error(result.error);runId=result.runId;stages=result.stages;missionLabel=result.missionLabel;return runId});
+async function createRun(mission){
+  const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),6000);
+  try{
+    const response=await fetch("/api/runs",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({mission}),signal:controller.signal}),result=await response.json().catch(()=>({}));
+    if(!response.ok)throw new Error(result.error||"미션 서버에 연결하지 못했어요. 잠시 후 다시 시도해 주세요.");
+    runId=result.runId;stages=result.stages;missionLabel=result.missionLabel;return runId;
+  }catch(error){if(error.name==="AbortError")throw new Error("미션 준비 시간이 너무 길어졌어요. 네트워크를 확인하고 다시 시도해 주세요.");throw error}finally{clearTimeout(timeout)}
+}
 const stage=()=>stages[stageIndex];
 const sourceBlockCount=(nodes=program)=>nodes.reduce((sum,node)=>sum+1+(node.type==="repeat"?node.body.length:0),0);
 const canAddBlock=()=>{
@@ -277,8 +284,9 @@ el("scoreForm").onsubmit=async event=>{event.preventDefault();const button=event
 async function startMission(mission,button){
   const select=el("missionSelect"),status=el("missionSelectStatus");document.querySelectorAll("[data-mission]").forEach(item=>item.disabled=true);button.classList.add("selected");status.textContent="미션을 준비하고 있어요...";
   try{
-    const countdownScreen=el("countdownScreen");select.hidden=true;countdownScreen.hidden=false;await playCountdown();runReady=createRun(mission);await runReady;running=false;renderStage();countdownScreen.classList.add("leaving");await sleep(380);countdownScreen.hidden=true;startedAt=Date.now();timerId=setInterval(updateTimer,250);
-  }catch(error){select.hidden=false;el("countdownScreen").hidden=true;status.textContent=error.message||"미션을 시작하지 못했어요. 다시 선택해 주세요.";document.querySelectorAll("[data-mission]").forEach(item=>item.disabled=false);button.classList.remove("selected")}
+    runReady=createRun(mission);await runReady;
+    const countdownScreen=el("countdownScreen");select.hidden=true;countdownScreen.hidden=false;await playCountdown();running=false;renderStage();countdownScreen.classList.add("leaving");await sleep(380);countdownScreen.hidden=true;countdownScreen.classList.remove("leaving");startedAt=Date.now();timerId=setInterval(updateTimer,250);
+  }catch(error){select.hidden=false;const countdownScreen=el("countdownScreen");countdownScreen.hidden=true;countdownScreen.classList.remove("leaving");status.textContent=error.message||"미션을 시작하지 못했어요. 다시 선택해 주세요.";document.querySelectorAll("[data-mission]").forEach(item=>item.disabled=false);button.classList.remove("selected")}
 }
 
 document.querySelectorAll("[data-mission]").forEach(button=>button.onclick=()=>startMission(button.dataset.mission,button));
