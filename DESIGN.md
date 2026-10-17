@@ -160,13 +160,13 @@ The brand palette leads with civic green, then uses yellow and orange as festiva
 
 **The One Festival Voice Rule.** Black Han Sans is reserved for the event name and decisive headings; all operational language remains Noto Sans KR.
 
-**The Live Number Rule.** Timers, scores, coin totals, block counts, and ranks use bold weight and tabular numerals where values update in place.
+**The Live Number Rule.** Timers, scores, coin totals, and block counts use bold weight and tabular numerals where values update in place.
 
 ## Layout
 
 The landing page uses an 82px festival-green header, a two-column hero, a 128px partner strip, and a 44px attribution footer on desktop. The first viewport keeps the 코딩할고양 name, short rules summary, start and tutorial actions, official running mascot, event slogan, and partner identities visible together. At 680px and below, the hero becomes a vertical invitation and the logo strip and footer stack without removing attribution.
 
-The mission surface targets 1920×1080. Before play, a two-choice selector presents intermediate and advanced missions. An 88px scoreboard combines the brand, partner logos, selected mission, live values, and leaderboard action. Beneath it, the upper work area places the algorithm canvas on the left at roughly 42% and the execution map on the right at roughly 58%; a 218px command dock spans the full bottom edge. The five source commands sit as centered square tiles between the dock explanation and undo/run actions.
+The mission surface targets 1920×1080. Before play, a two-choice selector presents intermediate and advanced missions. An 88px scoreboard combines the brand, partner logos, selected mission, and live values. Beneath it, the upper work area places the algorithm canvas on the left at roughly 42% and the execution map on the right at roughly 58%; a 218px command dock spans the full bottom edge. The five source commands sit as centered square tiles between the dock explanation and undo/run actions.
 
 Below 1180px, the algorithm and map remain side by side while the dock actions move to a second row. Below 760px, the surface becomes map-first—map, algorithm, then command dock—with sticky execution controls. Click-to-add remains alongside drag-and-drop for touch use. The grid derives both row and column tracks from the stage and preserves true square cells.
 
@@ -230,7 +230,7 @@ The repeat command is the signature algorithm shape: an orange C/ㄷ-like contai
 
 ### Navigation
 
-The landing header pairs the C tile and two-part 코딩할고양 wordmark with ranking and game-entry links. The game scoreboard adds a white partner-logo plate between the brand and live statistics. On small screens, navigation simplifies while the brand, critical race values, and partner identity remain readable.
+The landing header pairs the C tile and two-part 코딩할고양 wordmark with the game-entry link. The game scoreboard adds a white partner-logo plate between the brand and live statistics. On small screens, navigation simplifies while the brand, critical race values, and partner identity remain readable.
 
 ### Official Mascot & Partner Marks
 
@@ -238,7 +238,7 @@ The official Goyang City cat artwork appears as the landing hero, the moving gam
 
 ### Attribution
 
-Every public surface retains `제작: 연세대학교 컴퓨터과학과 조민준` and `캐릭터 제공: 고양특례시 · 공공누리 제3유형`. The landing page uses a full footer; the game and tutorial keep a persistent low-edge credit and repeat it in completion context where appropriate; ceremony and administrative surfaces include their own visible credit.
+Every public surface retains `제작: 연세대학교 컴퓨터과학과 조민준` and `캐릭터 제공: 고양특례시 · 공공누리 제3유형`. The landing page uses a full footer; the game and tutorial keep a persistent low-edge credit and repeat it in completion context where appropriate.
 
 ### Command Blocks
 

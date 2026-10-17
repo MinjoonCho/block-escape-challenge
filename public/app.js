@@ -9,15 +9,14 @@ const key=(r,c)=>`${r},${c}`;
 const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 
 let stages=[],stageIndex=0,program=[],openRepeat=null,player={r:0,c:0},collected=new Set();
-let running=true,startedAt=0,totalScore=0,totalTime=0,totalCoins=0,timerId,soundOn=true,runId="",missionLabel="",dragPayload=null,audioContext=null;
+let running=true,startedAt=0,totalScore=0,totalTime=0,totalCoins=0,timerId,soundOn=true,missionLabel="",dragPayload=null,audioContext=null;
 
-let runReady;
-async function createRun(mission){
+async function loadMission(mission){
   const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),6000);
   try{
     const response=await fetch("/api/runs",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({mission}),signal:controller.signal}),result=await response.json().catch(()=>({}));
     if(!response.ok)throw new Error(result.error||"미션 서버에 연결하지 못했어요. 잠시 후 다시 시도해 주세요.");
-    runId=result.runId;stages=result.stages;missionLabel=result.missionLabel;return runId;
+    stages=result.stages;missionLabel=result.missionLabel;
   }catch(error){if(error.name==="AbortError")throw new Error("미션 준비 시간이 너무 길어졌어요. 네트워크를 확인하고 다시 시도해 주세요.");throw error}finally{clearTimeout(timeout)}
 }
 const stage=()=>stages[stageIndex];
@@ -243,12 +242,10 @@ async function runProgram(){
 }
 
 async function finishStage(){
-  try{
-    const id=await runReady,response=await fetch(`/api/runs/${id}/stage`,{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({stage:stageIndex,program})}),result=await response.json();if(!response.ok)throw new Error(result.error);
-    totalScore=result.score;totalTime=result.timeMs;totalCoins=result.coins;updateStats();beep(960,.3);setStatus(`스테이지 성공 · ${result.stageScore.toLocaleString()}점`);await showOutcome("success","성공!",`${result.stageScore.toLocaleString()}점을 획득했어요.`);
-    if(result.complete){running=false;showResult();return}
-    stageIndex++;program=[];openRepeat=null;resetPlayer();startedAt=Date.now();running=false;document.querySelectorAll("button.command").forEach(button=>button.disabled=false);renderStage();toast(`${stageIndex+1}단계 시작!`);
-  }catch(error){setStatus("기록 서버를 확인해 주세요");await showOutcome("failure","확인 실패",error.message||"미션 기록을 저장하지 못했어요.");resetPlayer();renderGrid();updateStats();running=false;document.querySelectorAll("button.command").forEach(button=>button.disabled=false);renderProgram()}
+  const elapsed=Math.max(500,Date.now()-startedAt),blocks=sourceBlockCount(),coins=collected.size,stageScore=Math.max(500,Math.round(5000-elapsed/25-blocks*45+coins*700));
+  totalScore+=stageScore;totalTime+=elapsed;totalCoins+=coins;updateStats();beep(960,.3);setStatus(`스테이지 성공 · ${stageScore.toLocaleString()}점`);await showOutcome("success","성공!",`${stageScore.toLocaleString()}점을 획득했어요.`);
+  if(stageIndex===stages.length-1){running=false;showResult();return}
+  stageIndex++;program=[];openRepeat=null;resetPlayer();startedAt=Date.now();running=false;document.querySelectorAll("button.command").forEach(button=>button.disabled=false);renderStage();toast(`${stageIndex+1}단계 시작!`);
 }
 
 function renderStage(){el("missionLabel").textContent=missionLabel;el("stageLabel").textContent=`${stageIndex+1} / ${stages.length}`;el("missionTitle").textContent=stage().title;el("missionText").textContent=stage().text;resetPlayer();renderGrid();renderProgram();setStatus("블록을 조립하세요");updateStats()}
@@ -261,9 +258,7 @@ async function playCountdown(){
   for(const value of [3,2,1]){number.className="";number.textContent=value;void number.offsetWidth;playSound("count");await sleep(780)}
   number.className="go";number.textContent="시작!";void number.offsetWidth;playSound("go");await sleep(650);
 }
-function showResult(){clearInterval(timerId);el("resultStamp").textContent=`${missionLabel} · 3개 단계 완료`;el("finalScore").textContent=totalScore.toLocaleString();el("finalCoins").textContent=totalCoins;const sec=Math.floor(totalTime/1000);el("finalTime").textContent=`${String(Math.floor(sec/60)).padStart(2,"0")}:${String(sec%60).padStart(2,"0")}`;el("resultScreen").hidden=false;el("playerName").focus()}
-const escapeHtml=value=>String(value).replace(/[&<>"']/g,character=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[character]));
-async function loadScores(){const list=el("leaderList");list.innerHTML='<li class="leader-empty">순위를 불러오는 중...</li>';try{const data=await fetch("/api/scores").then(response=>response.json());list.innerHTML=data.length?data.map((score,index)=>`<li class="leader-row"><span class="leader-rank">${index+1}</span><span><strong>${escapeHtml(score.name)}</strong><small class="leader-meta">${escapeHtml(score.missionLabel||"전체 미션")} · 코인 ${score.coins}개 · ${Math.round(score.timeMs/1000)}초</small></span><span class="leader-score">${score.score.toLocaleString()}점</span></li>`).join(""):'<li class="leader-empty">첫 번째 기록의 주인공이 되어보세요!</li>'}catch{list.innerHTML='<li class="leader-empty">순위를 불러오지 못했어요.<br>잠시 후 다시 열어주세요.</li>'}}
+function showResult(){clearInterval(timerId);el("resultStamp").textContent=`${missionLabel} · 3개 단계 완료`;el("finalScore").textContent=totalScore.toLocaleString();el("finalCoins").textContent=totalCoins;const sec=Math.floor(totalTime/1000);el("finalTime").textContent=`${String(Math.floor(sec/60)).padStart(2,"0")}:${String(sec%60).padStart(2,"0")}`;el("resultScreen").hidden=false;el("playAgainButton").focus()}
 
 document.querySelectorAll("[data-move]").forEach(button=>{
   button.onclick=()=>addMove(button.dataset.move);button.ondragstart=event=>startDrag(event,{origin:"palette",type:"move",dir:button.dataset.move});button.ondragend=endDrag;
@@ -271,7 +266,6 @@ document.querySelectorAll("[data-move]").forEach(button=>{
 el("repeatButton").onclick=addRepeat;el("repeatButton").ondragstart=event=>startDrag(event,{origin:"palette",type:"repeat"});el("repeatButton").ondragend=endDrag;
 el("undoButton").onclick=()=>{if(openRepeat?.body.length)openRepeat.body.pop();else if(program.length){if(openRepeat===program.at(-1))openRepeat=null;program.pop()}renderProgram()};
 el("clearButton").onclick=()=>{if(!running){program=[];openRepeat=null;renderProgram()}};el("runButton").onclick=runProgram;el("mobileRunButton").onclick=runProgram;
-el("leaderButton").onclick=()=>{el("leaderboard").hidden=false;loadScores()};el("closeLeader").onclick=()=>el("leaderboard").hidden=true;
 el("soundToggle").onclick=()=>{soundOn=!soundOn;el("soundToggle").setAttribute("aria-pressed",String(soundOn));el("soundToggle").textContent=soundOn?"소리 켬":"소리 끔"};
 document.addEventListener("pointerdown",()=>getAudio(),{capture:true});
 document.addEventListener("dragend",endDrag);
@@ -279,12 +273,12 @@ codingCanvas.ondragover=event=>{if(running||!readDrag(event))return;event.preven
 codingCanvas.ondragleave=event=>{if(!codingCanvas.contains(event.relatedTarget))codingCanvas.classList.remove("canvas-drop-ready")};
 codingCanvas.ondrop=event=>{if(running)return endDrag();dropAtProgram(event,nearestProgramIndex(event.clientY))};
 
-el("scoreForm").onsubmit=async event=>{event.preventDefault();const button=event.submitter;button.disabled=true;el("formMessage").textContent="점수를 등록하고 있어요...";try{const response=await fetch("/api/scores",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({name:el("playerName").value,runId})}),result=await response.json();if(!response.ok)throw new Error(result.error);el("formMessage").textContent=`등록 완료! 현재 ${result.rank}위예요.`;button.textContent="등록 완료";setTimeout(()=>window.location.replace("/"),900)}catch(error){el("formMessage").textContent=error.message||"등록하지 못했어요. 다시 시도해 주세요.";button.disabled=false}};
+el("playAgainButton").onclick=()=>window.location.reload();
 
 async function startMission(mission,button){
   const select=el("missionSelect"),status=el("missionSelectStatus");document.querySelectorAll("[data-mission]").forEach(item=>item.disabled=true);button.classList.add("selected");status.textContent="미션을 준비하고 있어요...";
   try{
-    runReady=createRun(mission);await runReady;
+    await loadMission(mission);
     const countdownScreen=el("countdownScreen");select.hidden=true;countdownScreen.hidden=false;await playCountdown();running=false;renderStage();countdownScreen.classList.add("leaving");await sleep(380);countdownScreen.hidden=true;countdownScreen.classList.remove("leaving");startedAt=Date.now();timerId=setInterval(updateTimer,250);
   }catch(error){select.hidden=false;const countdownScreen=el("countdownScreen");countdownScreen.hidden=true;countdownScreen.classList.remove("leaving");status.textContent=error.message||"미션을 시작하지 못했어요. 다시 선택해 주세요.";document.querySelectorAll("[data-mission]").forEach(item=>item.disabled=false);button.classList.remove("selected")}
 }

@@ -8,7 +8,7 @@ web
 
 ## Stack
 
-Delegated: dependency-light Node.js server with a responsive HTML/CSS/JavaScript client. This keeps event setup simple while allowing a shared leaderboard. The exact deployment target remains open.
+Delegated: dependency-free Node.js server with a responsive HTML/CSS/JavaScript client. This keeps event setup and Vercel deployment simple without external storage.
 
 ## Users
 
@@ -37,9 +37,8 @@ The build is branded for the Goyang Youth Harmony Festival and assumes event com
 - Source-block limits are intentionally generous: stages 1–5 allow 8, 9, 9, 10, and 12 blocks. Repeat containers and their inner commands each count as source blocks.
 - Bomb collision ends the current attempt; the stage can be retried.
 - Coins award bonus points, and faster completion earns more points.
-- Ranking submission is unlocked only after all three stages in the chosen mission are completed.
-- The shared leaderboard persists to a small server-side JSON file.
-- No account system or personal data beyond a short display name.
+- The final screen shows the combined score, elapsed time, and collected coins after all three stages.
+- There is no leaderboard, account system, database, or personal-data input.
 - Exact competition scoring constants and deployment environment remain configurable decisions.
 
 ## Evidence on Hand

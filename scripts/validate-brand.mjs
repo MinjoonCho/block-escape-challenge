@@ -2,7 +2,7 @@ import { access, readFile } from "node:fs/promises";
 import { join } from "node:path";
 
 const root = new URL("../", import.meta.url).pathname;
-const publicPages = ["index.html", "game.html", "tutorial.html", "ranking.html", "admin.html"];
+const publicPages = ["index.html", "game.html", "tutorial.html"];
 const sourceFiles = [
   ...publicPages.map((name) => join(root, "public", name)),
   join(root, "public", "app.js"),
