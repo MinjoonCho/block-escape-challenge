@@ -1,9 +1,38 @@
 import { stages } from "./stages.js";
 
+const fullscreenButton=document.getElementById("fullscreenToggle");
+const fullscreenLabel=document.getElementById("fullscreenLabel");
+const fullscreenElement=()=>document.fullscreenElement||document.webkitFullscreenElement;
+const requestFullscreen=document.documentElement.requestFullscreen||document.documentElement.webkitRequestFullscreen;
+const exitFullscreen=document.exitFullscreen||document.webkitExitFullscreen;
+
+function syncFullscreenButton(){
+  if(!fullscreenButton)return;
+  const active=Boolean(fullscreenElement());
+  fullscreenButton.setAttribute("aria-pressed",String(active));
+  fullscreenButton.setAttribute("aria-label",active?"전체화면 종료":"전체화면으로 보기");
+  if(fullscreenLabel)fullscreenLabel.textContent=active?"전체화면 종료":"전체화면";
+}
+
+if(fullscreenButton){
+  if(!requestFullscreen||!exitFullscreen)fullscreenButton.hidden=true;
+  else{
+    fullscreenButton.addEventListener("click",async()=>{
+      try{
+        if(fullscreenElement())await exitFullscreen.call(document);
+        else await requestFullscreen.call(document.documentElement);
+      }catch{fullscreenButton.hidden=true}
+    });
+    document.addEventListener("fullscreenchange",syncFullscreenButton);
+    document.addEventListener("webkitfullscreenchange",syncFullscreenButton);
+    syncFullscreenButton();
+  }
+}
+
 const key=(r,c)=>`${r},${c}`;
 const previews=document.getElementById("stagePreviews");
 
-stages.forEach((stage,index)=>{
+if(previews)stages.forEach((stage,index)=>{
   const item=document.createElement("li");
   item.className="stage-ticket";
   const board=document.createElement("div");
